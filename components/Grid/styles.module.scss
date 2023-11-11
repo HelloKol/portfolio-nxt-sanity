@@ -1,0 +1,68 @@
+@import "../../styles//base/variables";
+
+// ==========================================================================
+// Global
+// ==========================================================================
+.grid {
+    display: grid;
+}
+
+// ==========================================================================
+// Mobile
+// ==========================================================================
+@media (min-width: $breakMobile) {
+    .grid {
+        grid-column-gap: $gutterMobile;
+        &.withRowGap {
+            grid-row-gap: $rowGutterMobile;
+        }
+    }
+}
+
+// ==========================================================================
+// Mobile Large
+// ==========================================================================
+@media (min-width: $breakMobileLarge) {
+    .grid {
+        grid-column-gap: $gutterMobileLarge;
+        &.withRowGap {
+            grid-row-gap: $rowGutterMobileLarge;
+        }
+    }
+}
+
+// ==========================================================================
+// Tablet
+// ==========================================================================
+@media (min-width: $breakTablet) {
+    .grid {
+        grid-column-gap: $gutterTablet;
+        &.withRowGap {
+            grid-row-gap: $rowGutterTablet;
+        }
+    }
+}
+
+// ==========================================================================
+// Desktop
+// ==========================================================================
+@media (min-width: $breakDesktop) {
+    .grid {
+        grid-column-gap: $gutterDesktop;
+        &.withRowGap {
+            grid-row-gap: $rowGutterDesktop;
+        }
+    }
+}
+
+// ==========================================================================
+// Desktop Large
+// ==========================================================================
+@media (min-width: $breakDesktopLarge) {
+    .grid {
+        grid-column-gap: $gutterDesktopLarge;
+        &.withRowGap {
+            grid-row-gap: $rowGutterDesktopLarge;
+        }
+    }
+}
