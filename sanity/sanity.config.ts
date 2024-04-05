@@ -1,9 +1,9 @@
-import {CogIcon} from '@sanity/icons'
+import {CogIcon, HomeIcon} from '@sanity/icons'
 import {defineConfig} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {visionTool} from '@sanity/vision'
 import {TiersIcon, TagIcon, ProjectsIcon} from '@sanity/icons'
-import { simplerColorInput } from 'sanity-plugin-simpler-color-input'
+import {simplerColorInput} from 'sanity-plugin-simpler-color-input'
 import {schemaTypes} from './schemaTypes'
 import config from './config'
 
@@ -29,6 +29,11 @@ export default defineConfig({
         return S.list()
           .title('Content')
           .items([
+            S.listItem()
+              .title('Home')
+              .icon(HomeIcon)
+              .id('home')
+              .child(S.document().schemaType('home').documentId('home')),
             S.listItem()
               .title('Work')
               .child(

@@ -8,6 +8,7 @@ export default defineType({
     {
       name: 'content',
       title: 'Content',
+      default: true,
     },
     {
       name: 'seo',
@@ -113,7 +114,7 @@ export default defineType({
     }),
     defineField({
       name: 'links',
-      title: 'Links',
+      title: 'Call to action (CTA)',
       type: 'array',
       of: [{type: 'internalLink'}, {type: 'externalLink'}],
       group: 'content',
@@ -129,7 +130,7 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      media: 'mainImage',
+      media: 'coverImage',
     },
   },
 })
