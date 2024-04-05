@@ -29,6 +29,7 @@ export default defineConfig({
         return S.list()
           .title('Content')
           .items([
+            // Define Home
             S.listItem()
               .title('Home')
               .icon(HomeIcon)
@@ -76,6 +77,12 @@ export default defineConfig({
                       ),
                   ]),
               ),
+            // Define Contact
+            S.listItem()
+              .title('Contact')
+              .icon(HomeIcon)
+              .id('contact')
+              .child(S.document().schemaType('contact').documentId('contact')),
             S.divider(),
             S.listItem()
               .title('Settings')
