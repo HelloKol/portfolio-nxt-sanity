@@ -83,6 +83,12 @@ export default defineConfig({
               .icon(HomeIcon)
               .id('contact')
               .child(S.document().schemaType('contact').documentId('contact')),
+            // Define Page Not Found
+            S.listItem()
+              .title('Page Not Found')
+              .icon(HomeIcon)
+              .id('pageNotFound')
+              .child(S.document().schemaType('pageNotFound').documentId('pageNotFound')),
             S.divider(),
             S.listItem()
               .title('Settings')

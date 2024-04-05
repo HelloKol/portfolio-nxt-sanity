@@ -2,6 +2,7 @@
 import category from './category'
 import contact from './contact'
 import home from './home'
+import pageNotFound from './pageNotFound'
 import settings from './settings'
 import work from './work'
 import workIndex from './workIndex'
@@ -18,6 +19,7 @@ export const schemaTypes = [
   category,
   contact,
   home,
+  pageNotFound,
   settings,
   work,
   workIndex,
