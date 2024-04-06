@@ -2,7 +2,7 @@ import {CogIcon, HomeIcon} from '@sanity/icons'
 import {defineConfig} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {visionTool} from '@sanity/vision'
-import {TiersIcon, TagIcon, ProjectsIcon} from '@sanity/icons'
+import {TiersIcon, TagIcon, ProjectsIcon, PinIcon, CaseIcon, InfoOutlineIcon} from '@sanity/icons'
 import {simplerColorInput} from 'sanity-plugin-simpler-color-input'
 import {schemaTypes} from './schemaTypes'
 import config from './config'
@@ -35,8 +35,14 @@ export default defineConfig({
               .icon(HomeIcon)
               .id('home')
               .child(S.document().schemaType('home').documentId('home')),
+            // Define Home
+            S.listItem()
+              .title('About')
+              .id('about')
+              .child(S.document().schemaType('about').documentId('about')),
             S.listItem()
               .title('Work')
+              .icon(CaseIcon)
               .child(
                 S.list()
                   .title('Content')
@@ -80,13 +86,13 @@ export default defineConfig({
             // Define Contact
             S.listItem()
               .title('Contact')
-              .icon(HomeIcon)
+              .icon(PinIcon)
               .id('contact')
               .child(S.document().schemaType('contact').documentId('contact')),
             // Define Page Not Found
             S.listItem()
               .title('Page Not Found')
-              .icon(HomeIcon)
+              .icon(InfoOutlineIcon)
               .id('pageNotFound')
               .child(S.document().schemaType('pageNotFound').documentId('pageNotFound')),
             S.divider(),

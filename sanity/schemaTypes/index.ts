@@ -1,4 +1,5 @@
 // Schema
+import about from './about'
 import category from './category'
 import contact from './contact'
 import home from './home'
@@ -8,14 +9,17 @@ import work from './work'
 import workIndex from './workIndex'
 // Objects
 import blockContent from '../objects/common/blockContent'
+import emailLink from '../objects/common/email-link'
 import externalLink from '../objects/common/external-link'
 import internalLink from '../objects/common/internal-link'
 import seoPage from '../objects/seo/seoPage'
+import seoSettings from '../objects/seo/seoSettings'
 
-const linkableContentTypes = ['home', 'work', 'work.index', 'contact']
+const linkableContentTypes = ['about', 'home', 'work', 'work.index', 'contact']
 
 export const schemaTypes = [
   // Schema
+  about,
   category,
   contact,
   home,
@@ -25,7 +29,9 @@ export const schemaTypes = [
   workIndex,
   // Objects
   blockContent,
+  emailLink,
   externalLink,
   internalLink({linkableContentTypes}),
   seoPage,
+  seoSettings,
 ]

@@ -1,6 +1,6 @@
-import {defineField} from 'sanity'
+import {defineType, defineField} from 'sanity'
 
-export default defineField({
+export default defineType({
   name: 'seo.page',
   title: 'SEO',
   type: 'object',

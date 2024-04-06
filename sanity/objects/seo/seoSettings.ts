@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import {defineType, defineField} from 'sanity'
 
 export default defineType({
   name: 'seo.settings',

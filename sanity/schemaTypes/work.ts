@@ -113,7 +113,7 @@ export default defineType({
       group: 'content',
     }),
     defineField({
-      name: 'links',
+      name: 'cta',
       title: 'Call to action (CTA)',
       type: 'array',
       of: [{type: 'internalLink'}, {type: 'externalLink'}],
