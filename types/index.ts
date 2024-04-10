@@ -1,18 +1,31 @@
 export interface Project {
-  attributes: {
-    Title: string;
-    TitleColor: string;
-    slug: string;
-    BodyCopy: string;
-    ProjectCreated: string;
-    Tags: string[];
-    Tools: string[];
-    CtaProjectTitle: string;
-    CtaProjectLink: string;
-    CtaCodeTitle: string;
-    CtaCodeLink: string;
-    Thumbnail: SingleMedia;
-    FeatureImage: MultiMedia;
+  _id: string;
+  title: string;
+  slug: {
+    current: string;
+  };
+  createdDate: string;
+  type: string[];
+  tools: string[];
+  coverImage: {
+    _type: string;
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        lqip: string;
+      };
+    };
+  };
+  featuredImage: {
+    _type: string;
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        lqip: string;
+      };
+    };
   };
 }
 

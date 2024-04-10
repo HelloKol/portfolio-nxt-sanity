@@ -1,4 +1,3 @@
-// config.ts
 interface AppConfig {
   projectId: string
   dataset: string
@@ -21,7 +20,6 @@ class Config {
   }
 
   get(): AppConfig {
-    // Merge default and environment-specific values
     return {...this.defaults, ...this.envConfig}
   }
 }

@@ -1,0 +1,235 @@
+@import "../../styles/base/variables";
+@import "../../styles/mixins/mixins";
+
+// ==========================================================================
+// Global
+// ==========================================================================
+
+.workSection {
+  &.darkMode {
+    .projectFeedItem {
+      .projectIndex,
+      .tags {
+        color: $lightRed;
+      }
+    }
+  }
+  &.lightMode {
+    .projectFeedItem {
+      .projectIndex,
+      .projectTags {
+        color: $grey;
+      }
+    }
+  }
+
+  .title {
+    align-self: center;
+  }
+  .projectFeedItem {
+    padding: 20px 0 20px 0;
+    .projectThumbnail {
+      overflow: hidden;
+      position: relative;
+      .overlay {
+        opacity: 0;
+        z-index: 1;
+        position: absolute;
+        background: rgba(0, 0, 0, 0.4);
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.5s ease-in-out;
+        span {
+          height: 120px;
+          width: 120px;
+          background: red;
+          border-radius: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transition: transform 0.5s ease-in-out;
+          transform: scale(0.2);
+        }
+      }
+      img {
+        transition: transform 0.5s ease-in-out;
+      }
+      &:hover {
+        img {
+          transform: scale(1.06);
+        }
+        .overlay {
+          opacity: 1;
+          span {
+            transform: scale(1);
+          }
+        }
+      }
+    }
+    &:last-of-type {
+      padding: 20px 0 0 0;
+    }
+  }
+}
+
+// ==========================================================================
+// Mobile
+// ==========================================================================
+@media (min-width: $breakMobile) {
+  .workSection {
+    padding: 180px 0 220px 0;
+    .title {
+      grid-column: 1/13;
+      @include type-setting-responsive(16, 5, 50);
+    }
+    .projectFeed {
+      grid-column: 1/13;
+      margin: 50px 0 0 0;
+    }
+    .projectFeedItem {
+      .projectIndex,
+      .projectTitle,
+      .projectTags {
+        grid-column: 3/13;
+      }
+      .projectThumbnail {
+        grid-column: 1/13;
+        height: 300px;
+        margin: 20px 0 40px 0;
+      }
+      .projectTitle {
+        @include type-setting-responsive(14, 8, 40);
+        margin: 10px 0 0 0;
+      }
+      .projectTags {
+        margin: 10px 0 0 0;
+        .tags {
+          margin: 10px 0 0 0;
+          p {
+            margin: 10px 0 0 0;
+          }
+        }
+      }
+      .projectCreated {
+        line-height: 20px;
+      }
+      &:last-of-type {
+        .projectThumbnail {
+          margin: 20px 0 0 0;
+        }
+      }
+    }
+    .discoverBtn {
+      grid-column: 1/13;
+      grid-row: 3;
+      margin: 100px 0 0 auto;
+    }
+  }
+}
+
+// ==========================================================================
+// Mobile Large
+// ==========================================================================
+@media (min-width: $breakMobileLarge) {
+}
+
+// ==========================================================================
+// Tablet
+// ==========================================================================
+@media (min-width: $breakTablet) {
+  .workSection {
+    .projectFeed {
+      margin: 70px 0 0 0;
+    }
+    .title {
+      grid-column: 1/9;
+      @include type-setting-responsive(16, 1.4, 20);
+    }
+    .projectFeedItem {
+      .projectIndex {
+        grid-column: 1/4;
+      }
+      .projectTitle {
+        grid-column: 4/11;
+        margin: 0;
+        @include type-setting-responsive(30, 5, 50);
+      }
+      .projectTags {
+        grid-column: 11/13;
+        text-align: right;
+        margin: 0;
+      }
+      .projectThumbnail {
+        grid-column: 4/13;
+        height: 350px;
+      }
+    }
+    .discoverBtn {
+      grid-column: 9/13;
+      grid-row: 1;
+      margin: 0 0 0 auto;
+    }
+  }
+}
+
+// ==========================================================================
+// Desktop
+// ==========================================================================
+@media (min-width: $breakDesktop) {
+  .workSection {
+    .title {
+      @include type-setting-responsive(16, 1.6, 20);
+    }
+    .projectFeed {
+      margin: 10 0px 0 0 0;
+    }
+    .projectFeedItem {
+      .projectThumbnail {
+        height: 400px;
+        margin: 40px 0 60px 0;
+      }
+      &:last-of-type {
+        .projectThumbnail {
+          margin: 40px 0 0 0;
+        }
+      }
+    }
+  }
+}
+
+// ==========================================================================
+// Desktop Large
+// ==========================================================================
+@media (min-width: $breakDesktopLarge) {
+  .workSection {
+    padding: 360px 0 220px 0;
+    .title {
+      @include type-setting-responsive(24, 1.4, 50);
+    }
+    .projectFeedItem {
+      .projectIndex {
+        grid-column: 1/4;
+      }
+      .projectTitle {
+        grid-column: 4/12;
+        @include type-setting-responsive(30, 4, 100);
+      }
+      .projectTags {
+        grid-column: 12/13;
+      }
+      .projectThumbnail {
+        grid-column: 4/13;
+        height: 900px;
+        margin: 50px 0 100px 0;
+      }
+      &:last-of-type {
+        .projectThumbnail {
+          margin: 50px 0 0 0;
+        }
+      }
+    }
+  }
+}

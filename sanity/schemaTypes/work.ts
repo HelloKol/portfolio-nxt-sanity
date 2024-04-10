@@ -1,4 +1,11 @@
 import {defineField, defineType} from 'sanity'
+import sanityClient from '../lib/sanityClient'
+import CustomSelect from '../components/CustomSelect'
+
+const numbersList = []
+for (let i = 1; i <= 50; i++) {
+  numbersList.push({title: `${i}`, value: `${i}`})
+}
 
 export default defineType({
   name: 'work',
@@ -33,6 +40,30 @@ export default defineType({
       validation: (Rule) => Rule.required(),
       group: 'content',
     }),
+    {
+      name: 'rank',
+      title: 'Rank',
+      type: 'string',
+      inputComponent: CustomSelect,
+      validation: (Rule) =>
+        Rule.custom(async (number, context) => {
+          // Custom validation to check uniqueness of number
+          const existingDocs = await sanityClient.fetch(
+            `*[_type == '${context.document._type}' && number == $number && _id != $id]`,
+            {number, id: context.document._id},
+          )
+          if (existingDocs.length > 0) {
+            return 'Number is already in use. Please choose a different number.'
+          }
+          return true
+        }).error('Number is already in use. Please choose a different number.'),
+      options: {
+        list: numbersList,
+        documentType: 'work',
+        documentId: '_id',
+      },
+      group: 'content',
+    },
     defineField({
       name: 'color',
       title: 'Color',
@@ -104,9 +135,10 @@ export default defineType({
       ],
       options: {
         list: [
-          {title: 'Web development', value: 'webDevelopment'},
-          {title: 'UI/UX Design', value: 'uxDesign'},
-          {title: 'Full stack', value: 'fullStack'},
+          {title: 'Web development', value: 'Web development'},
+          {title: 'UI/UX Design', value: 'UI/UX Design'},
+          {title: 'Full stack', value: 'Full stack'},
+          {title: 'Extension', value: 'Extension'},
         ],
         layout: 'grid',
       },

@@ -12,6 +12,7 @@ interface props {
   imgClassName?: string;
   fadeUp?: boolean;
   quality?: number;
+  blurDataURL?: string;
   objectFit?:
     | "contain"
     | "cover"
@@ -34,6 +35,7 @@ const ImageTag = ({
   imgClassName = "",
   quality,
   objectFit,
+  blurDataURL,
 }: props): JSX.Element => {
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -52,6 +54,8 @@ const ImageTag = ({
         priority={priority}
         objectFit={objectFit || undefined}
         onLoad={() => setIsLoaded(true)}
+        placeholder={blurDataURL ? "blur" : "empty"}
+        blurDataURL={blurDataURL}
       />
     </div>
   );

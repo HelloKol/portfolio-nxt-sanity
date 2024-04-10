@@ -6,6 +6,7 @@ const nextConfig = {
       "localhost",
       "secure-beyond-53875-586b6a225685.herokuapp.com",
       "res.cloudinary.com",
+      "cdn.sanity.io",
     ],
   },
 };

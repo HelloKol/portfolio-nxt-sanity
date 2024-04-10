@@ -1,0 +1,82 @@
+@import "../../styles/base/variables";
+@import "../../styles/mixins/mixins";
+
+// ==========================================================================
+// Global
+// ==========================================================================
+.heroSection {
+  &.darkMode {
+    .title {
+      color: $white;
+    }
+  }
+  &.lightMode {
+    .title {
+      color: $black;
+    }
+  }
+  .title {
+    text-transform: uppercase;
+    span {
+      display: block;
+    }
+    .titleCenter {
+      text-align: center;
+    }
+    .titleRight {
+      text-align: right;
+    }
+  }
+}
+
+// ==========================================================================
+// Mobile
+// ==========================================================================
+@media (min-width: $breakMobile) {
+  .heroSection {
+    padding: 100px 0 0 0;
+    .title {
+      font-size: 17vw;
+      line-height: 17vw;
+    }
+  }
+}
+
+// ==========================================================================
+// Mobile Large
+// ==========================================================================
+@media (min-width: $breakMobileLarge) {
+}
+
+// ==========================================================================
+// Tablet
+// ==========================================================================
+@media (min-width: $breakTablet) {
+  .heroSection {
+    .title {
+      @include type-setting-responsive(50, 10, 100);
+    }
+  }
+}
+
+// ==========================================================================
+// Desktop
+// ==========================================================================
+@media (min-width: $breakDesktop) {
+  .heroSection {
+    .title {
+      @include type-setting-responsive(50, 10, 255);
+    }
+  }
+}
+
+// ==========================================================================
+// Desktop Large
+// ==========================================================================
+@media (min-width: $breakDesktopLarge) {
+  .heroSection {
+    .title {
+      @include type-setting-responsive(50, 10, 255);
+    }
+  }
+}
