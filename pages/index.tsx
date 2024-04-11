@@ -96,7 +96,7 @@ export const getStaticProps: GetStaticProps = async () => {
             }
           }
         }
-      }`);
+    }`);
 
     // render the 404 if there is an api error
     if (!page) {

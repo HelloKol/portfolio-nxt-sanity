@@ -1,12 +1,23 @@
+import { PortableTextBlock } from "@portabletext/types";
+
 export interface Project {
   _id: string;
   title: string;
+  excerpt: PortableTextBlock;
   slug: {
     current: string;
   };
   createdDate: string;
   type: string[];
   tools: string[];
+  color: {
+    value: string;
+  };
+  cta: {
+    title: string;
+    url: string;
+    _type: string;
+  };
   coverImage: {
     _type: string;
     asset: {

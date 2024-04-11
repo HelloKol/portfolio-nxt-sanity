@@ -1,5 +1,5 @@
 import React from "react";
-import Head from "next/head";
+import { PortableText } from "@portabletext/react";
 import { GetStaticPaths, GetStaticPropsResult } from "next/types";
 import ReactMarkdown from "react-markdown";
 import { Button, Container, Grid, ImageTag, Main, Section } from "@/components";
@@ -12,64 +12,66 @@ import {
 import { Project, SEO } from "@/types";
 import { apolloClient } from "@/utils";
 import styles from "./styles.module.scss";
+import { sanityClient } from "@/lib";
+import groq from "groq";
 
 interface Page {
   page: Project;
-  Projects: Project[];
+  work: Project[];
 }
 
-export default function Project({ page, Projects }: Page): JSX.Element | null {
+export default function Page({ page, work }: Page): JSX.Element | null {
   if (!page) return null;
   const { theme } = useTheme();
-  const { attributes } = page;
   const {
-    Title,
+    title,
+    excerpt,
     slug,
-    BodyCopy,
-    ProjectCreated,
-    Tags,
-    Tools,
-    CtaProjectTitle,
-    CtaProjectLink,
-    CtaCodeTitle,
-    CtaCodeLink,
-    Thumbnail,
-    FeatureImage,
-  } = attributes;
+    // body,
+    createdDate,
+    tools,
+    type,
+    cta,
+    coverImage,
+    featuredImage,
+  } = page;
   const isDarkMode = theme === "dark-theme";
-  const currentIndex = Projects.findIndex(
-    (item) => item.attributes.slug === slug
+  const currentIndex = work.findIndex(
+    (item) => item.slug.current === slug.current
   );
-  const nextIndex = currentIndex < Projects.length - 1 ? currentIndex + 1 : 0;
+  const nextIndex = currentIndex < work.length - 1 ? currentIndex + 1 : 0;
 
-  const renderFeatureImage = () =>
-    FeatureImage &&
-    FeatureImage.data.map((item, index) => {
-      const { attributes } = item;
+  console.log("page", page);
 
-      return (
-        <div key={index} className={styles.projectImage}>
-          {attributes && (
-            <ImageTag
-              src={`${attributes.url}`}
-              alt="project Image"
-              layout="responsive"
-              width={1000}
-              height={1000}
-              quality={100}
-            />
-          )}
-        </div>
-      );
-    });
+  const renderCta = (cta: any) => {
+    if (!cta) return null;
+
+    return cta.map(
+      (
+        item: {
+          title: string;
+          url: string;
+        },
+        index: number
+      ) => {
+        return (
+          <Button
+            key={index}
+            className={styles.visitProjectLink}
+            href={`${item.url}`}
+            variant="primary"
+            newTab
+            withSvg
+          >
+            {item.title}
+          </Button>
+        );
+      }
+    );
+  };
 
   return (
     <>
-      <Head>
-        <title>{Title}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <Main>
         <Section
           className={`${styles.section} ${
@@ -77,18 +79,19 @@ export default function Project({ page, Projects }: Page): JSX.Element | null {
           }`}
         >
           <Container className={styles.container} isFluid={false}>
-            {Title && <h1 className={styles.title}>{Title}</h1>}
+            {title && <h1 className={styles.title}>{title}</h1>}
           </Container>
 
-          {Thumbnail && (
+          {coverImage && (
             <div className={styles.thumbmailImage}>
               <ImageTag
-                src={`${Thumbnail?.data?.attributes?.url}`}
+                src={`${coverImage?.asset?.url}`}
                 alt="project Image"
                 layout="fill"
                 objectFit="cover"
                 quality={100}
                 priority={true}
+                blurDataURL={coverImage?.asset?.metadata?.lqip}
               />
             </div>
           )}
@@ -96,26 +99,26 @@ export default function Project({ page, Projects }: Page): JSX.Element | null {
           <Container className={styles.containerProjectInfo} isFluid={false}>
             <Grid>
               <div className={styles.projectInfo}>
-                {ProjectCreated && (
+                {createdDate && (
                   <>
                     <span className={styles.redInfo}>DATE</span>
-                    <span className={styles.whiteInfo}> {ProjectCreated}</span>
+                    <span className={styles.whiteInfo}> {createdDate}</span>
                   </>
                 )}
-                {Tags && (
+                {type && (
                   <>
                     <span className={styles.redInfo}>ROLE</span>
-                    {Tags.map((item, index) => (
+                    {type.map((item, index) => (
                       <span key={index} className={styles.whiteInfo}>
                         {item}
                       </span>
                     ))}
                   </>
                 )}
-                {Tools && (
+                {tools && (
                   <>
                     <span className={styles.redInfo}>TOOLS</span>
-                    {Tools.map((item, index) => (
+                    {tools.map((item, index) => (
                       <span key={index} className={styles.whiteInfo}>
                         {item}
                       </span>
@@ -124,11 +127,13 @@ export default function Project({ page, Projects }: Page): JSX.Element | null {
                 )}
               </div>
 
-              <article className={styles.bodyCopy}>
-                <ReactMarkdown>{BodyCopy}</ReactMarkdown>
-              </article>
+              {excerpt && (
+                <article className={styles.bodyCopy}>
+                  <PortableText value={excerpt} />
+                </article>
+              )}
 
-              <div className={styles.btnWrap}>
+              {/* <div className={styles.btnWrap}>
                 {CtaProjectLink && (
                   <Button
                     className={styles.visitProjectLink}
@@ -152,9 +157,22 @@ export default function Project({ page, Projects }: Page): JSX.Element | null {
                     {CtaCodeTitle}
                   </Button>
                 )}
-              </div>
+              </div> */}
 
-              {renderFeatureImage()}
+              <div className={styles.projectImage}>
+                {featuredImage && (
+                  <ImageTag
+                    src={`${featuredImage?.asset?.url}`}
+                    alt="project Image"
+                    layout="responsive"
+                    width={1000}
+                    height={1000}
+                    quality={100}
+                    priority={true}
+                    blurDataURL={featuredImage?.asset?.metadata?.lqip}
+                  />
+                )}
+              </div>
 
               <div className={styles.nextProjectWrapper}>
                 <div className={styles.divider} />
@@ -162,10 +180,10 @@ export default function Project({ page, Projects }: Page): JSX.Element | null {
                 {nextIndex !== null && (
                   <Button
                     className={styles.nextProjectLink}
-                    href={`/projects/${Projects[nextIndex].attributes.slug}`}
+                    href={`/projects/${work[nextIndex].slug.current}`}
                     variant="text"
                   >
-                    {Projects[nextIndex].attributes.Title}
+                    {work[nextIndex].title}
                   </Button>
                 )}
               </div>
@@ -178,10 +196,13 @@ export default function Project({ page, Projects }: Page): JSX.Element | null {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { data } = await apolloClient.query({ query: ALL_PROJECT_QUERY });
+  let work = await sanityClient.fetch(groq`
+  *[_type == "work" && !(_id in path('drafts.**'))] {
+      slug,
+  }`);
 
-  const paths = data.projects.data.map((project: any) => {
-    return { params: { slug: project.attributes.slug } };
+  const paths = work.map((project: Project) => {
+    return { params: { slug: project.slug.current } };
   });
 
   return {
@@ -201,31 +222,80 @@ export async function getStaticProps({
 }: pathParams): Promise<GetStaticPropsResult<Page>> {
   const { slug } = params;
 
-  const { data } = await apolloClient.query({
-    query: SINGLE_PROJECT_QUERY,
-    variables: { slugUrl: slug },
-  });
+  let page = await sanityClient.fetch(
+    groq`
+    *[_type == "work" && slug.current == $slug && !(_id in path('drafts.**'))][0] {
+      _id,
+      title,
+      excerpt,
+      body,
+      slug,
+      createdDate,
+      type,
+      tools,
+      coverImage {
+        _type,
+        asset->{
+          _id,
+          url,
+          metadata{
+            lqip
+          }
+        }
+      },
+      featuredImage {
+        _type,
+        asset->{
+          _id,
+          url,
+          metadata{
+            lqip
+          }
+        }
+      },
+      cta[] {
+        _type,
+        title,
+        url
+      },
+      seo {
+        ...,
+        image {
+          _type,
+          asset->{
+            _id,
+            url,
+            metadata{
+              lqip
+            }
+          }
+        }
+      }
+    }`,
+    {
+      slug,
+    }
+  );
 
-  const { data: projects } = await apolloClient.query({
-    query: ALL_PROJECT_QUERY,
-  });
+  let work = await sanityClient.fetch(groq`
+  *[_type == "work" && !(_id in path('drafts.**'))] {
+    title,
+    slug,
+  }`);
 
   // render the 404 if there is an api error
-  if (!data)
+  if (!page)
     return {
       notFound: true,
     };
 
-  let page = data.projects.data[0];
   page = JSON.parse(JSON.stringify(page));
-
-  let Projects = projects.projects.data;
-  Projects = JSON.parse(JSON.stringify(Projects));
+  work = JSON.parse(JSON.stringify(work));
 
   return {
     props: {
       page,
-      Projects,
+      work,
     },
     revalidate: 30,
   };

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Image from "next/image";
 import styles from "./styles.module.scss";
 
@@ -37,14 +36,10 @@ const ImageTag = ({
   objectFit,
   blurDataURL,
 }: props): JSX.Element => {
-  const [isLoaded, setIsLoaded] = useState(false);
-
   return (
     <div className={`${styles.imageWrap}`}>
       <Image
-        className={`${imgClassName || ""} ${styles.imageTag} ${
-          isLoaded && styles.active
-        }`}
+        className={`${imgClassName || ""} ${styles.imageTag}`}
         src={src}
         alt={alt || ""}
         layout={layout}
@@ -53,7 +48,6 @@ const ImageTag = ({
         quality={quality || 100}
         priority={priority}
         objectFit={objectFit || undefined}
-        onLoad={() => setIsLoaded(true)}
         placeholder={blurDataURL ? "blur" : "empty"}
         blurDataURL={blurDataURL}
       />

@@ -17,38 +17,37 @@ import { ALL_PROJECT_QUERY, WORK_QUERY } from "@/services/queries";
 import { Project, SEO } from "@/types";
 import { apolloClient } from "@/utils";
 import styles from "./styles.module.scss";
+import { sanityClient } from "@/lib";
+import groq from "groq";
 
 interface Page {
   page: {
-    Title: string;
-    Projects: Project[];
+    title: string;
     seo: SEO;
   };
+  work: Project[];
 }
 
-export default function Projects({ page }: Page): JSX.Element | null {
+export default function Projects({ page, work }: Page): JSX.Element | null {
   if (!page) return null;
   const { theme } = useTheme();
   const { projectFilterTag, setProjectFilterTag } = useContext(Context);
   const { isMobile, isMobileLarge, isTablet } = useWindowDimension();
-  const { Title, Projects, seo } = page;
+  const { title, seo } = page;
   const isDarkMode = theme === "dark-theme";
 
-  const filteredData = Projects.filter(
-    (item) =>
-      item?.attributes?.Tags &&
-      item.attributes.Tags.some((tag) =>
-        tag.toLowerCase().includes(projectFilterTag.toLocaleLowerCase())
-      )
-  );
+  console.log("page", page, work);
+
+  // const filteredData = Projects.filter(
+  //   (item) =>
+  //     item?.attributes?.Tags &&
+  //     item.attributes.Tags.some((tag) =>
+  //       tag.toLowerCase().includes(projectFilterTag.toLocaleLowerCase())
+  //     )
+  // );
 
   return (
     <>
-      <Head>
-        <title>{seo.metaTitle || Title}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <Main>
         <Section
           className={`${styles.section} ${
@@ -57,13 +56,13 @@ export default function Projects({ page }: Page): JSX.Element | null {
         >
           <Container isFluid={false}>
             <Grid>
-              {Title && (
+              {title && (
                 <h1
                   className={`${styles.title} ${
                     isDarkMode ? styles.darkMode : styles.lightMode
                   }`}
                 >
-                  {Title}
+                  {title}
                 </h1>
               )}
               <div className={styles.filterWrap}>
@@ -113,42 +112,41 @@ export default function Projects({ page }: Page): JSX.Element | null {
               </div>
               {isMobile || isMobileLarge || isTablet ? (
                 <ul className={styles.projectFeedMobile}>
-                  {filteredData.map((item, index) => {
-                    const { attributes } = item;
-                    const { Title, TitleColor, slug, Tags, Thumbnail } =
-                      attributes;
+                  {work.map((item, index) => {
+                    const { title, color, slug, tools, coverImage } = item;
 
                     return (
                       <Link
                         key={index}
-                        href={`/projects/${slug}`}
+                        href={`/projects/${slug.current}`}
                         className={styles.projectItem}
                       >
-                        {Thumbnail && (
+                        {coverImage && (
                           <div className={styles.thumbmailImage}>
                             <ImageTag
-                              src={`${Thumbnail?.data?.attributes?.url}`}
+                              src={`${coverImage?.asset?.url}`}
                               alt="project Image"
                               layout="fill"
                               objectFit="cover"
                               quality={100}
+                              blurDataURL={coverImage?.asset?.metadata?.lqip}
                             />
                           </div>
                         )}
                         <div className={styles.projectTitleWrap}>
-                          {Title && (
+                          {title && (
                             <h1
                               className={styles.projectTitle}
                               style={{
-                                color: TitleColor,
+                                color: color.value,
                               }}
                             >
-                              {Title}
+                              {title}
                             </h1>
                           )}
                           <div className={styles.projectTags}>
-                            {Tags &&
-                              Tags.map((item, index) => {
+                            {tools &&
+                              tools.map((item, index) => {
                                 return <p key={index}>{item}</p>;
                               })}
                           </div>
@@ -160,38 +158,38 @@ export default function Projects({ page }: Page): JSX.Element | null {
               ) : (
                 <ul className={styles.projectFeedDesktop}>
                   <Grid>
-                    {filteredData.map((item: any, index: any) => {
-                      const { attributes } = item;
-                      const { Title, TitleColor, slug, Thumbnail } = attributes;
+                    {work.map((item: any, index: any) => {
+                      const { title, color, slug, tools, coverImage } = item;
 
                       return (
                         <Link
                           key={index}
-                          href={`/projects/${slug}`}
+                          href={`/projects/${slug.current}`}
                           className={styles.projectItem}
                         >
-                          {Thumbnail && (
+                          {coverImage && (
                             <div className={styles.thumbmailImage}>
                               <div className={styles.overlay}>
                                 <span>View project</span>
                               </div>
                               <ImageTag
-                                src={`${Thumbnail?.data?.attributes?.url}`}
+                                src={`${coverImage?.asset?.url}`}
                                 alt="project Image"
                                 layout="fill"
                                 objectFit="cover"
                                 quality={100}
+                                blurDataURL={coverImage?.asset?.metadata?.lqip}
                               />
                             </div>
                           )}
-                          {Title && (
+                          {title && (
                             <h1
                               className={styles.projectTitle}
                               style={{
-                                color: TitleColor,
+                                color: color.value,
                               }}
                             >
-                              {Title}
+                              {title}
                             </h1>
                           )}
                         </Link>
@@ -211,35 +209,69 @@ export default function Projects({ page }: Page): JSX.Element | null {
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    const { data: pageData } = await apolloClient.query({
-      query: WORK_QUERY,
-    });
+    let page = await sanityClient.fetch(groq`
+      *[_type == "work.index" && !(_id in path('drafts.**'))][0] {
+          title,
+          seo {
+            ...,
+            image {
+              _type,
+              asset->{
+                _id,
+                url,
+                metadata{
+                  lqip
+                }
+              }
+            }
+          }
+      }`);
 
-    const { data } = await apolloClient.query({
-      query: ALL_PROJECT_QUERY,
-    });
+    let work = await sanityClient.fetch(groq`
+    *[_type == "work" && !(_id in path('drafts.**'))] {
+        _id,
+        title,
+        slug,
+        tools,
+        color,
+        coverImage {
+          _type,
+          asset->{
+            _id,
+            url,
+            metadata{
+              lqip
+            }
+          }
+        },
+        seo {
+          ...,
+          image {
+            _type,
+            asset->{
+              _id,
+              url,
+              metadata{
+                lqip
+              }
+            }
+          }
+        }
+    }`);
 
     // render the 404 if there is no page in cms
-    if (!pageData)
+    if (!page)
       return {
         notFound: true,
       };
 
-    let page = pageData.work.data.attributes;
     page = JSON.parse(JSON.stringify(page));
-    const Title = page.Title;
-    const seo = page.seo;
-
-    let Projects = data.projects.data;
-    Projects = JSON.parse(JSON.stringify(Projects));
+    work = JSON.parse(JSON.stringify(work));
 
     return {
       props: {
-        page: {
-          Title,
-          Projects,
-          seo,
-        },
+        page,
+        work,
       },
     };
   } catch (err) {
