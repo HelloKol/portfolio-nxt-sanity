@@ -9,8 +9,10 @@ interface Props {
     title: string;
     cta: {
       title: string;
-      url: string;
       _type: string;
+      content: {
+        slug: string;
+      };
     };
     workList: Project[];
   };
@@ -19,6 +21,8 @@ interface Props {
 const WorkSection = ({ data }: Props): JSX.Element | null => {
   const { theme } = useTheme();
   const isDarkMode = theme === "dark-theme";
+
+  console.log(data);
 
   if (!data) return null;
   const { title, cta, workList } = data;

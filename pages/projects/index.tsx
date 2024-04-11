@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { GetStaticProps } from "next";
 import Link from "next/link";
-import Head from "next/head";
+import groq from "groq";
 import {
   Container,
   Grid,
@@ -13,12 +13,9 @@ import {
 import { Context } from "@/contexts/Context";
 import { useWindowDimension } from "@/hooks";
 import { useTheme } from "@/providers";
-import { ALL_PROJECT_QUERY, WORK_QUERY } from "@/services/queries";
 import { Project, SEO } from "@/types";
-import { apolloClient } from "@/utils";
-import styles from "./styles.module.scss";
 import { sanityClient } from "@/lib";
-import groq from "groq";
+import styles from "./styles.module.scss";
 
 interface Page {
   page: {

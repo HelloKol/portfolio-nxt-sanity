@@ -1,2 +1,1 @@
-export { apolloClient } from "./apollo";
-export { queryClient } from "./reactQuery";
+export { env } from "./env";

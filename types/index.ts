@@ -17,7 +17,7 @@ export interface Project {
     title: string;
     url: string;
     _type: string;
-  };
+  }[];
   coverImage: {
     _type: string;
     asset: {

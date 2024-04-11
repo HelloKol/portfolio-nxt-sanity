@@ -1,6 +1,7 @@
 export { default as AboutSection } from "./AboutSection";
 export { default as Button } from "./Button";
 export { default as Circles } from "./Circles";
+export { default as ContactForm } from "./ContactForm";
 export { default as Container } from "./Container";
 export { default as Cursor } from "./Cursor";
 export { default as Grid } from "./Grid";

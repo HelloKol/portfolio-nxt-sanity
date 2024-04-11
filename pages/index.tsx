@@ -19,8 +19,10 @@ interface Page {
       title: string;
       cta: {
         title: string;
-        url: string;
         _type: string;
+        content: {
+          slug: string;
+        };
       };
       workList: Project[];
     };
@@ -59,11 +61,11 @@ export const getStaticProps: GetStaticProps = async () => {
         workSection {
           title,
           cta {
-            _type,
             title,
-            content-> {
-              "slug": *[_id == ^.reference._ref][0].slug,
-            },
+            _type,
+            content -> {
+              slug
+            }
           },
           workList[]->{
             _id,

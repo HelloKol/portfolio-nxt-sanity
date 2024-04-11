@@ -1,5 +1,5 @@
 import sanityClient from "@sanity/client";
-import { env } from "./env";
+import { env } from "@/utils";
 
 // Initialize Sanity client
 const client = sanityClient({

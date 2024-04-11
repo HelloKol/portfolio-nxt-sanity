@@ -1,17 +1,13 @@
 import React from "react";
-import Head from "next/head";
+import { GetStaticProps } from "next";
 import { PortableText } from "@portabletext/react";
 import { PortableTextBlock } from "@portabletext/types";
-import { GetStaticProps } from "next";
-import ReactMarkdown from "react-markdown";
+import groq from "groq";
 import { Container, ImageTag, Main, Section, Button } from "@/components";
 import { useTheme } from "@/providers";
-import { ABOUT_QUERY } from "@/services/queries";
-import { SEO, SingleMedia } from "@/types";
-import { apolloClient } from "@/utils";
-import styles from "./styles.module.scss";
-import groq from "groq";
+import { SEO } from "@/types";
 import { sanityClient } from "@/lib";
+import styles from "./styles.module.scss";
 
 interface Page {
   page: {

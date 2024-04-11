@@ -11,6 +11,10 @@ export default defineType({
       default: true,
     },
     {
+      name: 'contactForm',
+      title: 'Contact Form',
+    },
+    {
       name: 'seo',
       title: 'SEO',
     },
@@ -22,6 +26,24 @@ export default defineType({
       type: 'string',
       group: 'content',
     }),
+    {
+      name: 'contactForm',
+      type: 'document',
+      fields: [
+        defineField({
+          name: 'title',
+          title: 'Title',
+          type: 'string',
+        }),
+        defineField({
+          name: 'successMessage',
+          title: 'Success Message',
+          type: 'text',
+          rows: 4,
+        }),
+      ],
+      group: 'contactForm',
+    },
     defineField({
       name: 'slug',
       title: 'Slug',

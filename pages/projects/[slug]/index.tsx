@@ -1,22 +1,15 @@
 import React from "react";
-import { PortableText } from "@portabletext/react";
 import { GetStaticPaths, GetStaticPropsResult } from "next/types";
-import ReactMarkdown from "react-markdown";
+import { PortableText } from "@portabletext/react";
+import groq from "groq";
 import { Button, Container, Grid, ImageTag, Main, Section } from "@/components";
 import { useTheme } from "@/providers";
-import {
-  ALL_PROJECT_QUERY,
-  SINGLE_PROJECT_QUERY,
-  WORK_QUERY,
-} from "@/services/queries";
 import { Project, SEO } from "@/types";
-import { apolloClient } from "@/utils";
-import styles from "./styles.module.scss";
 import { sanityClient } from "@/lib";
-import groq from "groq";
+import styles from "./styles.module.scss";
 
 interface Page {
-  page: Project;
+  page: Project & SEO;
   work: Project[];
 }
 
@@ -27,7 +20,6 @@ export default function Page({ page, work }: Page): JSX.Element | null {
     title,
     excerpt,
     slug,
-    // body,
     createdDate,
     tools,
     type,
@@ -41,9 +33,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
   );
   const nextIndex = currentIndex < work.length - 1 ? currentIndex + 1 : 0;
 
-  console.log("page", page);
-
-  const renderCta = (cta: any) => {
+  const renderCta = () => {
     if (!cta) return null;
 
     return cta.map(
@@ -57,7 +47,6 @@ export default function Page({ page, work }: Page): JSX.Element | null {
         return (
           <Button
             key={index}
-            className={styles.visitProjectLink}
             href={`${item.url}`}
             variant="primary"
             newTab
@@ -133,31 +122,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
                 </article>
               )}
 
-              {/* <div className={styles.btnWrap}>
-                {CtaProjectLink && (
-                  <Button
-                    className={styles.visitProjectLink}
-                    href={`${CtaProjectLink}`}
-                    variant="primary"
-                    newTab
-                    withSvg
-                  >
-                    {CtaProjectTitle}
-                  </Button>
-                )}
-
-                {CtaCodeLink && (
-                  <Button
-                    className={styles.visitCodeLink}
-                    href={`${CtaCodeLink}`}
-                    variant="primary"
-                    newTab
-                    withSvg
-                  >
-                    {CtaCodeTitle}
-                  </Button>
-                )}
-              </div> */}
+              <div className={styles.btnWrap}>{renderCta()}</div>
 
               <div className={styles.projectImage}>
                 {featuredImage && (
