@@ -135,7 +135,7 @@ export default defineType({
       ],
       options: {
         list: [
-          {title: 'Web development', value: 'Web development'},
+          {title: 'Web development', value: 'Web Development'},
           {title: 'UI/UX Design', value: 'UI/UX Design'},
           {title: 'Full stack', value: 'Full stack'},
           {title: 'Extension', value: 'Extension'},

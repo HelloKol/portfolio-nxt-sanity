@@ -12,6 +12,7 @@ export default function Button({
   newTab,
   onClick,
   download,
+  disabled,
   ...rest
 }: {
   children: React.ReactNode | React.ReactNode[];
@@ -22,6 +23,7 @@ export default function Button({
   href?: string;
   newTab?: boolean;
   download?: boolean;
+  disabled?: boolean;
   onClick?: () => void;
   rest?: any;
 }) {
@@ -62,6 +64,7 @@ export default function Button({
         isDarkMode ? styles.darkMode : styles.lightMode
       } ${styles[variant]}`}
       type={type}
+      disabled={disabled}
       onClick={onClick}
       {...rest}
     >

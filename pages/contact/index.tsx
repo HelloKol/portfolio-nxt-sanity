@@ -8,7 +8,6 @@ import { useTheme } from "@/providers";
 import { SEO } from "@/types";
 import { sanityClient } from "@/lib";
 import styles from "./styles.module.scss";
-import { env } from "@/utils";
 
 interface Props {
   page: {
@@ -83,7 +82,7 @@ export default function Page({ page }: Props): JSX.Element | null {
           }`}
         >
           <Container isFluid={false}>
-            {title && <h1 className={styles.title}>{title}</h1>}{" "}
+            {title && <h1 className={styles.title}>{title}</h1>}
           </Container>
 
           <ContactForm data={contactForm} />
@@ -91,7 +90,7 @@ export default function Page({ page }: Props): JSX.Element | null {
           <div className={styles.googleMapwrapper}>
             <GoogleMapReact
               bootstrapURLKeys={{
-                key: env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY,
+                key: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY,
               }}
               defaultCenter={defaultProps.center}
               defaultZoom={defaultProps.zoom}
