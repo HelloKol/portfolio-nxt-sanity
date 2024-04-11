@@ -46,6 +46,15 @@ export default defineType({
       group: 'content',
     }),
     defineField({
+      name: 'featuredImage',
+      title: 'Featured image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      group: 'content',
+    }),
+    defineField({
       name: 'skillsTitle',
       title: 'Skills Title',
       type: 'string',

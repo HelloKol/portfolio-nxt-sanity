@@ -1,5 +1,7 @@
 import React from "react";
 import Head from "next/head";
+import { PortableText } from "@portabletext/react";
+import { PortableTextBlock } from "@portabletext/types";
 import { GetStaticProps } from "next";
 import ReactMarkdown from "react-markdown";
 import { Container, ImageTag, Main, Section, Button } from "@/components";
@@ -8,15 +10,26 @@ import { ABOUT_QUERY } from "@/services/queries";
 import { SEO, SingleMedia } from "@/types";
 import { apolloClient } from "@/utils";
 import styles from "./styles.module.scss";
+import groq from "groq";
+import { sanityClient } from "@/lib";
 
 interface Page {
   page: {
-    Title: string;
-    Name: string;
-    Description: string;
-    FeatureImage: SingleMedia;
-    SkillsTitle: string;
-    Skills: string[];
+    title: string;
+    name: string;
+    body: PortableTextBlock;
+    featuredImage: {
+      _type: string;
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string;
+        };
+      };
+    };
+    skillsTitle: string;
+    skills: string[];
     seo: SEO;
   };
 }
@@ -24,13 +37,12 @@ interface Page {
 export default function About({ page }: Page): JSX.Element | null {
   if (!page) return null;
   const { theme } = useTheme();
-  const { Title, Name, Description, FeatureImage, SkillsTitle, Skills, seo } =
-    page;
+  const { title, name, body, featuredImage, skillsTitle, skills, seo } = page;
   const isDarkMode = theme === "dark-theme";
 
   const renderSkills = () =>
-    Skills &&
-    Skills.map((item: string, index: number) => (
+    skills &&
+    skills.map((item: string, index: number) => (
       <li key={index} className={styles.skillItem}>
         <div className={styles.bubble}>{item}</div>
       </li>
@@ -38,11 +50,6 @@ export default function About({ page }: Page): JSX.Element | null {
 
   return (
     <>
-      <Head>
-        <title>{seo.metaTitle || Title}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <Main>
         <Section
           className={`${styles.section} ${
@@ -51,24 +58,25 @@ export default function About({ page }: Page): JSX.Element | null {
         >
           <Container isFluid={false}>
             <div className={styles.left}>
-              {FeatureImage?.data?.attributes?.url && (
+              {featuredImage && (
                 <div className={styles.imageWrapper}>
                   <ImageTag
-                    src={`${FeatureImage.data.attributes.url}`}
+                    src={`${featuredImage?.asset?.url}`}
                     alt="Background Image"
                     layout="fill"
                     objectFit="cover"
                     priority={true}
                     quality={100}
+                    blurDataURL={featuredImage?.asset?.metadata?.lqip}
                   />
                 </div>
               )}
             </div>
             <div className={styles.right}>
-              {Description && (
+              {body && (
                 <article className={styles.bodyCopy}>
-                  {Name && <h3>{Name}</h3>}
-                  <ReactMarkdown>{Description}</ReactMarkdown>
+                  {name && <h3>{name}</h3>}
+                  <PortableText value={body} />
                 </article>
               )}
               <Button
@@ -86,8 +94,8 @@ export default function About({ page }: Page): JSX.Element | null {
                   </g>
                 </svg>
               </Button>
-              {SkillsTitle && (
-                <p className={styles.skillsTitle}>{SkillsTitle}</p>
+              {skillsTitle && (
+                <p className={styles.skillsTitle}>{skillsTitle}</p>
               )}
               <ul className={styles.skills}>{renderSkills()}</ul>
             </div>
@@ -100,18 +108,45 @@ export default function About({ page }: Page): JSX.Element | null {
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    const { data } = await apolloClient.query({
-      query: ABOUT_QUERY,
-    });
+    let page = await sanityClient.fetch(groq`
+      *[_type == "about" && !(_id in path('drafts.**'))][0] {
+          title,
+          name,
+          body,
+          featuredImage {
+            _type,
+            asset->{
+              _id,
+              url,
+              metadata{
+                lqip
+              }
+            }
+          },
+          skillsTitle,
+          skills,
+          seo {
+            ...,
+            image {
+              _type,
+              asset->{
+                _id,
+                url,
+                metadata{
+                  lqip
+                }
+              }
+            }
+          }
+    }`);
 
     // render the 404 if there is an api error
-    if (!data) {
+    if (!page) {
       return {
         notFound: true,
       };
     }
 
-    let page = data.about.data.attributes;
     page = JSON.parse(JSON.stringify(page));
 
     return {
