@@ -11,6 +11,7 @@ export { default as Main } from "./Main";
 export { default as NavDraw } from "./NavDraw";
 export { default as ProjectFilter } from "./ProjectFilter";
 export { default as Section } from "./Section";
+export { default as Seo } from "./Seo";
 export { default as SiteFooter } from "./SiteFooter";
 export { default as SiteHeader } from "./SiteHeader";
 export { default as WorkSection } from "./WorkSection";

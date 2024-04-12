@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
-import { SiteFooter } from "..";
+import { SiteFooter, SiteHeader } from "@/components";
 import { useTheme } from "@/providers";
 
 type props = {
-  children: any;
+  children: React.ReactNode | React.ReactNode[];
 };
 
 export default function Layout({ children }: props) {
@@ -14,6 +14,7 @@ export default function Layout({ children }: props) {
 
   return (
     <div className={`${theme} app`}>
+      <SiteHeader />
       {children}
       {!isFooterHidden && <SiteFooter />}
     </div>

@@ -2,14 +2,24 @@ import React from "react";
 import { GetStaticPaths, GetStaticPropsResult } from "next/types";
 import { PortableText } from "@portabletext/react";
 import groq from "groq";
-import { Button, Container, Grid, ImageTag, Main, Section } from "@/components";
+import {
+  Button,
+  Container,
+  Grid,
+  ImageTag,
+  Main,
+  Section,
+  Seo,
+} from "@/components";
 import { useTheme } from "@/providers";
 import { Project, SEO } from "@/types";
 import { sanityClient } from "@/lib";
 import styles from "./styles.module.scss";
 
 interface Page {
-  page: Project & SEO;
+  page: Project & {
+    seo: SEO;
+  };
   work: Project[];
 }
 
@@ -26,6 +36,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
     cta,
     coverImage,
     featuredImage,
+    seo,
   } = page;
   const isDarkMode = theme === "dark-theme";
   const currentIndex = work.findIndex(
@@ -61,6 +72,8 @@ export default function Page({ page, work }: Page): JSX.Element | null {
 
   return (
     <>
+      <Seo seo={seo} />
+
       <Main>
         <Section
           className={`${styles.section} ${

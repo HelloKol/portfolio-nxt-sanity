@@ -2,7 +2,13 @@ import React from "react";
 import { GetStaticProps } from "next/types";
 import { PortableTextBlock } from "@portabletext/types";
 import groq from "groq";
-import { AboutSection, HeroSection, Main, WorkSection } from "@/components";
+import {
+  AboutSection,
+  HeroSection,
+  Main,
+  WorkSection,
+  Seo,
+} from "@/components";
 import { sanityClient } from "@/lib";
 import { Project, SEO } from "@/types";
 
@@ -38,6 +44,8 @@ export default function Home({ page }: Page): JSX.Element | null {
 
   return (
     <>
+      <Seo seo={seo} />
+
       <Main>
         <HeroSection data={heroSection} />
 

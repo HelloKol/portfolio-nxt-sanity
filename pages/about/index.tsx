@@ -3,7 +3,7 @@ import { GetStaticProps } from "next";
 import { PortableText } from "@portabletext/react";
 import { PortableTextBlock } from "@portabletext/types";
 import groq from "groq";
-import { Container, ImageTag, Main, Section, Button } from "@/components";
+import { Container, ImageTag, Main, Section, Button, Seo } from "@/components";
 import { useTheme } from "@/providers";
 import { SEO } from "@/types";
 import { sanityClient } from "@/lib";
@@ -33,7 +33,7 @@ interface Page {
 export default function About({ page }: Page): JSX.Element | null {
   if (!page) return null;
   const { theme } = useTheme();
-  const { title, name, body, featuredImage, skillsTitle, skills, seo } = page;
+  const { name, body, featuredImage, skillsTitle, skills, seo } = page;
   const isDarkMode = theme === "dark-theme";
 
   const renderSkills = () =>
@@ -46,6 +46,8 @@ export default function About({ page }: Page): JSX.Element | null {
 
   return (
     <>
+      <Seo seo={seo} />
+
       <Main>
         <Section
           className={`${styles.section} ${

@@ -9,6 +9,7 @@ import {
   Main,
   ProjectFilter,
   Section,
+  Seo,
 } from "@/components";
 import { Context } from "@/contexts/Context";
 import { useWindowDimension } from "@/hooks";
@@ -33,18 +34,18 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
   const { title, seo } = page;
   const isDarkMode = theme === "dark-theme";
 
-  console.log("page", page, work);
-
-  // const filteredData = Projects.filter(
-  //   (item) =>
-  //     item?.attributes?.Tags &&
-  //     item.attributes.Tags.some((tag) =>
-  //       tag.toLowerCase().includes(projectFilterTag.toLocaleLowerCase())
-  //     )
-  // );
+  const filteredData = work.filter(
+    (item) =>
+      item?.type &&
+      item.type.some((type) =>
+        type.toLowerCase().includes(projectFilterTag.toLocaleLowerCase())
+      )
+  );
 
   return (
     <>
+      <Seo seo={seo} />
+
       <Main>
         <Section
           className={`${styles.section} ${
@@ -109,7 +110,7 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
               </div>
               {isMobile || isMobileLarge || isTablet ? (
                 <ul className={styles.projectFeedMobile}>
-                  {work.map((item, index) => {
+                  {filteredData.map((item, index) => {
                     const { title, color, slug, tools, coverImage } = item;
 
                     return (
@@ -155,7 +156,7 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
               ) : (
                 <ul className={styles.projectFeedDesktop}>
                   <Grid>
-                    {work.map((item: any, index: any) => {
+                    {filteredData.map((item: any, index: any) => {
                       const { title, color, slug, tools, coverImage } = item;
 
                       return (
@@ -230,6 +231,7 @@ export const getStaticProps: GetStaticProps = async () => {
         title,
         slug,
         tools,
+        type,
         color,
         coverImage {
           _type,

@@ -59,18 +59,13 @@ export interface MultiMedia {
 }
 
 export interface SEO {
-  __typename: string;
-  metaTitle: string;
-  metaDescription: string;
-  metaImage: {
-    __typename: string;
-    data: {
-      __typename: string;
-      attributes: {
-        __typename: string;
-        url: string;
-        caption: string;
-      };
+  title?: string;
+  description?: string;
+  keywords?: string;
+  tags?: string;
+  image?: {
+    asset?: {
+      url?: string;
     };
   };
 }

@@ -3,7 +3,7 @@ import { GetStaticProps } from "next";
 import groq from "groq";
 // @ts-ignore
 import GoogleMapReact from "google-map-react";
-import { ContactForm, Container, Main, Section } from "@/components";
+import { ContactForm, Container, Main, Section, Seo } from "@/components";
 import { useTheme } from "@/providers";
 import { SEO } from "@/types";
 import { sanityClient } from "@/lib";
@@ -75,6 +75,8 @@ export default function Page({ page }: Props): JSX.Element | null {
 
   return (
     <>
+      <Seo seo={seo} />
+
       <Main withPadding>
         <Section
           className={`${styles.section} ${

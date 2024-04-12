@@ -3,7 +3,7 @@ import { GetStaticProps } from "next";
 import { PortableText } from "@portabletext/react";
 import { PortableTextBlock } from "@portabletext/types";
 import groq from "groq";
-import { Section, Container, Main, Button } from "@/components";
+import { Section, Container, Main, Button, Seo } from "@/components";
 import { useTheme } from "@/providers";
 import { sanityClient } from "@/lib";
 import { SEO } from "@/types";
@@ -35,6 +35,8 @@ export default function Page({ page }: Props): JSX.Element | null {
 
   return (
     <>
+      <Seo seo={seo} />
+
       <Main withPadding>
         <Section
           className={`${styles.section} ${
