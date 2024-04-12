@@ -1,7 +1,6 @@
 import React from "react";
 import { GetStaticProps } from "next/types";
 import { PortableTextBlock } from "@portabletext/types";
-import groq from "groq";
 import {
   AboutSection,
   HeroSection,
@@ -11,6 +10,7 @@ import {
 } from "@/components";
 import { sanityClient } from "@/lib";
 import { Project, SEO } from "@/types";
+import { HOME_QUERY } from "@/services/queries";
 
 interface Page {
   page: {
@@ -59,56 +59,7 @@ export default function Home({ page }: Page): JSX.Element | null {
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    let page = await sanityClient.fetch(groq`
-    *[_type == "home" && !(_id in path('drafts.**'))][0] {
-        heroSection {
-          title
-        },
-        aboutSection {
-          title,
-          body
-        },
-        workSection {
-          title,
-          cta {
-            title,
-            _type,
-            content -> {
-              slug
-            }
-          },
-          workList[]->{
-            _id,
-            title,
-            slug,
-            createdDate,
-            type,
-            coverImage {
-              _type,
-              asset->{
-                _id,
-                url,
-                metadata{
-                  lqip
-                }
-              }
-            }
-          }
-        },
-        seo {
-          ...,
-          image {
-            _type,
-            asset->{
-              _id,
-              url,
-              metadata{
-                lqip
-              }
-            }
-          }
-        }
-    }`);
+    let page = await sanityClient.fetch(HOME_QUERY);
 
     // render the 404 if there is an api error
     if (!page) {

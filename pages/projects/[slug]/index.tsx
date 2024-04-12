@@ -14,6 +14,7 @@ import {
 import { useTheme } from "@/providers";
 import { Project, SEO } from "@/types";
 import { sanityClient } from "@/lib";
+import { PROJECT_QUERY } from "@/services/queries";
 import styles from "./styles.module.scss";
 
 interface Page {
@@ -200,60 +201,9 @@ export async function getStaticProps({
 }: pathParams): Promise<GetStaticPropsResult<Page>> {
   const { slug } = params;
 
-  let page = await sanityClient.fetch(
-    groq`
-    *[_type == "work" && slug.current == $slug && !(_id in path('drafts.**'))][0] {
-      _id,
-      title,
-      excerpt,
-      body,
-      slug,
-      createdDate,
-      type,
-      tools,
-      coverImage {
-        _type,
-        asset->{
-          _id,
-          url,
-          metadata{
-            lqip
-          }
-        }
-      },
-      featuredImage {
-        _type,
-        asset->{
-          _id,
-          url,
-          metadata{
-            lqip
-          }
-        }
-      },
-      cta[] {
-        _type,
-        title,
-        url
-      },
-      seo {
-        ...,
-        image {
-          _type,
-          asset->{
-            _id,
-            url,
-            metadata{
-              lqip
-            }
-          }
-        }
-      }
-    }`,
-    {
-      slug,
-    }
-  );
+  let page = await sanityClient.fetch(PROJECT_QUERY, {
+    slug,
+  });
 
   let work = await sanityClient.fetch(groq`
   *[_type == "work" && !(_id in path('drafts.**'))] {

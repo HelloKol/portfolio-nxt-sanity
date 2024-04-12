@@ -2,11 +2,11 @@ import React from "react";
 import { GetStaticProps } from "next";
 import { PortableText } from "@portabletext/react";
 import { PortableTextBlock } from "@portabletext/types";
-import groq from "groq";
 import { Container, ImageTag, Main, Section, Button, Seo } from "@/components";
 import { useTheme } from "@/providers";
 import { SEO } from "@/types";
 import { sanityClient } from "@/lib";
+import { ABOUT_QUERY } from "@/services/queries";
 import styles from "./styles.module.scss";
 
 interface Page {
@@ -106,37 +106,7 @@ export default function About({ page }: Page): JSX.Element | null {
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    let page = await sanityClient.fetch(groq`
-      *[_type == "about" && !(_id in path('drafts.**'))][0] {
-          title,
-          name,
-          body,
-          featuredImage {
-            _type,
-            asset->{
-              _id,
-              url,
-              metadata{
-                lqip
-              }
-            }
-          },
-          skillsTitle,
-          skills,
-          seo {
-            ...,
-            image {
-              _type,
-              asset->{
-                _id,
-                url,
-                metadata{
-                  lqip
-                }
-              }
-            }
-          }
-    }`);
+    let page = await sanityClient.fetch(ABOUT_QUERY);
 
     // render the 404 if there is an api error
     if (!page) {

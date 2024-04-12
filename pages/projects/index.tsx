@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { GetStaticProps } from "next";
 import Link from "next/link";
-import groq from "groq";
 import {
   Container,
   Grid,
@@ -16,6 +15,10 @@ import { useWindowDimension } from "@/hooks";
 import { useTheme } from "@/providers";
 import { Project, SEO } from "@/types";
 import { sanityClient } from "@/lib";
+import {
+  PROJECT_INDEX_LIST_QUERY,
+  PROJECT_INDEX_QUERY,
+} from "@/services/queries";
 import styles from "./styles.module.scss";
 
 interface Page {
@@ -207,56 +210,9 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    let page = await sanityClient.fetch(groq`
-      *[_type == "workIndex" && !(_id in path('drafts.**'))][0] {
-          title,
-          seo {
-            ...,
-            image {
-              _type,
-              asset->{
-                _id,
-                url,
-                metadata{
-                  lqip
-                }
-              }
-            }
-          }
-      }`);
+    let page = await sanityClient.fetch(PROJECT_INDEX_QUERY);
 
-    let work = await sanityClient.fetch(groq`
-    *[_type == "work" && !(_id in path('drafts.**'))] {
-        _id,
-        title,
-        slug,
-        tools,
-        type,
-        color,
-        coverImage {
-          _type,
-          asset->{
-            _id,
-            url,
-            metadata{
-              lqip
-            }
-          }
-        },
-        seo {
-          ...,
-          image {
-            _type,
-            asset->{
-              _id,
-              url,
-              metadata{
-                lqip
-              }
-            }
-          }
-        }
-    }`);
+    let work = await sanityClient.fetch(PROJECT_INDEX_LIST_QUERY);
 
     // render the 404 if there is no page in cms
     if (!page)
@@ -272,6 +228,7 @@ export const getStaticProps: GetStaticProps = async () => {
         page,
         work,
       },
+      revalidate: 30,
     };
   } catch (err) {
     return {

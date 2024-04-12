@@ -1,6 +1,5 @@
 import React from "react";
 import { GetStaticProps } from "next";
-import groq from "groq";
 // @ts-ignore
 import GoogleMapReact from "google-map-react";
 import { ContactForm, Container, Main, Section, Seo } from "@/components";
@@ -8,6 +7,7 @@ import { useTheme } from "@/providers";
 import { SEO } from "@/types";
 import { sanityClient } from "@/lib";
 import styles from "./styles.module.scss";
+import { CONTACT_QUERY } from "@/services/queries";
 
 interface Props {
   page: {
@@ -107,24 +107,7 @@ export default function Page({ page }: Props): JSX.Element | null {
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    let page = await sanityClient.fetch(groq`
-      *[_type == "contact" && !(_id in path('drafts.**'))][0] {
-          title,
-          contactForm,
-          seo {
-            ...,
-            image {
-              _type,
-              asset->{
-                _id,
-                url,
-                metadata{
-                  lqip
-                }
-              }
-            }
-          }
-    }`);
+    let page = await sanityClient.fetch(CONTACT_QUERY);
 
     // render the 404 if there is an api error
     if (!page) {

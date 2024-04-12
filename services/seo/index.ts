@@ -1,14 +1,15 @@
 const SEO = `
     seo {
-        metaTitle
-        metaDescription
-        metaImage {
-            data {
-                attributes {
-                    url
-                    caption
-                }
+        ...,
+        image {
+        _type,
+        asset->{
+            _id,
+            url,
+            metadata{
+            lqip
             }
+        }
         }
     }
 `;
