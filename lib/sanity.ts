@@ -3,8 +3,8 @@ import { env } from "@/utils";
 
 // Initialize Sanity client
 const client = sanityClient({
-  projectId: env.NEXT_PUBLIC_SANITY_STUDIO_ID,
-  dataset: env.NEXT_PUBLIC_SANITY_STUDIO_DATASET,
+  projectId: process.env.NEXT_PUBLIC_SANITY_STUDIO_ID,
+  dataset: process.env.NEXT_PUBLIC_SANITY_STUDIO_DATASET,
   useCdn: false,
 });
 

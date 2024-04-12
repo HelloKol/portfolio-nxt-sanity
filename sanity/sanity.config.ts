@@ -51,8 +51,8 @@ export default defineConfig({
                     S.listItem()
                       .title('Work Index')
                       .icon(TiersIcon)
-                      .id('work.index')
-                      .child(S.document().schemaType('work.index').documentId('work.index')),
+                      .id('workIndex')
+                      .child(S.document().schemaType('workIndex').documentId('workIndex')),
                     // Define Work
                     S.listItem()
                       .title('Work')

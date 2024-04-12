@@ -5,6 +5,7 @@ type ContextType = {
   setIsNavOpen: (value: boolean) => void;
   projectFilterTag: string;
   setProjectFilterTag: (value: string) => void;
+  settingsData: any;
 };
 
 // create the context with default value
@@ -13,4 +14,5 @@ export const Context = React.createContext<ContextType>({
   setIsNavOpen: () => {},
   projectFilterTag: "",
   setProjectFilterTag: () => {},
+  settingsData: null,
 });

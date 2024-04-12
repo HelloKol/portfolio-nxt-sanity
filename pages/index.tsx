@@ -21,7 +21,9 @@ interface Page {
         title: string;
         _type: string;
         content: {
-          slug: string;
+          slug: {
+            current: string;
+          };
         };
       };
       workList: Project[];

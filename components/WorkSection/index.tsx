@@ -11,7 +11,9 @@ interface Props {
       title: string;
       _type: string;
       content: {
-        slug: string;
+        slug: {
+          current: string;
+        };
       };
     };
     workList: Project[];
@@ -21,8 +23,6 @@ interface Props {
 const WorkSection = ({ data }: Props): JSX.Element | null => {
   const { theme } = useTheme();
   const isDarkMode = theme === "dark-theme";
-
-  console.log(data);
 
   if (!data) return null;
   const { title, cta, workList } = data;
@@ -98,7 +98,7 @@ const WorkSection = ({ data }: Props): JSX.Element | null => {
           {cta && (
             <Button
               className={styles.discoverBtn}
-              href={`/projects`}
+              href={`/${cta.content.slug.current}`}
               variant="primary"
               withSvg
             >

@@ -1,7 +1,7 @@
 import {defineField, defineType} from 'sanity'
 
 export default defineType({
-  name: 'work.index',
+  name: 'workIndex',
   title: 'Work Index',
   type: 'document',
   groups: [

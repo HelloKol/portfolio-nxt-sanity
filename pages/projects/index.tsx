@@ -207,7 +207,7 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
 export const getStaticProps: GetStaticProps = async () => {
   try {
     let page = await sanityClient.fetch(groq`
-      *[_type == "work.index" && !(_id in path('drafts.**'))][0] {
+      *[_type == "workIndex" && !(_id in path('drafts.**'))][0] {
           title,
           seo {
             ...,

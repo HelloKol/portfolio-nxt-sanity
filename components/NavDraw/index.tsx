@@ -3,15 +3,11 @@ import Link from "next/link";
 import { Context } from "@/contexts/Context";
 import styles from "./styles.module.scss";
 
-type props = { test?: string };
+export default function NavDraw() {
+  const { isNavOpen, setIsNavOpen, settingsData } = useContext(Context);
 
-export default function NavDraw({ test }: props) {
-  const { isNavOpen, setIsNavOpen } = useContext(Context);
-  const NAVIGATION = [
-    { Name: "The Projects", href: "/projects" },
-    { Name: "About Myself", href: "/about" },
-    { Name: "Get In Touch", href: "/contact" },
-  ];
+  if (!settingsData) return null;
+  const { credit, headerNavigation } = settingsData;
 
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
@@ -24,16 +20,32 @@ export default function NavDraw({ test }: props) {
   }, []);
 
   const renderNavigation = () => {
-    return NAVIGATION.map((link, index) => (
-      <Link
-        key={index}
-        href={`${link.href}`}
-        className={`${styles.navItem}`}
-        onClick={() => setIsNavOpen(false)}
-      >
-        <span>{link.Name}</span>
-      </Link>
-    ));
+    return headerNavigation.map(
+      (
+        item: {
+          title: string;
+          content: {
+            slug: {
+              current: string;
+            };
+          };
+        },
+        index: number
+      ) => {
+        const { title, content } = item;
+
+        return (
+          <Link
+            key={index}
+            href={`/${content.slug.current}`}
+            className={`${styles.navItem}`}
+            onClick={() => setIsNavOpen(false)}
+          >
+            <span>{title}</span>
+          </Link>
+        );
+      }
+    );
   };
 
   return (
@@ -44,11 +56,13 @@ export default function NavDraw({ test }: props) {
           {renderNavigation()}
           <div className={`${styles.navItem} ${styles.placeholder}`} />
         </ul>
-        <div
-          className={`${styles.disclaimer}  ${isNavOpen ? styles.open : ""}`}
-        >
-          Designed and developed by me
-        </div>
+        {credit && (
+          <div
+            className={`${styles.disclaimer}  ${isNavOpen ? styles.open : ""}`}
+          >
+            {credit}
+          </div>
+        )}
       </div>
     </>
   );

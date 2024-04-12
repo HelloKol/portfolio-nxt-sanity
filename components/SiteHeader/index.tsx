@@ -1,13 +1,11 @@
-import { useContext } from "react";
 import Link from "next/link";
+import { useContext } from "react";
 import { Container, NavDraw } from "@/components";
 import { Context } from "@/contexts/Context";
 import { useTheme } from "@/providers";
 import styles from "./styles.module.scss";
 
-type props = { test?: string };
-
-export default function SiteHeader({ test }: props) {
+export default function SiteHeader() {
   const { isNavOpen, setIsNavOpen } = useContext(Context);
   const { theme, toggleTheme } = useTheme();
   const isDarkMode = theme === "dark-theme";

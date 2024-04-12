@@ -15,7 +15,7 @@ import internalLink from '../objects/common/internal-link'
 import seoPage from '../objects/seo/seoPage'
 import seoSettings from '../objects/seo/seoSettings'
 
-const linkableContentTypes = ['about', 'home', 'work', 'work.index', 'contact']
+const linkableContentTypes = ['about', 'home', 'work', 'workIndex', 'contact']
 
 export const schemaTypes = [
   // Schema
