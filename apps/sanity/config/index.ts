@@ -1,12 +1,14 @@
 interface AppConfig {
   projectId: string
   dataset: string
+  token: string
 }
 
 class Config {
   private readonly defaults: AppConfig = {
     projectId: '',
     dataset: '',
+    token: '',
   }
 
   private readonly envConfig: Partial<AppConfig>
@@ -16,6 +18,7 @@ class Config {
     this.envConfig = {
       projectId: process.env.SANITY_STUDIO_PROJECT_ID,
       dataset: process.env.SANITY_STUDIO_DATASET,
+      token: process.env.SANITY_STUDIO_TOKEN,
     }
   }
 
