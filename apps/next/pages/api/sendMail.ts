@@ -1,16 +1,16 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import sgMail from "@sendgrid/mail";
+import { NextApiRequest, NextApiResponse } from 'next';
+import sgMail from '@sendgrid/mail';
 
-sgMail.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY);
+sgMail.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY as string);
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { name, email, message } = req.body;
 
   const content = {
-    to: "emonhasan20002000@gmail.com",
+    to: process.env.NEXT_PUBLIC_RECIEVER_EMAIL as string,
     from: {
-      name: "Portfolio message",
-      email: "shehabhasan2020@gmail.com",
+      name: 'Portfolio message',
+      email: process.env.NEXT_PUBLIC_SENDER_EMAIL as string
     },
     subject: `New Message from ${email}`,
     text: message,
@@ -709,14 +709,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         </center>
       </body>
     </html>
-    `,
+    `
   };
 
   try {
     const response = await sgMail.send(content);
     res.status(200).send(response);
   } catch (error) {
-    console.log("ERROR ", error);
+    console.log('ERROR ', error);
     res.status(400).send(error);
   }
 };
