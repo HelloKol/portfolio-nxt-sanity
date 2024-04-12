@@ -16,6 +16,7 @@ import { Project, SEO } from "@/types";
 import { sanityClient } from "@/lib";
 import { PROJECT_QUERY } from "@/services/queries";
 import styles from "./styles.module.scss";
+import { formatDate } from "@/utils";
 
 interface Page {
   page: Project & {
@@ -39,6 +40,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
     featuredImage,
     seo,
   } = page;
+  const formattedDate = formatDate(createdDate);
   const isDarkMode = theme === "dark-theme";
   const currentIndex = work.findIndex(
     (item) => item.slug.current === slug.current
@@ -102,10 +104,10 @@ export default function Page({ page, work }: Page): JSX.Element | null {
           <Container className={styles.containerProjectInfo} isFluid={false}>
             <Grid>
               <div className={styles.projectInfo}>
-                {createdDate && (
+                {formattedDate && (
                   <>
                     <span className={styles.redInfo}>DATE</span>
-                    <span className={styles.whiteInfo}> {createdDate}</span>
+                    <span className={styles.whiteInfo}> {formattedDate}</span>
                   </>
                 )}
                 {type && (

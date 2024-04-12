@@ -3,6 +3,7 @@ import { Button, Container, Grid, ImageTag, Section } from "@/components";
 import { useTheme } from "@/providers";
 import { Project } from "@/types";
 import styles from "./styles.module.scss";
+import { formatDate } from "@/utils";
 
 interface Props {
   data: {
@@ -37,7 +38,7 @@ const WorkSection = ({ data }: Props): JSX.Element | null => {
     workList &&
     workList.slice(0, 4).map((item, index) => {
       const { _id, title, slug, createdDate, type, coverImage } = item;
-
+      const formattedDate = formatDate(createdDate);
       const currentIndex = index < 10 ? `0${index + 1}` : index + 1;
 
       return (
@@ -55,7 +56,7 @@ const WorkSection = ({ data }: Props): JSX.Element | null => {
               </Link>
             </h3>
             <div className={styles.projectTags}>
-              <p className={styles.projectCreated}>{createdDate}</p>
+              <p className={styles.projectCreated}>{formattedDate}</p>
               <div className={styles.tags}>
                 {type &&
                   type.map((item: string, index: number) => (
