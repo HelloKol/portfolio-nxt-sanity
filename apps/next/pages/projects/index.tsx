@@ -1,25 +1,14 @@
-import React, { useContext } from "react";
-import { GetStaticProps } from "next";
-import Link from "next/link";
-import {
-  Container,
-  Grid,
-  ImageTag,
-  Main,
-  ProjectFilter,
-  Section,
-  Seo,
-} from "@/components";
-import { Context } from "@/contexts/Context";
-import { useWindowDimension } from "@/hooks";
-import { useTheme } from "@/providers";
-import { Project, SEO } from "@/types";
-import { sanityClient } from "@/lib";
-import {
-  PROJECT_INDEX_LIST_QUERY,
-  PROJECT_INDEX_QUERY,
-} from "@/services/queries";
-import styles from "./styles.module.scss";
+import React, { useContext } from 'react';
+import { GetStaticProps } from 'next';
+import Link from 'next/link';
+import { Container, Grid, ImageTag, Main, ProjectFilter, Section, Seo } from '@/components';
+import { Context } from '@/contexts/Context';
+import { useWindowDimension } from '@/hooks';
+import { useTheme } from '@/providers';
+import { Project, SEO } from '@/types';
+import { sanityClient } from '@/lib';
+import { PROJECT_INDEX_LIST_QUERY, PROJECT_INDEX_QUERY } from '@/services/queries';
+import styles from './styles.module.scss';
 
 interface Page {
   page: {
@@ -35,50 +24,36 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
   const { projectFilterTag, setProjectFilterTag } = useContext(Context);
   const { isMobile, isMobileLarge, isTablet } = useWindowDimension();
   const { title, seo } = page;
-  const isDarkMode = theme === "dark-theme";
+  const isDarkMode = theme === 'dark-theme';
 
-  const filteredData = work.filter(
-    (item) =>
-      item?.type &&
-      item.type.some((type) =>
-        type.toLowerCase().includes(projectFilterTag.toLocaleLowerCase())
-      )
-  );
+  const filteredData = work
+    .filter(
+      (item) =>
+        item?.type &&
+        item.type.some((type) => type.toLowerCase().includes(projectFilterTag.toLocaleLowerCase()))
+    )
+    .sort((a, b) => a.rank - b.rank);
 
   return (
     <>
       <Seo seo={seo} />
 
       <Main>
-        <Section
-          className={`${styles.section} ${
-            isDarkMode ? styles.darkMode : styles.lightMode
-          }`}
-        >
+        <Section className={`${styles.section} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
           <Container isFluid={false}>
             <Grid>
               {title && (
-                <h1
-                  className={`${styles.title} ${
-                    isDarkMode ? styles.darkMode : styles.lightMode
-                  }`}
-                >
+                <h1 className={`${styles.title} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
                   {title}
                 </h1>
               )}
               <div className={styles.filterWrap}>
                 <div className={styles.projectView}>
                   <p>Change view</p>
-                  <button
-                    className={`${styles.filterBtn} ${styles.activeFilterBtn}`}
-                    disabled
-                  >
+                  <button className={`${styles.filterBtn} ${styles.activeFilterBtn}`} disabled>
                     Grid
                   </button>
-                  <button
-                    className={`${styles.filterBtn} ${styles.inActiveFilterBtn}`}
-                    disabled
-                  >
+                  <button className={`${styles.filterBtn} ${styles.inActiveFilterBtn}`} disabled>
                     List
                   </button>
                 </div>
@@ -86,26 +61,22 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
                 <div className={styles.filterList}>
                   <p>Type</p>
                   <button
-                    className={`${styles.filterBtn} ${
-                      projectFilterTag === "" && styles.activeFilterBtn
-                    }`}
-                    onClick={() => setProjectFilterTag("")}
+                    className={`${styles.filterBtn} ${projectFilterTag === '' && styles.activeFilterBtn}`}
+                    onClick={() => setProjectFilterTag('')}
                   >
                     All
                   </button>
                   <button
                     className={`${styles.filterBtn} ${
-                      projectFilterTag === "design" && styles.activeFilterBtn
+                      projectFilterTag === 'design' && styles.activeFilterBtn
                     }`}
-                    onClick={() => setProjectFilterTag("design")}
+                    onClick={() => setProjectFilterTag('design')}
                   >
                     Design
                   </button>
                   <button
-                    className={`${styles.filterBtn} ${
-                      projectFilterTag === "web" && styles.activeFilterBtn
-                    }`}
-                    onClick={() => setProjectFilterTag("web")}
+                    className={`${styles.filterBtn} ${projectFilterTag === 'web' && styles.activeFilterBtn}`}
+                    onClick={() => setProjectFilterTag('web')}
                   >
                     Web
                   </button>
@@ -117,11 +88,7 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
                     const { title, color, slug, tools, coverImage } = item;
 
                     return (
-                      <Link
-                        key={index}
-                        href={`/projects/${slug.current}`}
-                        className={styles.projectItem}
-                      >
+                      <Link key={index} href={`/projects/${slug.current}`} className={styles.projectItem}>
                         {coverImage && (
                           <div className={styles.thumbmailImage}>
                             <ImageTag
@@ -139,7 +106,7 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
                             <h1
                               className={styles.projectTitle}
                               style={{
-                                color: color.value,
+                                color: color.value
                               }}
                             >
                               {title}
@@ -163,11 +130,7 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
                       const { title, color, slug, tools, coverImage } = item;
 
                       return (
-                        <Link
-                          key={index}
-                          href={`/projects/${slug.current}`}
-                          className={styles.projectItem}
-                        >
+                        <Link key={index} href={`/projects/${slug.current}`} className={styles.projectItem}>
                           {coverImage && (
                             <div className={styles.thumbmailImage}>
                               <div className={styles.overlay}>
@@ -187,7 +150,7 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
                             <h1
                               className={styles.projectTitle}
                               style={{
-                                color: color.value,
+                                color: color.value
                               }}
                             >
                               {title}
@@ -217,7 +180,7 @@ export const getStaticProps: GetStaticProps = async () => {
     // render the 404 if there is no page in cms
     if (!page)
       return {
-        notFound: true,
+        notFound: true
       };
 
     page = JSON.parse(JSON.stringify(page));
@@ -226,13 +189,13 @@ export const getStaticProps: GetStaticProps = async () => {
     return {
       props: {
         page,
-        work,
+        work
       },
-      revalidate: 30,
+      revalidate: 30
     };
   } catch (err) {
     return {
-      notFound: true,
+      notFound: true
     };
   }
 };

@@ -1,12 +1,18 @@
-import groq from "groq";
-import SEO from "../seo";
+import groq from 'groq';
+import SEO from '../seo';
 
 const PROJECT_QUERY = groq`
 *[_type == "work" && slug.current == $slug && !(_id in path('drafts.**'))][0] {
   _id,
   title,
   excerpt,
-  body,
+  body[]{
+    ...,
+    _type == "image" => {
+      ...,
+      asset->
+    }
+  },
   slug,
   createdDate,
   type,

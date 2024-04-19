@@ -1,15 +1,17 @@
-import { PortableTextBlock } from "@portabletext/types";
+import { PortableTextBlock } from '@portabletext/types';
 
 export interface Project {
   _id: string;
   title: string;
   excerpt: PortableTextBlock;
+  body: PortableTextBlock;
   slug: {
     current: string;
   };
   createdDate: string;
   type: string[];
   tools: string[];
+  rank: number;
   color: {
     value: string;
   };

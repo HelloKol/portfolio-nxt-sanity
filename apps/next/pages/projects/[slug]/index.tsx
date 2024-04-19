@@ -1,22 +1,16 @@
-import React from "react";
-import { GetStaticPaths, GetStaticPropsResult } from "next/types";
-import { PortableText } from "@portabletext/react";
-import groq from "groq";
-import {
-  Button,
-  Container,
-  Grid,
-  ImageTag,
-  Main,
-  Section,
-  Seo,
-} from "@/components";
-import { useTheme } from "@/providers";
-import { Project, SEO } from "@/types";
-import { sanityClient } from "@/lib";
-import { PROJECT_QUERY } from "@/services/queries";
-import styles from "./styles.module.scss";
-import { formatDate } from "@/utils";
+import React from 'react';
+import { GetStaticPaths, GetStaticPropsResult } from 'next/types';
+import { PortableText } from '@portabletext/react';
+import groq from 'groq';
+import getYouTubeId from 'get-youtube-id';
+import YouTube, { YouTubeProps } from 'react-youtube';
+import { Button, Container, Grid, ImageTag, Main, Section, Seo } from '@/components';
+import { useTheme } from '@/providers';
+import { Project, SEO } from '@/types';
+import { sanityClient } from '@/lib';
+import { PROJECT_QUERY } from '@/services/queries';
+import styles from './styles.module.scss';
+import { formatDate } from '@/utils';
 
 interface Page {
   page: Project & {
@@ -25,26 +19,56 @@ interface Page {
   work: Project[];
 }
 
+const youtubeOptions: YouTubeProps['opts'] = {
+  height: '600',
+  width: '100%'
+};
+
+const serializers = {
+  types: {
+    image: ({ value }: any) => {
+      const { asset } = value;
+      return (
+        <div
+          style={{
+            height: `500px`
+          }}
+        >
+          <ImageTag
+            src={`${asset?.url}`}
+            alt="project Image"
+            layout="fill"
+            objectFit="cover"
+            quality={100}
+            priority={true}
+            blurDataURL={asset?.metadata?.lqip}
+          />
+        </div>
+      );
+    },
+    youtube: ({ value }: any) => {
+      const { url } = value;
+      const id = getYouTubeId(url);
+      return (
+        <div
+          style={{
+            margin: `0 0 30px 0`
+          }}
+        >
+          <YouTube videoId={id as string} opts={youtubeOptions} />
+        </div>
+      );
+    }
+  }
+};
+
 export default function Page({ page, work }: Page): JSX.Element | null {
   if (!page) return null;
   const { theme } = useTheme();
-  const {
-    title,
-    excerpt,
-    slug,
-    createdDate,
-    tools,
-    type,
-    cta,
-    coverImage,
-    featuredImage,
-    seo,
-  } = page;
+  const { title, excerpt, body, slug, createdDate, tools, type, cta, coverImage, featuredImage, seo } = page;
   const formattedDate = formatDate(createdDate);
-  const isDarkMode = theme === "dark-theme";
-  const currentIndex = work.findIndex(
-    (item) => item.slug.current === slug.current
-  );
+  const isDarkMode = theme === 'dark-theme';
+  const currentIndex = work.findIndex((item) => item.slug.current === slug.current);
   const nextIndex = currentIndex < work.length - 1 ? currentIndex + 1 : 0;
 
   const renderCta = () => {
@@ -59,13 +83,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
         index: number
       ) => {
         return (
-          <Button
-            key={index}
-            href={`${item.url}`}
-            variant="primary"
-            newTab
-            withSvg
-          >
+          <Button key={index} href={`${item.url}`} variant="primary" newTab withSvg>
             {item.title}
           </Button>
         );
@@ -78,11 +96,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
       <Seo seo={seo} />
 
       <Main>
-        <Section
-          className={`${styles.section} ${
-            isDarkMode ? styles.darkMode : styles.lightMode
-          }`}
-        >
+        <Section className={`${styles.section} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
           <Container className={styles.container} isFluid={false}>
             {title && <h1 className={styles.title}>{title}</h1>}
           </Container>
@@ -133,27 +147,18 @@ export default function Page({ page, work }: Page): JSX.Element | null {
               </div>
 
               {excerpt && (
-                <article className={styles.bodyCopy}>
+                <article className={styles.excerpt}>
                   <PortableText value={excerpt} />
                 </article>
               )}
 
               <div className={styles.btnWrap}>{renderCta()}</div>
 
-              <div className={styles.projectImage}>
-                {featuredImage && (
-                  <ImageTag
-                    src={`${featuredImage?.asset?.url}`}
-                    alt="project Image"
-                    layout="responsive"
-                    width={1000}
-                    height={1000}
-                    quality={100}
-                    priority={true}
-                    blurDataURL={featuredImage?.asset?.metadata?.lqip}
-                  />
-                )}
-              </div>
+              {body && (
+                <article className={styles.bodyCopy}>
+                  <PortableText value={body} components={serializers} />
+                </article>
+              )}
 
               <div className={styles.nextProjectWrapper}>
                 <div className={styles.divider} />
@@ -188,7 +193,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths,
-    fallback: false,
+    fallback: false
   };
 };
 
@@ -198,13 +203,11 @@ type pathParams = {
   };
 };
 
-export async function getStaticProps({
-  params,
-}: pathParams): Promise<GetStaticPropsResult<Page>> {
+export async function getStaticProps({ params }: pathParams): Promise<GetStaticPropsResult<Page>> {
   const { slug } = params;
 
   let page = await sanityClient.fetch(PROJECT_QUERY, {
-    slug,
+    slug
   });
 
   let work = await sanityClient.fetch(groq`
@@ -216,7 +219,7 @@ export async function getStaticProps({
   // render the 404 if there is an api error
   if (!page)
     return {
-      notFound: true,
+      notFound: true
     };
 
   page = JSON.parse(JSON.stringify(page));
@@ -225,8 +228,8 @@ export async function getStaticProps({
   return {
     props: {
       page,
-      work,
+      work
     },
-    revalidate: 30,
+    revalidate: 30
   };
 }

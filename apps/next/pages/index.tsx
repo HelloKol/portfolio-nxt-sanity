@@ -1,16 +1,10 @@
-import React from "react";
-import { GetStaticProps } from "next/types";
-import { PortableTextBlock } from "@portabletext/types";
-import {
-  AboutSection,
-  HeroSection,
-  Main,
-  WorkSection,
-  Seo,
-} from "@/components";
-import { sanityClient } from "@/lib";
-import { Project, SEO } from "@/types";
-import { HOME_QUERY } from "@/services/queries";
+import React from 'react';
+import { GetStaticProps } from 'next/types';
+import { PortableTextBlock } from '@portabletext/types';
+import { AboutSection, HeroSection, Main, WorkSection, Seo } from '@/components';
+import { sanityClient } from '@/lib';
+import { Project, SEO } from '@/types';
+import { HOME_QUERY } from '@/services/queries';
 
 interface Page {
   page: {
@@ -64,7 +58,7 @@ export const getStaticProps: GetStaticProps = async () => {
     // render the 404 if there is an api error
     if (!page) {
       return {
-        notFound: true,
+        notFound: true
       };
     }
 
@@ -72,13 +66,13 @@ export const getStaticProps: GetStaticProps = async () => {
 
     return {
       props: {
-        page,
+        page
       },
-      revalidate: 30,
+      revalidate: 30
     };
   } catch (err) {
     return {
-      notFound: true,
+      notFound: true
     };
   }
 };

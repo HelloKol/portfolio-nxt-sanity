@@ -35,6 +35,8 @@ build/Release
 /node_modules
 node_modules/
 jspm_packages/
+apps/sanity/.sanity
+apps/sanity/dist
 
 # Optional npm cache directory
 .npm

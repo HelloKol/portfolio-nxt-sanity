@@ -12,6 +12,7 @@ import blockContent from '../objects/common/blockContent'
 import emailLink from '../objects/common/email-link'
 import externalLink from '../objects/common/external-link'
 import internalLink from '../objects/common/internal-link'
+import youtube from '../objects/common/youtube'
 import seoPage from '../objects/seo/seoPage'
 import seoSettings from '../objects/seo/seoSettings'
 
@@ -32,6 +33,7 @@ export const schemaTypes = [
   emailLink,
   externalLink,
   internalLink({linkableContentTypes}),
+  youtube,
   seoPage,
   seoSettings,
 ]

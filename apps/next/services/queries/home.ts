@@ -1,5 +1,5 @@
-import groq from "groq";
-import SEO from "../seo";
+import groq from 'groq';
+import SEO from '../seo';
 
 const HOME_QUERY = groq`
 *[_type == "home" && !(_id in path('drafts.**'))][0] {
@@ -25,6 +25,7 @@ const HOME_QUERY = groq`
         slug,
         createdDate,
         type,
+        rank,
         coverImage {
           _type,
           asset->{

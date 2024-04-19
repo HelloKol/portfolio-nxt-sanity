@@ -1,25 +1,18 @@
-@import "../../styles/base/variables";
-@import "../../styles/mixins/mixins";
+@import '../../styles/base/variables';
+@import '../../styles/mixins/mixins';
 
 // ==========================================================================
 // Global
 // ==========================================================================
 
 .workSection {
-  &.darkMode {
-    .projectFeedItem {
-      .projectIndex,
-      .tags {
-        color: $lightRed;
-      }
+  .projectFeedItem {
+    .projectIndex,
+    .projectCreated {
+      color: $grey;
     }
-  }
-  &.lightMode {
-    .projectFeedItem {
-      .projectIndex,
-      .projectTags {
-        color: $grey;
-      }
+    .tags {
+      color: $lightRed;
     }
   }
 
@@ -153,12 +146,12 @@
         grid-column: 1/4;
       }
       .projectTitle {
-        grid-column: 4/11;
+        grid-column: 4/10;
         margin: 0;
         @include type-setting-responsive(30, 5, 50);
       }
       .projectTags {
-        grid-column: 11/13;
+        grid-column: 10/13;
         text-align: right;
         margin: 0;
       }
@@ -214,11 +207,11 @@
         grid-column: 1/4;
       }
       .projectTitle {
-        grid-column: 4/12;
+        grid-column: 4/11;
         @include type-setting-responsive(30, 4, 100);
       }
       .projectTags {
-        grid-column: 12/13;
+        grid-column: 11/13;
       }
       .projectThumbnail {
         grid-column: 4/13;
