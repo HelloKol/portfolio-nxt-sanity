@@ -2,14 +2,14 @@ const SEO = `
     seo {
         ...,
         image {
-        _type,
-        asset->{
-            _id,
-            url,
-            metadata{
-            lqip
+            _type,
+            asset->{
+                _id,
+                url,
+                metadata{
+                lqip
+                }
             }
-        }
         }
     }
 `;

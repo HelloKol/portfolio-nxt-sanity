@@ -47,6 +47,10 @@
   }
 }
 
+.title {
+  font-family: $chillaxRegular;
+}
+
 .projectInfo {
   .redInfo {
     font-weight: 700;
@@ -80,8 +84,10 @@
   }
   p {
     color: $grey;
+    font-family: $chillaxRegular;
   }
   .nextProjectLink {
+    font-family: $chillaxRegular;
     text-transform: capitalize;
   }
 }
@@ -138,7 +144,7 @@
 
   .nextProjectWrapper {
     grid-column: 1/13;
-    margin: 180px 0 100px 0;
+    margin: 100px 0 60px 0;
     .divider {
       margin: 0 0 40px 0;
     }
@@ -217,7 +223,7 @@
   }
 
   .nextProjectWrapper {
-    margin: 260px 0 160px 0;
+    margin: 180px 0 100px 0;
     .nextProjectLink {
       span {
         @include type-setting-responsive(50, 7, 100);

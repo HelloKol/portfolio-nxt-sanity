@@ -64,13 +64,15 @@ $rowGutterDesktopLarge: 30px;
 // ==========================================================================
 
 // Fonts
-$CormorantGaramondLight: "PPMoriExtraLight", sans-serif;
-$CormorantGaramondRegular: "PPMoriMedium", sans-serif;
-$CormorantGaramondSemiBold: "PPMoriSemBold", sans-serif;
+$chillaxRegular: 'Chillax-Regular';
+$chillaxMedium: 'Chillax-Medium';
+$SatoshiRegular: 'Satoshi-Regular';
+$SatoshiMedium: 'Satoshi-Medium';
+$SatoshiBold: 'Satoshi-Bold';
 
 // Global Vars
-$baseFontFamily: $CormorantGaramondRegular; // may not need this
-$baseFontFamilyBold: $CormorantGaramondSemiBold;
+$baseFontFamily: $SatoshiRegular; // may not need this
+$baseFontFamilyBold: $SatoshiMedium;
 $baseFontSize: 11;
 $baseLineHeight: 16;
 $baseLetterSpacingSize: 0;
@@ -84,7 +86,7 @@ $baseBackgroundColor: $white;
 // ==========================================================================
 
 // Normal
-$btnFontFamily: $CormorantGaramondRegular;
+$btnFontFamily: $SatoshiRegular;
 $btnTextTransform: none;
 // $btnFontSizes: 14;
 // $btnLineHeight: 16;
@@ -126,7 +128,7 @@ $linkTextDecoration: none;
 
 // Labels
 // ==========================================================================
-$baseInputLabelFamily: $CormorantGaramondRegular;
+$baseInputLabelFamily: $SatoshiRegular;
 $baseInputLabelFontSize: 14;
 $baseInputLabelLineHeight: 14;
 $baseInputLabelLetterSpacingSize: $baseLetterSpacingSize;
@@ -138,7 +140,7 @@ $baseInputLabelPaddingDesktopLarge: 0 0 12px;
 
 // Inputs
 // ==========================================================================
-$baseInputFamily: $CormorantGaramondRegular;
+$baseInputFamily: $SatoshiRegular;
 $baseInputFontSize: 12;
 $baseInputLineHeight: 12;
 $baseInputLetterSpacingSize: $baseLetterSpacingSize;

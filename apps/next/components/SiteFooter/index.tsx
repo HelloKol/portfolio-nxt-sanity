@@ -1,35 +1,30 @@
-import Link from "next/link";
-import { useContext } from "react";
-import { useRouter } from "next/router";
-import { Container } from "@/components";
-import { useTheme } from "@/providers";
-import { Context } from "@/contexts/Context";
-import styles from "./styles.module.scss";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { Container } from '@/components';
+import { useTheme } from '@/providers';
+import settings from '../../data/settings.json';
+import styles from './styles.module.scss';
 
 export default function SiteFooter() {
   const router = useRouter();
   const { theme } = useTheme();
-  const { settingsData } = useContext(Context);
-  const isDarkMode = theme === "dark-theme";
-  const hideFooterPath = ["/about"];
+  const isDarkMode = theme === 'dark-theme';
+  const hideFooterPath = ['/about'];
   const isFooterHidden = hideFooterPath.includes(router.pathname);
 
   if (isFooterHidden) return null;
-  if (!settingsData) return null;
+  if (!settings) return null;
 
-  const { credit, reserved, socialMediaLinks } = settingsData;
+  const { credit, reserved, socialMediaLinks } = settings;
 
   const renderFooterLinks = () => {
     return (
       socialMediaLinks &&
       socialMediaLinks.map(
-        (
-          item: { title: string; url: string; email: string; _type: string },
-          index: number
-        ) => {
+        (item: { title: string; url: string; email: string; _type: string }, index: number) => {
           const { _type, title, url, email } = item;
 
-          if (_type === "emailLink") {
+          if (_type === 'emailLink') {
             return (
               <Link key={index} href={`mailto:${email}`}>
                 {title}
@@ -38,7 +33,7 @@ export default function SiteFooter() {
           }
 
           return (
-            <Link key={index} href={url} target={"_blank"}>
+            <Link key={index} href={url} target={'_blank'}>
               {title}
             </Link>
           );
@@ -48,11 +43,7 @@ export default function SiteFooter() {
   };
 
   return (
-    <footer
-      className={`${styles.footer} ${
-        isDarkMode ? styles.darkMode : styles.lightMode
-      }`}
-    >
+    <footer className={`${styles.footer} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
       <Container className={styles.footerContainer} isFluid={false}>
         {reserved && (
           <div className={styles.footerDisclaimer}>

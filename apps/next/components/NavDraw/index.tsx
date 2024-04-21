@@ -1,21 +1,22 @@
-import { useContext, useEffect } from "react";
-import Link from "next/link";
-import { Context } from "@/contexts/Context";
-import styles from "./styles.module.scss";
+import { useContext, useEffect } from 'react';
+import Link from 'next/link';
+import { Context } from '@/contexts/Context';
+import settings from '../../data/settings.json';
+import styles from './styles.module.scss';
 
 export default function NavDraw() {
-  const { isNavOpen, setIsNavOpen, settingsData } = useContext(Context);
+  const { isNavOpen, setIsNavOpen } = useContext(Context);
 
-  if (!settingsData) return null;
-  const { credit, headerNavigation } = settingsData;
+  if (!settings) return null;
+  const { credit, headerNavigation } = settings;
 
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
       if (event.keyCode === 27) setIsNavOpen(false);
     };
-    window.addEventListener("keydown", handleEsc);
+    window.addEventListener('keydown', handleEsc);
     return () => {
-      window.removeEventListener("keydown", handleEsc);
+      window.removeEventListener('keydown', handleEsc);
     };
   }, []);
 
@@ -50,19 +51,13 @@ export default function NavDraw() {
 
   return (
     <>
-      <div className={`${styles.overlay} ${isNavOpen ? styles.open : ""}`} />
-      <div className={`${styles.navDraw} ${isNavOpen ? styles.open : ""}`}>
+      <div className={`${styles.overlay} ${isNavOpen ? styles.open : ''}`} />
+      <div className={`${styles.navDraw} ${isNavOpen ? styles.open : ''}`}>
         <ul className={styles.navList}>
           {renderNavigation()}
           <div className={`${styles.navItem} ${styles.placeholder}`} />
         </ul>
-        {credit && (
-          <div
-            className={`${styles.disclaimer}  ${isNavOpen ? styles.open : ""}`}
-          >
-            {credit}
-          </div>
-        )}
+        {credit && <div className={`${styles.disclaimer}  ${isNavOpen ? styles.open : ''}`}>{credit}</div>}
       </div>
     </>
   );

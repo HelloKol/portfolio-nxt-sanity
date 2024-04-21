@@ -1,6 +1,6 @@
-@import "./typography/_fonts";
-@import "./base/_variables";
-@import "./_reset";
+@import './typography/_fonts';
+@import './base/_variables';
+@import './_reset';
 
 // ==========================================================================
 // Global
@@ -71,7 +71,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: $CormorantGaramondRegular;
+  font-family: $SatoshiRegular;
 }
 
 .app {

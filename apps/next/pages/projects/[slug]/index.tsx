@@ -1,7 +1,6 @@
 import React from 'react';
 import { GetStaticPaths, GetStaticPropsResult } from 'next/types';
 import groq from 'groq';
-import ReactPlayer from 'react-player/youtube';
 import { Button, BlockContent, Container, Grid, ImageTag, Main, Section, Seo } from '@/components';
 import { useTheme } from '@/providers';
 import { Project, SEO } from '@/types';
@@ -16,39 +15,6 @@ interface Page {
   };
   work: Project[];
 }
-
-const serializers = {
-  types: {
-    image: ({ value }: any) => {
-      const { asset } = value;
-      return (
-        <div
-          style={{
-            height: `500px`
-          }}
-        >
-          <ImageTag
-            src={`${asset?.url}`}
-            alt="project Image"
-            layout="fill"
-            objectFit="cover"
-            quality={100}
-            priority={true}
-            blurDataURL={asset?.metadata?.lqip}
-          />
-        </div>
-      );
-    },
-    youtube: ({ value }: any) => {
-      const { url } = value;
-      return (
-        <div>
-          <ReactPlayer url={url} width="100%" height="100%" />
-        </div>
-      );
-    }
-  }
-};
 
 export default function Page({ page, work }: Page): JSX.Element | null {
   if (!page) return null;
