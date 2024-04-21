@@ -69,6 +69,11 @@ export default defineType({
           title: 'Body',
           type: 'blockContent',
         }),
+        defineField({
+          name: 'cvLink',
+          title: 'Cv Link',
+          type: 'string',
+        }),
       ],
       group: 'content',
     }),

@@ -1,13 +1,14 @@
-import React from "react";
-import { GetStaticProps } from "next";
+import React from 'react';
+import { GetStaticProps } from 'next';
 // @ts-ignore
-import GoogleMapReact from "google-map-react";
-import { ContactForm, Container, Main, Section, Seo } from "@/components";
-import { useTheme } from "@/providers";
-import { SEO } from "@/types";
-import { sanityClient } from "@/lib";
-import styles from "./styles.module.scss";
-import { CONTACT_QUERY } from "@/services/queries";
+import GoogleMapReact from 'google-map-react';
+import { ContactForm, Container, Main, Section, Seo } from '@/components';
+import { useTheme } from '@/providers';
+import { SEO } from '@/types';
+import { sanityClient } from '@/lib';
+import { env } from '@/utils/env';
+import { CONTACT_QUERY } from '@/services/queries';
+import styles from './styles.module.scss';
 
 interface Props {
   page: {
@@ -24,11 +25,11 @@ export default function Page({ page }: Props): JSX.Element | null {
   const { theme } = useTheme();
   if (!page) return null;
   const { title, contactForm, seo } = page;
-  const isDarkMode = theme === "dark-theme";
+  const isDarkMode = theme === 'dark-theme';
   const defaultProps = {
     center: {
       lat: 51.514715,
-      lng: -0.096448,
+      lng: -0.096448
     },
     zoom: 14,
     options: {
@@ -36,41 +37,41 @@ export default function Page({ page }: Props): JSX.Element | null {
         {
           stylers: [
             {
-              visibility: "simplified",
-            },
-          ],
+              visibility: 'simplified'
+            }
+          ]
         },
         {
           stylers: [
             {
-              color: "#131314",
-            },
-          ],
+              color: '#131314'
+            }
+          ]
         },
         {
-          featureType: "water",
+          featureType: 'water',
           stylers: [
             {
-              color: "#131313",
+              color: '#131313'
             },
             {
-              lightness: 7,
-            },
-          ],
+              lightness: 7
+            }
+          ]
         },
         {
-          elementType: "labels.text.fill",
+          elementType: 'labels.text.fill',
           stylers: [
             {
-              visibility: "on",
+              visibility: 'on'
             },
             {
-              lightness: 25,
-            },
-          ],
-        },
-      ],
-    },
+              lightness: 25
+            }
+          ]
+        }
+      ]
+    }
   };
 
   return (
@@ -78,21 +79,15 @@ export default function Page({ page }: Props): JSX.Element | null {
       <Seo seo={seo} />
 
       <Main withPadding>
-        <Section
-          className={`${styles.section} ${
-            isDarkMode ? styles.darkMode : styles.lightMode
-          }`}
-        >
-          <Container isFluid={false}>
-            {title && <h1 className={styles.title}>{title}</h1>}
-          </Container>
+        <Section className={`${styles.section} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
+          <Container isFluid={false}>{title && <h1 className={styles.title}>{title}</h1>}</Container>
 
           <ContactForm data={contactForm} />
 
           <div className={styles.googleMapwrapper}>
             <GoogleMapReact
               bootstrapURLKeys={{
-                key: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY,
+                key: env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY
               }}
               defaultCenter={defaultProps.center}
               defaultZoom={defaultProps.zoom}
@@ -112,7 +107,7 @@ export const getStaticProps: GetStaticProps = async () => {
     // render the 404 if there is an api error
     if (!page) {
       return {
-        notFound: true,
+        notFound: true
       };
     }
 
@@ -120,13 +115,13 @@ export const getStaticProps: GetStaticProps = async () => {
 
     return {
       props: {
-        page,
+        page
       },
-      revalidate: 30,
+      revalidate: 30
     };
   } catch (err) {
     return {
-      notFound: true,
+      notFound: true
     };
   }
 };

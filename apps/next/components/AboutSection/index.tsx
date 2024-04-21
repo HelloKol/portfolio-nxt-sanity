@@ -1,29 +1,26 @@
-import { PortableText } from "@portabletext/react";
-import { PortableTextBlock } from "@portabletext/types";
-import { Button, Container, Grid, Section } from "@/components";
-import { useTheme } from "@/providers";
-import styles from "./styles.module.scss";
+import { PortableText } from '@portabletext/react';
+import { PortableTextBlock } from '@portabletext/types';
+import { Button, Container, Grid, Section } from '@/components';
+import { useTheme } from '@/providers';
+import styles from './styles.module.scss';
 
 interface Props {
   data: {
     title: string;
     body: PortableTextBlock;
+    cvLink: string;
   };
 }
 
 const AboutSection = ({ data }: Props): JSX.Element | null => {
   const { theme } = useTheme();
-  const isDarkMode = theme === "dark-theme";
+  const isDarkMode = theme === 'dark-theme';
 
   if (!data) return null;
-  const { title, body } = data;
+  const { title, body, cvLink } = data;
 
   return (
-    <Section
-      className={`${styles.aboutSection} ${
-        isDarkMode ? styles.darkMode : styles.lightMode
-      }`}
-    >
+    <Section className={`${styles.aboutSection} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
       <Container isFluid={false}>
         <Grid>
           {title && <h2 className={styles.title}>{title}</h2>}
@@ -32,12 +29,7 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
               <PortableText value={body} />
             </article>
           )}
-          <Button
-            className={styles.downloadCvBtn}
-            href={`/static/pdf/updated_cv.pdf`}
-            variant="primary"
-            download={true}
-          >
+          <Button className={styles.downloadCvBtn} href={cvLink} variant="primary" download={true} newTab>
             Download CV
             <svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
               <title />

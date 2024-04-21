@@ -8,7 +8,8 @@ const HOME_QUERY = groq`
     },
     aboutSection {
       title,
-      body
+      body,
+      cvLink
     },
     workSection {
       title,

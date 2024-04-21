@@ -1,16 +1,17 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import sgMail from '@sendgrid/mail';
+import { env } from '@/utils/env';
 
-sgMail.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY as string);
+sgMail.setApiKey(env.NEXT_PUBLIC_SENDGRID_API_KEY as string);
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { name, email, message } = req.body;
 
   const content = {
-    to: process.env.NEXT_PUBLIC_RECIEVER_EMAIL as string,
+    to: env.NEXT_PUBLIC_RECIEVER_EMAIL as string,
     from: {
       name: 'Portfolio message',
-      email: process.env.NEXT_PUBLIC_SENDER_EMAIL as string
+      email: env.NEXT_PUBLIC_SENDER_EMAIL as string
     },
     subject: `New Message from ${email}`,
     text: message,

@@ -14,6 +14,7 @@ interface Page {
     aboutSection: {
       title: string;
       body: PortableTextBlock;
+      cvLink: string;
     };
     workSection: {
       title: string;

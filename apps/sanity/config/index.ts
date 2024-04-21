@@ -16,7 +16,7 @@ class Config {
   constructor() {
     // Load environment-specific values
     this.envConfig = {
-      projectId: process.env.SANITY_STUDIO_PROJECT_ID,
+      projectId: process.env.SANITY_STUDIO_ID,
       dataset: process.env.SANITY_STUDIO_DATASET,
       token: process.env.SANITY_STUDIO_TOKEN,
     }

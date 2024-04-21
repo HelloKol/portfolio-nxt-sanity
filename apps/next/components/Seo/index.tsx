@@ -1,8 +1,9 @@
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useContext } from "react";
-import { Context } from "@/contexts/Context";
-import { SEO } from "@/types";
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useContext } from 'react';
+import { Context } from '@/contexts/Context';
+import { env } from '@/utils/env';
+import { SEO } from '@/types';
 
 interface Props {
   seo?: SEO;
@@ -31,18 +32,14 @@ const Seo = ({ seo }: Props) => {
   const { title, siteName, siteNamePosition, description, keywords, image } =
     seoSettings as unknown as SettingsSeo;
 
-  const path = process.env.NEXT_PUBLIC_BASE_URL + router.asPath;
+  const path = env.NEXT_PUBLIC_BASE_URL + router.asPath;
 
   return (
     <Head>
       <title>
-        {siteNamePosition === "after"
-          ? `${
-              seo?.title ? seo.title + " | " : title ? title + " | " : ""
-            } ${siteName}`
-          : `${siteName} ${
-              seo?.title ? " | " + seo.title : title ? " | " + title : ""
-            }`}
+        {siteNamePosition === 'after'
+          ? `${seo?.title ? seo.title + ' | ' : title ? title + ' | ' : ''} ${siteName}`
+          : `${siteName} ${seo?.title ? ' | ' + seo.title : title ? ' | ' + title : ''}`}
       </title>
 
       {/* Basic Meta Tags */}
@@ -54,7 +51,7 @@ const Seo = ({ seo }: Props) => {
       <meta name="keywords" content={seo?.keywords || keywords} />
 
       {/* Canonical Link Tag */}
-      <link rel="canonical" href={path || ""} />
+      <link rel="canonical" href={path || ''} />
 
       {/* Site Open Graph Tags */}
       <meta content="en_GB" property="og:locale" />
@@ -64,35 +61,20 @@ const Seo = ({ seo }: Props) => {
       <meta content={siteName} name="site_name" />
 
       {/* Content Open Graph Tags */}
-      <meta property="og:title" content={seo?.title || siteName || ""} />
-      <meta
-        property="og:description"
-        content={seo?.description || description}
-      />
-      <meta
-        property="og:image"
-        content={seo?.image?.asset?.url || image?.asset?.url}
-      />
-      <meta property="og:url" content={path || ""} />
+      <meta property="og:title" content={seo?.title || siteName || ''} />
+      <meta property="og:description" content={seo?.description || description} />
+      <meta property="og:image" content={seo?.image?.asset?.url || image?.asset?.url} />
+      <meta property="og:url" content={path || ''} />
 
       {/*<!-- Google / Search Engine Tags -->*/}
-      <meta property="name" content={seo?.title || siteName || ""} />
+      <meta property="name" content={seo?.title || siteName || ''} />
       <meta property="description" content={seo?.description || description} />
-      <meta
-        property="image"
-        content={seo?.image?.asset?.url || image?.asset?.url}
-      />
+      <meta property="image" content={seo?.image?.asset?.url || image?.asset?.url} />
 
       {/*<!-- Twitter Meta Tags -->*/}
-      <meta name="twitter:title" content={seo?.title || siteName || ""} />
-      <meta
-        name="twitter:description"
-        content={seo?.description || description}
-      />
-      <meta
-        name="twitter:image"
-        content={seo?.image?.asset?.url || image?.asset?.url}
-      />
+      <meta name="twitter:title" content={seo?.title || siteName || ''} />
+      <meta name="twitter:description" content={seo?.description || description} />
+      <meta name="twitter:image" content={seo?.image?.asset?.url || image?.asset?.url} />
       <meta name="twitter:card" content="summary_large_image" />
 
       {/* Favicon */}
