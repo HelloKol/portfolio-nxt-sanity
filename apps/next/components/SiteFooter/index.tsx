@@ -21,6 +21,7 @@ export default function SiteFooter() {
     return (
       socialMediaLinks &&
       socialMediaLinks.map(
+        // @ts-ignore
         (item: { title: string; url: string; email: string; _type: string }, index: number) => {
           const { _type, title, url, email } = item;
 
