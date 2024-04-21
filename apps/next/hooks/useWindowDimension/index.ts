@@ -3,7 +3,7 @@
  * * This hook returns the viewport/window height and width
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 type WindowDimention = {
   isMobile: boolean;
@@ -65,8 +65,8 @@ const useWindowDimension = (): WindowDimention => {
     }
 
     handleResize();
-    window.addEventListener("resize", handleResize);
-    return (): void => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return (): void => window.removeEventListener('resize', handleResize);
   }, []); // Empty array ensures that effect is only run on mount
 
   return {
@@ -74,7 +74,7 @@ const useWindowDimension = (): WindowDimention => {
     isMobileLarge,
     isTablet,
     isDesktop,
-    isWidescreen,
+    isWidescreen
   };
 };
 

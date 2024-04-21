@@ -4,6 +4,7 @@ import {deskTool} from 'sanity/desk'
 import {visionTool} from '@sanity/vision'
 import {TiersIcon, TagIcon, ProjectsIcon, PinIcon, CaseIcon, InfoOutlineIcon} from '@sanity/icons'
 import {simplerColorInput} from 'sanity-plugin-simpler-color-input'
+import {codeInput} from '@sanity/code-input'
 import {schemaTypes} from './schemaTypes'
 import config from './config'
 
@@ -20,6 +21,7 @@ export default defineConfig({
   dataset: config.dataset,
 
   plugins: [
+    codeInput(),
     simplerColorInput({
       defaultColorFormat: 'rgba',
       enableSearch: true,

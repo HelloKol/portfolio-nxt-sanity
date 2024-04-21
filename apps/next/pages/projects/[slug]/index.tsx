@@ -1,16 +1,14 @@
 import React from 'react';
 import { GetStaticPaths, GetStaticPropsResult } from 'next/types';
-import { PortableText } from '@portabletext/react';
 import groq from 'groq';
-import getYouTubeId from 'get-youtube-id';
-import YouTube, { YouTubeProps } from 'react-youtube';
-import { Button, Container, Grid, ImageTag, Main, Section, Seo } from '@/components';
+import ReactPlayer from 'react-player/youtube';
+import { Button, BlockContent, Container, Grid, ImageTag, Main, Section, Seo } from '@/components';
 import { useTheme } from '@/providers';
 import { Project, SEO } from '@/types';
 import { sanityClient } from '@/lib';
 import { PROJECT_QUERY } from '@/services/queries';
-import styles from './styles.module.scss';
 import { formatDate } from '@/utils';
+import styles from './styles.module.scss';
 
 interface Page {
   page: Project & {
@@ -18,11 +16,6 @@ interface Page {
   };
   work: Project[];
 }
-
-const youtubeOptions: YouTubeProps['opts'] = {
-  height: '600',
-  width: '100%'
-};
 
 const serializers = {
   types: {
@@ -48,14 +41,9 @@ const serializers = {
     },
     youtube: ({ value }: any) => {
       const { url } = value;
-      const id = getYouTubeId(url);
       return (
-        <div
-          style={{
-            margin: `0 0 30px 0`
-          }}
-        >
-          <YouTube videoId={id as string} opts={youtubeOptions} />
+        <div>
+          <ReactPlayer url={url} width="100%" height="100%" />
         </div>
       );
     }
@@ -148,7 +136,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
 
               {excerpt && (
                 <article className={styles.excerpt}>
-                  <PortableText value={excerpt} />
+                  <BlockContent value={excerpt} />
                 </article>
               )}
 
@@ -156,7 +144,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
 
               {body && (
                 <article className={styles.bodyCopy}>
-                  <PortableText value={body} components={serializers} />
+                  <BlockContent value={body} />
                 </article>
               )}
 

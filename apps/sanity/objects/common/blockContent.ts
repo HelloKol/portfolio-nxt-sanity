@@ -21,7 +21,6 @@ export default defineType({
         decorators: [
           {title: 'Strong', value: 'strong'},
           {title: 'Emphasis', value: 'em'},
-          {title: 'Code', value: 'code'},
         ],
         annotations: [
           {
@@ -48,5 +47,9 @@ export default defineType({
     defineArrayMember({
       type: 'youtube',
     }),
+    {
+      type: 'code',
+      title: 'Code block',
+    },
   ],
 })
