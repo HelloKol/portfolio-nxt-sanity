@@ -66,13 +66,12 @@ $rowGutterDesktopLarge: 30px;
 // Fonts
 $chillaxRegular: 'Chillax-Regular';
 $chillaxMedium: 'Chillax-Medium';
-$SatoshiRegular: 'Nunito-Regular';
-$SatoshiMedium: 'Nunito-Regular';
-$SatoshiBold: 'Nunito-Regular';
+$NunitoRegular: 'Nunito-Regular';
+$NunitoMedium: 'Nunito-Regular';
 
 // Global Vars
-$baseFontFamily: $SatoshiRegular; // may not need this
-$baseFontFamilyBold: $SatoshiMedium;
+$baseFontFamily: $NunitoRegular; // may not need this
+$baseFontFamilyBold: $NunitoMedium;
 $baseFontSize: 11;
 $baseLineHeight: 16;
 $baseLetterSpacingSize: 0;
@@ -86,7 +85,7 @@ $baseBackgroundColor: $white;
 // ==========================================================================
 
 // Normal
-$btnFontFamily: $SatoshiRegular;
+$btnFontFamily: $NunitoRegular;
 $btnTextTransform: none;
 // $btnFontSizes: 14;
 // $btnLineHeight: 16;
@@ -128,7 +127,7 @@ $linkTextDecoration: none;
 
 // Labels
 // ==========================================================================
-$baseInputLabelFamily: $SatoshiRegular;
+$baseInputLabelFamily: $NunitoRegular;
 $baseInputLabelFontSize: 14;
 $baseInputLabelLineHeight: 14;
 $baseInputLabelLetterSpacingSize: $baseLetterSpacingSize;
@@ -140,7 +139,7 @@ $baseInputLabelPaddingDesktopLarge: 0 0 12px;
 
 // Inputs
 // ==========================================================================
-$baseInputFamily: $SatoshiRegular;
+$baseInputFamily: $NunitoRegular;
 $baseInputFontSize: 12;
 $baseInputLineHeight: 12;
 $baseInputLetterSpacingSize: $baseLetterSpacingSize;
