@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player/youtube';
+import ReactPlayerCustom from 'react-player';
 import { PortableTextBlock } from '@portabletext/types';
 import { PortableText } from '@portabletext/react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 // import { solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { CopyCode, ImageTag } from '@/components';
+import styles from './styles.module.scss';
 
 interface Props {
   value: PortableTextBlock;
@@ -22,12 +24,9 @@ const Code = ({ value }: CodeProps) => {
   const { language, code } = value;
 
   return (
-    <div
-    // className="relative group"
-    >
+    <div>
       <SyntaxHighlighter
         language={language || 'text'}
-        // style={solarizedlight}
         customStyle={{
           background: '#1C1E20',
           borderRadius: `10px`,
@@ -46,22 +45,38 @@ const Code = ({ value }: CodeProps) => {
 
 const serializers = {
   types: {
+    videoLink: ({
+      value
+    }: {
+      value: {
+        href: string;
+      };
+    }) => {
+      const { href } = value;
+      return (
+        <div className={styles.videoPlayerWrapper}>
+          <ReactPlayerCustom width="100%" height="100%" url={href} playing muted controls />
+        </div>
+      );
+    },
     code: Code,
     image: ({ value }: any) => {
       const { asset } = value;
       return (
         <div
           style={{
-            height: `600px`,
+            position: 'relative',
             margin: `0 0 30px 0`
           }}
         >
           <ImageTag
             src={`${asset?.url}`}
             alt="project Image"
-            layout="fill"
-            objectFit="cover"
+            layout="responsive"
+            objectFit="contain"
             quality={100}
+            height={500}
+            width={500}
             priority={true}
             blurDataURL={asset?.metadata?.lqip}
           />

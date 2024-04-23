@@ -7,9 +7,6 @@
 .section {
   &.darkMode {
     color: $white;
-    .redInfo {
-      color: $lightRed;
-    }
     .whiteInfo {
       color: $white;
     }
@@ -27,9 +24,6 @@
   }
   &.lightMode {
     color: $black;
-    .redInfo {
-      color: $lightRed;
-    }
     .whiteInfo {
       color: $black;
     }
@@ -52,8 +46,9 @@
 }
 
 .projectInfo {
-  .redInfo {
+  .greyInfo {
     font-weight: 700;
+    color: $grey;
   }
 }
 
@@ -115,7 +110,7 @@
     span {
       display: block;
     }
-    .redInfo {
+    .greyInfo {
       margin: 25px 0 0 0;
       &:nth-of-type(1) {
         margin: 0;

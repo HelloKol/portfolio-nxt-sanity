@@ -20,32 +20,12 @@
 }
 
 @font-face {
-  font-family: 'Satoshi-Regular';
+  font-family: 'Nunito-Regular';
   src:
-    url('../../static/fonts/satoshi/Satoshi-Regular.woff2') format('woff2'),
-    url('../../static/fonts/satoshi/Satoshi-Regular.woff') format('woff'),
-    url('../../static/fonts/satoshi/Satoshi-Regular.ttf') format('truetype');
+    url('../../static/fonts/nunito/Nunito-Regular.woff2') format('woff2'),
+    url('../../static/fonts/nunito/Nunito-Regular.woff') format('woff'),
+    url('../../static/fonts/nunito/Nunito-Regular.ttf') format('truetype');
   font-weight: 400;
-  font-display: swap;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Satoshi-Medium';
-  src:
-    url('../../static/fonts/satoshi/Satoshi-Medium.woff2') format('woff2'),
-    url('../../static/fonts/satoshi/Satoshi-Medium.woff') format('woff'),
-    url('../../static/fonts/satoshi/Satoshi-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-display: swap;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Satoshi-Bold';
-  src:
-    url('../../static/fonts/satoshi/Satoshi-Bold.woff2') format('woff2'),
-    url('../../static/fonts/satoshi/Satoshi-Bold.woff') format('woff'),
-    url('../../static/fonts/satoshi/Satoshi-Bold.ttf') format('truetype');
-  font-weight: 700;
   font-display: swap;
   font-style: normal;
 }

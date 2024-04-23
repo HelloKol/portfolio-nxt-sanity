@@ -74,13 +74,13 @@ export default function Page({ page, work }: Page): JSX.Element | null {
               <div className={styles.projectInfo}>
                 {formattedDate && (
                   <>
-                    <span className={styles.redInfo}>DATE</span>
+                    <span className={styles.greyInfo}>Date</span>
                     <span className={styles.whiteInfo}> {formattedDate}</span>
                   </>
                 )}
                 {type && (
                   <>
-                    <span className={styles.redInfo}>ROLE</span>
+                    <span className={styles.greyInfo}>Role</span>
                     {type.map((item, index) => (
                       <span key={index} className={styles.whiteInfo}>
                         {item}
@@ -90,7 +90,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
                 )}
                 {tools && (
                   <>
-                    <span className={styles.redInfo}>TOOLS</span>
+                    <span className={styles.greyInfo}>Tools</span>
                     {tools.map((item, index) => (
                       <span key={index} className={styles.whiteInfo}>
                         {item}
