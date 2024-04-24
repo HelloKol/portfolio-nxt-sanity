@@ -15,7 +15,7 @@ const VideoPlayerCustom = ({ value }: Props) => {
 
   return (
     <div className={styles.videoPlayerWrapper}>
-      <ReactPlayer width="100%" height="100%" url={href} playing muted controls />
+      <ReactPlayer width="100%" height="100%" url={href} muted controls />
     </div>
   );
 };

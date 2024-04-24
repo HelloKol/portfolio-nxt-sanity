@@ -10,16 +10,18 @@
   align-items: center;
   &.darkMode {
     svg {
-      fill: $lightRed;
+      fill: $white;
     }
     .text {
-      color: $lightRed;
+      color: $white;
     }
-    .text:after {
-      background-color: $lightRed;
+    .text:after,
+    .dot {
+      background: $white;
     }
-
-    // Primary button variant
+    // =================
+    // Primary button
+    // =================
     &.primary {
       background: $white;
       color: $black;
@@ -28,6 +30,9 @@
       }
       svg {
         fill: $black;
+      }
+      .dot {
+        background: $black;
       }
     }
   }
@@ -38,9 +43,23 @@
     .text {
       color: $black;
     }
-    .text:after {
-      background-color: $black;
+    .text:after,
+    .dot {
+      background: $black;
     }
+    // =================
+    // Primary button
+    // =================
+    &.primary {
+      .dot {
+        background: $white;
+      }
+    }
+  }
+  .dot {
+    height: 5px;
+    width: 5px;
+    border-radius: 100%;
   }
 }
 
@@ -67,7 +86,9 @@
 }
 
 .button {
-  // Primary button variant
+  // =================
+  // Primary button
+  // =================
   &.primary {
     background: $black;
     padding: 15px 20px 15px 20px;
@@ -82,7 +103,9 @@
     }
   }
 
-  // Link variant
+  // =================
+  // Link button
+  // =================
   &.text {
     padding-bottom: 7px;
     font-size: 14px;
