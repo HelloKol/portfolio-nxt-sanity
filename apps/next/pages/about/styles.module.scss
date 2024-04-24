@@ -13,8 +13,8 @@
       }
     }
     .bubble {
-      color: $black;
-      background: $white;
+      color: $white;
+      border: 1px solid $white;
     }
   }
   &.lightMode {
@@ -24,8 +24,8 @@
       }
     }
     .bubble {
-      color: $white;
-      background: $black;
+      color: $black;
+      border: 1px solid $black;
     }
   }
 }
@@ -83,7 +83,7 @@
 
 .bubble {
   width: max-content;
-  padding: 5px 15px 5px 15px;
+  padding: 3px 10px 3px 10px;
   border-radius: 100px;
   text-transform: uppercase;
   -moz-user-select: none;
