@@ -42,27 +42,7 @@ export default function Button({
       download={download}
     >
       <span className={styles.text}>{children}</span>
-      {/* {withSvg && (
-        <svg viewBox="0 0 46 16" height="10" width="30" xmlns="http://www.w3.org/2000/svg">
-          <path
-            transform="translate(30)"
-            d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
-            data-name="Path 10"
-            id="Path_10"
-          ></path>
-        </svg>
-      )} */}
-
-      {withSvg && (
-        <div
-          style={{
-            height: '5px',
-            width: '5px',
-            background: 'white',
-            borderRadius: '100%'
-          }}
-        ></div>
-      )}
+      {withSvg && <div className={styles.dot}></div>}
     </Link>
   ) : (
     <button
@@ -75,32 +55,7 @@ export default function Button({
       {...rest}
     >
       <p>{children}</p>
-      {/* {withSvg && (
-        <svg
-          viewBox="0 0 46 16"
-          height="10"
-          width="30"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            transform="translate(30)"
-            d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
-            data-name="Path 10"
-            id="Path_10"
-          ></path>
-        </svg>
-      )} */}
-
-      {withSvg && (
-        <div
-          style={{
-            height: '5px',
-            width: '5px',
-            background: 'white',
-            borderRadius: '100%'
-          }}
-        ></div>
-      )}
+      {withSvg && <div className={styles.dot}></div>}
     </button>
   );
 }
