@@ -66,12 +66,12 @@ $rowGutterDesktopLarge: 30px;
 // Fonts
 $chillaxRegular: 'Chillax-Regular';
 $chillaxMedium: 'Chillax-Medium';
-$NunitoRegular: 'Nunito-Regular';
-$NunitoMedium: 'Nunito-Regular';
+$neueMontrealBook: 'PPNeueMontreal-Book';
+$neueMontrealMedium: 'PPNeueMontreal-Medium';
 
 // Global Vars
-$baseFontFamily: $NunitoRegular; // may not need this
-$baseFontFamilyBold: $NunitoMedium;
+$baseFontFamily: $neueMontrealBook; // may not need this
+$baseFontFamilyBold: $neueMontrealMedium;
 $baseFontSize: 11;
 $baseLineHeight: 16;
 $baseLetterSpacingSize: 0;
@@ -85,7 +85,7 @@ $baseBackgroundColor: $white;
 // ==========================================================================
 
 // Normal
-$btnFontFamily: $NunitoRegular;
+$btnFontFamily: $neueMontrealBook;
 $btnTextTransform: none;
 // $btnFontSizes: 14;
 // $btnLineHeight: 16;
@@ -127,7 +127,7 @@ $linkTextDecoration: none;
 
 // Labels
 // ==========================================================================
-$baseInputLabelFamily: $NunitoRegular;
+$baseInputLabelFamily: $neueMontrealBook;
 $baseInputLabelFontSize: 14;
 $baseInputLabelLineHeight: 14;
 $baseInputLabelLetterSpacingSize: $baseLetterSpacingSize;
@@ -139,7 +139,7 @@ $baseInputLabelPaddingDesktopLarge: 0 0 12px;
 
 // Inputs
 // ==========================================================================
-$baseInputFamily: $NunitoRegular;
+$baseInputFamily: $neueMontrealBook;
 $baseInputFontSize: 12;
 $baseInputLineHeight: 12;
 $baseInputLetterSpacingSize: $baseLetterSpacingSize;
