@@ -1,114 +1,123 @@
-@import "../../styles/base/variables";
+@import '../../styles/base/variables';
 
 // ==========================================================================
 // Global
 // ==========================================================================
 .button {
-    all: unset;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    &.darkMode {
-        svg {
-            fill: $lightRed;
-        }
-        .text {
-            color: $lightRed;
-        }
-        .text:after {
-            background-color: $lightRed;
-        }
-
-        // Primary button variant
-        &.primary {
-            background: $white;
-            color: $black;
-            .text {
-                color: $black;
-            }
-            svg {
-                fill: $black;
-            }
-        }
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  &.darkMode {
+    svg {
+      fill: $lightRed;
     }
-    &.lightMode {
-        svg {
-            fill: $black;
-        }
-        .text {
-            color: $black;
-        }
-        .text:after {
-            background-color: $black;
-        }
+    .text {
+      color: $lightRed;
     }
-}
+    .text:after {
+      background-color: $lightRed;
+    }
 
-.button svg {
-    transform: translateX(-8px);
-    transition: all 0.3s ease;
-}
-
-.button:hover svg {
-    transform: translateX(0);
-}
-
-.button:active svg {
-    transform: scale(0.9);
+    // Primary button variant
+    &.primary {
+      background: $white;
+      color: $black;
+      .text {
+        color: $black;
+      }
+      svg {
+        fill: $black;
+      }
+    }
+  }
+  &.lightMode {
+    svg {
+      fill: $black;
+    }
+    .text {
+      color: $black;
+    }
+    .text:after {
+      background-color: $black;
+    }
+  }
 }
 
 .button {
-    // Primary button variant
-    &.primary {
-        background: $black;
-        padding: 15px 20px 15px 20px;
-        border-radius: 150px;
-        color: $white;
-        width: max-content;
-        .text {
-            color: $white;
-        }
-        svg {
-            fill: $white;
-        }
-    }
+  svg,
+  > div {
+    transform: translateX(-8px);
+    transition: all 0.3s ease;
+  }
+}
 
-    // Link variant
-    &.text {
-        padding-bottom: 7px;
-        font-size: 14px;
-        padding-right: 15px;
-        text-transform: uppercase;
-        font-weight: 700;
-        position: relative;
-        padding-bottom: 20px;
-        &:after {
-            content: "";
-            position: absolute;
-            width: 100%;
-            transform: scaleX(1);
-            height: 1px;
-            bottom: 0;
-            left: 0;
-            transform-origin: bottom right;
-            transition: transform 0.25s ease-out;
-        }
-        &:hover {
-            &:after {
-                transform: scaleX(0);
-                transform-origin: bottom left;
-            }
-        }
+.button:hover {
+  svg,
+  > div {
+    transform: translateX(0);
+  }
+}
+
+.button:active {
+  svg,
+  > div {
+    transform: scale(0.9);
+  }
+}
+
+.button {
+  // Primary button variant
+  &.primary {
+    background: $black;
+    padding: 15px 20px 15px 20px;
+    border-radius: 150px;
+    color: $white;
+    width: max-content;
+    .text {
+      color: $white;
     }
+    svg {
+      fill: $white;
+    }
+  }
+
+  // Link variant
+  &.text {
+    padding-bottom: 7px;
+    font-size: 14px;
+    padding-right: 15px;
+    text-transform: uppercase;
+    font-weight: 700;
+    position: relative;
+    padding-bottom: 20px;
+    &:after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      transform: scaleX(1);
+      height: 1px;
+      bottom: 0;
+      left: 0;
+      transform-origin: bottom right;
+      transition: transform 0.25s ease-out;
+    }
+    &:hover {
+      &:after {
+        transform: scaleX(0);
+        transform-origin: bottom left;
+      }
+    }
+  }
 }
 
 // ==========================================================================
 // Mobile
 // ==========================================================================
 @media (min-width: $breakMobile) {
-    .button {
-        gap: 25px;
-    }
+  .button {
+    gap: 25px;
+  }
 }
 
 // ==========================================================================

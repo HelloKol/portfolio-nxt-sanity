@@ -4,21 +4,34 @@
 // ==========================================================================
 // Global
 // ==========================================================================
-
 .workSection {
+  &.darkMode {
+    .projectFeedItem {
+      .tags {
+        color: $white;
+      }
+    }
+  }
+  &.lightMode {
+    .projectFeedItem {
+      .tags {
+        color: $black;
+      }
+    }
+  }
+
   .projectFeedItem {
     .projectIndex,
     .projectCreated {
+      font-weight: 700;
       color: $grey;
-    }
-    .tags {
-      color: $lightRed;
     }
   }
 
   .title {
     align-self: center;
   }
+
   .projectFeedItem {
     padding: 20px 0 20px 0;
     .projectTitle {

@@ -4,42 +4,40 @@
 // ==========================================================================
 // Global
 // ==========================================================================
-.heroSection {
-  &.darkMode {
-    .title {
-      color: $white;
+.codeBlockWrapper {
+  position: relative;
+
+  button {
+    opacity: 0;
+    background: #3b3d40;
+    padding: 13px 12px 6px 12px;
+    border-radius: 5px;
+    transition: opacity 0.3s ease-in-out;
+    svg {
+      height: 18px;
+      width: 18px;
     }
   }
-  &.lightMode {
-    .title {
-      color: $black;
+  &:hover {
+    button {
+      opacity: 1;
     }
   }
-  .title {
-    font-family: $chillaxRegular;
-    text-transform: uppercase;
-    span {
-      display: block;
-    }
-    .titleCenter {
-      text-align: center;
-    }
-    .titleRight {
-      text-align: right;
-    }
-  }
+}
+.copyButtonWrapper {
+  position: absolute;
 }
 
 // ==========================================================================
 // Mobile
 // ==========================================================================
 @media (min-width: $breakMobile) {
-  .heroSection {
-    padding: 60px 0 0 0;
-    .title {
-      font-size: 17vw;
-      line-height: 17vw;
-    }
+  .codeBlockWrapper {
+    padding: 0 0 30px 0;
+  }
+  .copyButtonWrapper {
+    top: 20px;
+    right: 20px;
   }
 }
 
@@ -53,32 +51,16 @@
 // Tablet
 // ==========================================================================
 @media (min-width: $breakTablet) {
-  .heroSection {
-    padding: 0;
-    .title {
-      @include type-setting-responsive(50, 10, 100);
-    }
-  }
 }
 
 // ==========================================================================
 // Desktop
 // ==========================================================================
 @media (min-width: $breakDesktop) {
-  .heroSection {
-    .title {
-      @include type-setting-responsive(50, 10, 255);
-    }
-  }
 }
 
 // ==========================================================================
 // Desktop Large
 // ==========================================================================
 @media (min-width: $breakDesktopLarge) {
-  .heroSection {
-    .title {
-      @include type-setting-responsive(50, 10, 255);
-    }
-  }
 }

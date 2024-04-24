@@ -20,26 +20,23 @@ export default function SiteFooter() {
   const renderFooterLinks = () => {
     return (
       socialMediaLinks &&
-      socialMediaLinks.map(
-        // @ts-ignore
-        (item: { title: string; url: string; email: string; _type: string }, index: number) => {
-          const { _type, title, url, email } = item;
+      socialMediaLinks.map((item, index) => {
+        const { _type, title, url, email } = item;
 
-          if (_type === 'emailLink') {
-            return (
-              <Link key={index} href={`mailto:${email}`}>
-                {title}
-              </Link>
-            );
-          }
-
+        if (_type === 'emailLink') {
           return (
-            <Link key={index} href={url} target={'_blank'}>
+            <Link key={index} href={`mailto:${email}`}>
               {title}
             </Link>
           );
         }
-      )
+
+        return (
+          <Link key={index} href={url as string} target={'_blank'}>
+            {title}
+          </Link>
+        );
+      })
     );
   };
 

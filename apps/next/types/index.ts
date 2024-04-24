@@ -20,44 +20,19 @@ export interface Project {
     url: string;
     _type: string;
   }[];
-  coverImage: {
-    _type: string;
-    asset: {
-      _id: string;
-      url: string;
-      metadata: {
-        lqip: string;
-      };
-    };
-  };
-  featuredImage: {
-    _type: string;
-    asset: {
-      _id: string;
-      url: string;
-      metadata: {
-        lqip: string;
-      };
-    };
-  };
+  coverImage: Media;
+  featuredImage: Media;
 }
 
-export interface SingleMedia {
-  data: {
-    attributes: {
-      url: string;
-      caption: string;
+export interface Media {
+  _type: string;
+  asset: {
+    _id: string;
+    url: string;
+    metadata: {
+      lqip: string;
     };
   };
-}
-
-export interface MultiMedia {
-  data: {
-    attributes: {
-      url: string;
-      caption: string;
-    };
-  }[];
 }
 
 export interface SEO {
