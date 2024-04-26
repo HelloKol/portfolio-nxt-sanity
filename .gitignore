@@ -37,6 +37,7 @@ node_modules/
 jspm_packages/
 apps/sanity/.sanity
 apps/sanity/dist
+apps/next/data
 
 # Optional npm cache directory
 .npm

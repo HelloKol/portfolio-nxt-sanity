@@ -7,14 +7,18 @@
 .workSection {
   &.darkMode {
     .projectFeedItem {
-      .tags {
+      .tags,
+      .projectIndex,
+      .projectCreated {
         color: $white;
       }
     }
   }
   &.lightMode {
     .projectFeedItem {
-      .tags {
+      .tags,
+      .projectIndex,
+      .projectCreated {
         color: $black;
       }
     }
@@ -24,7 +28,8 @@
     .projectIndex,
     .projectCreated {
       font-weight: 700;
-      color: $grey;
+      color: $white;
+      font-family: $neueMontrealMedium;
     }
   }
 
@@ -35,12 +40,13 @@
   .projectFeedItem {
     padding: 20px 0 20px 0;
     .projectTitle {
-      font-family: $chillaxRegular;
+      font-family: $neueMontrealMedium;
     }
     .projectThumbnail {
       overflow: hidden;
       position: relative;
       .overlay {
+        font-family: $neueMontrealMedium;
         opacity: 0;
         z-index: 1;
         position: absolute;
