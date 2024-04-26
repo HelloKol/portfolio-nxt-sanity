@@ -44,14 +44,12 @@
 }
 
 .title {
-  font-family: $neueMontrealMedium;
 }
 
 .projectInfo {
   .greyInfo {
     font-weight: 700;
     color: $white;
-    font-family: $neueMontrealMedium;
   }
 }
 
@@ -82,10 +80,8 @@
   }
   p {
     color: $grey;
-    font-family: $neueMontrealMedium;
   }
   .nextProjectLink {
-    font-family: $neueMontrealMedium;
     text-transform: capitalize;
   }
 }

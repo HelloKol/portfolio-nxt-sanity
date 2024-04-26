@@ -27,7 +27,6 @@
   .projectFeedItem {
     .projectIndex,
     .projectCreated {
-      font-weight: 700;
       color: $white;
       font-family: $neueMontrealMedium;
     }
@@ -39,14 +38,10 @@
 
   .projectFeedItem {
     padding: 20px 0 20px 0;
-    .projectTitle {
-      font-family: $neueMontrealMedium;
-    }
     .projectThumbnail {
       overflow: hidden;
       position: relative;
       .overlay {
-        font-family: $neueMontrealMedium;
         opacity: 0;
         z-index: 1;
         position: absolute;
@@ -57,6 +52,7 @@
         justify-content: center;
         align-items: center;
         transition: opacity 0.5s ease-in-out;
+        font-family: $neueMontrealMedium;
         span {
           height: 120px;
           width: 120px;
