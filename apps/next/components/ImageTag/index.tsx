@@ -1,27 +1,28 @@
-import Image from "next/image";
-import styles from "./styles.module.scss";
+import Image from 'next/image';
+import styles from './styles.module.scss';
 
 interface props {
   src: string;
   alt?: string;
   height?: number;
   width?: number;
-  layout: "responsive" | "fill" | "intrinsic" | "fixed";
+  layout: 'responsive' | 'fill' | 'intrinsic' | 'fixed';
   priority?: boolean;
   imgClassName?: string;
   fadeUp?: boolean;
   quality?: number;
   blurDataURL?: string;
   objectFit?:
-    | "contain"
-    | "cover"
-    | "fill"
-    | "none"
-    | "scale-down"
-    | "inherit"
-    | "initial"
-    | "unset"
-    | "revert";
+    | 'contain'
+    | 'cover'
+    | 'fill'
+    | 'none'
+    | 'scale-down'
+    | 'inherit'
+    | 'initial'
+    | 'unset'
+    | 'revert';
+  imageRef: any;
 }
 
 const ImageTag = ({
@@ -31,24 +32,26 @@ const ImageTag = ({
   width,
   layout,
   priority = false,
-  imgClassName = "",
+  imgClassName = '',
   quality,
   objectFit,
   blurDataURL,
+  imageRef
 }: props): JSX.Element => {
   return (
     <div className={`${styles.imageWrap}`}>
       <Image
-        className={`${imgClassName || ""} ${styles.imageTag}`}
+        ref={imageRef}
+        className={`${imgClassName || ''} ${styles.imageTag}`}
         src={src}
-        alt={alt || ""}
+        alt={alt || ''}
         layout={layout}
         width={width || undefined}
         height={height || undefined}
         quality={quality || 100}
         priority={priority}
         objectFit={objectFit || undefined}
-        placeholder={blurDataURL ? "blur" : "empty"}
+        placeholder={blurDataURL ? 'blur' : 'empty'}
         blurDataURL={blurDataURL}
       />
     </div>

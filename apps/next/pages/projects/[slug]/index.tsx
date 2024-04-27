@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { GetStaticPaths, GetStaticPropsResult } from 'next/types';
 import groq from 'groq';
 import { Button, BlockContent, Container, Grid, ImageTag, Main, Section, Seo } from '@/components';
 import { useTheme } from '@/providers';
 import { Project, SEO } from '@/types';
-import { sanityClient } from '@/lib';
+import { sanityClient, useGSAP, gsap } from '@/lib';
 import { PROJECT_QUERY } from '@/services/queries';
 import { formatDate } from '@/utils';
 import styles from './styles.module.scss';
@@ -24,6 +24,37 @@ export default function Page({ page, work }: Page): JSX.Element | null {
   const isDarkMode = theme === 'dark-theme';
   const currentIndex = work.findIndex((item) => item.slug.current === slug.current);
   const nextIndex = currentIndex < work.length - 1 ? currentIndex + 1 : 0;
+
+  const containerRef = useRef(null);
+  const imageRef = useRef(null);
+
+  useGSAP(
+    () => {
+      gsap.set(imageRef.current, {
+        scale: 1.3,
+        filter: 'blur(50px)'
+      });
+
+      const tl = gsap.timeline();
+      tl.to(containerRef.current, {
+        duration: 1,
+        scaleX: 0,
+        transformOrigin: 'left',
+        ease: 'power2.inOut'
+      }).to(
+        imageRef.current,
+        {
+          duration: 1,
+          scale: 1,
+          filter: 'blur(0px)',
+          ease: 'power2.inOut'
+        },
+
+        '-=1'
+      );
+    },
+    { scope: containerRef }
+  );
 
   const renderCta = () => {
     if (!cta) return null;
@@ -55,19 +86,59 @@ export default function Page({ page, work }: Page): JSX.Element | null {
             {title && <h1 className={styles.title}>{title}</h1>}
           </Container>
 
-          {coverImage && (
-            <div className={styles.thumbmailImage}>
-              <ImageTag
-                src={`${coverImage?.asset?.url}`}
-                alt="project Image"
-                layout="fill"
-                objectFit="cover"
-                quality={100}
-                priority={true}
-                blurDataURL={coverImage?.asset?.metadata?.lqip}
-              />
+          {/* {coverImage && (
+            <div className={`thumbmailImageWrapper ${styles.thumbmailImage}`}>
+              <div
+                className="thumbnailImageBlock"
+                style={{
+                  height: '100%',
+                  width: `100%`
+                }}
+              >
+                <div
+                  className="thumbnailImageBlock"
+                  style={{
+                    height: '100%',
+                    width: `100%`
+                  }}
+                >
+                  <ImageTag
+                    src={`${coverImage?.asset?.url}`}
+                    alt="project Image"
+                    layout="fill"
+                    objectFit="cover"
+                    quality={100}
+                    priority={true}
+                    blurDataURL={coverImage?.asset?.metadata?.lqip}
+                  />
+                </div>
+              </div>
             </div>
-          )}
+          )} */}
+
+          <div style={{ position: 'relative', overflow: 'hidden' }} className={`${styles.thumbmailImage}`}>
+            <div
+              ref={containerRef}
+              style={{
+                width: '100%',
+                height: '100%',
+                position: 'absolute',
+                background: '#0F0F0F',
+                transformOrigin: 'left',
+                zIndex: 2
+              }}
+            />
+            <ImageTag
+              imageRef={imageRef}
+              src={`${coverImage?.asset?.url}`}
+              alt="project Image"
+              layout="fill"
+              objectFit="cover"
+              quality={100}
+              priority={true}
+              blurDataURL={coverImage?.asset?.metadata?.lqip}
+            />
+          </div>
 
           <Container className={styles.containerProjectInfo} isFluid={false}>
             <Grid>
