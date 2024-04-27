@@ -50,6 +50,10 @@
   }
 }
 
+.title {
+  font-family: $melodramaRegular;
+}
+
 .excerpt {
   @include article-responsive-new();
   p {
@@ -81,6 +85,7 @@
   .nextProjectLink {
     font-weight: 700;
     text-transform: capitalize;
+    font-family: $melodramaRegular;
   }
 }
 

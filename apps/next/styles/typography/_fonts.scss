@@ -1,20 +1,29 @@
 @font-face {
-  font-family: 'Chillax-Regular';
+  font-family: 'Melodrama-Light';
   src:
-    url('../../static/fonts/chillax/Chillax-Regular.woff2') format('woff2'),
-    url('../../static/fonts/chillax/Chillax-Regular.woff') format('woff'),
-    url('../../static/fonts/chillax/Chillax-Regular.ttf') format('truetype');
+    url('../../static/fonts/melodrama/Melodrama-Light.woff2') format('woff2'),
+    url('../../static/fonts/melodrama/Melodrama-Light.woff') format('woff'),
+    url('../../static/fonts/melodrama/Melodrama-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Melodrama-Regular';
+  src:
+    url('../../static/fonts/melodrama/Melodrama-Regular.woff2') format('woff2'),
+    url('../../static/fonts/melodrama/Melodrama-Regular.woff') format('woff'),
+    url('../../static/fonts/melodrama/Melodrama-Regular.ttf') format('truetype');
   font-weight: 400;
   font-display: swap;
   font-style: normal;
 }
-
 @font-face {
-  font-family: 'Chillax-Medium';
+  font-family: 'Melodrama-Medium';
   src:
-    url('../../static/fonts/chillax/Chillax-Medium.woff2') format('woff2'),
-    url('../../static/fonts/chillax/Chillax-Medium.woff') format('woff'),
-    url('../../static/fonts/chillax/Chillax-Medium.ttf') format('truetype');
+    url('../../static/fonts/melodrama/Melodrama-Medium.woff2') format('woff2'),
+    url('../../static/fonts/melodrama/Melodrama-Medium.woff') format('woff'),
+    url('../../static/fonts/melodrama/Melodrama-Medium.ttf') format('truetype');
   font-weight: 500;
   font-display: swap;
   font-style: normal;

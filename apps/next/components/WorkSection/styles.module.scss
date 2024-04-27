@@ -38,6 +38,9 @@
 
   .projectFeedItem {
     padding: 20px 0 20px 0;
+    .projectTitle {
+      font-family: $melodramaRegular;
+    }
     .projectThumbnail {
       overflow: hidden;
       position: relative;
