@@ -1,104 +1,101 @@
-@import "../base/variables";
+@import '../base/variables';
 
 @mixin type-setting($fontSize, $lineHeight, $letterSpacing) {
-    font-size: #{$fontSize}px;
-    line-height: #{$fontSize}px;
-    letter-spacing: #{$letterSpacing}px;
+  font-size: #{$fontSize}px;
+  line-height: #{$fontSize}px;
+  letter-spacing: #{$letterSpacing}px;
 }
 
 @mixin type-setting-responsive($min, $preferred, $max) {
-    font-size: min(max(#{$min}px, #{$preferred}vw), #{$max}px);
-    line-height: min(max(#{$min}px, #{$preferred}vw), #{$max}px);
+  font-size: min(max(#{$min}px, #{$preferred}vw), #{$max}px);
+  line-height: min(max(#{$min}px, #{$preferred}vw), #{$max}px);
 }
 
 @mixin line-height-responsive($min, $preferred, $max) {
-    line-height: min(max(#{$min}px, #{$preferred}vw), #{$max}px);
+  line-height: min(max(#{$min}px, #{$preferred}vw), #{$max}px);
 }
 
 @mixin article-responsive($min, $preferred, $max) {
-    h1 {
-        font-size: min(max(#{$min}px, #{$preferred * 5}vw), #{$max}px);
-        line-height: min(max(#{$min}px, #{$preferred * 5}vw), #{$max}px);
-    }
-    h2 {
-        font-size: min(max(#{$min}px, #{$preferred * 4}vw), #{$max}px);
-        line-height: min(max(#{$min}px, #{$preferred * 4}vw), #{$max}px);
-    }
-    h3 {
-        font-size: min(max(#{$min}px, #{$preferred * 2.2}vw), #{$max}px);
-        line-height: min(max(#{$min}px, #{$preferred * 2.2}vw), #{$max}px);
-    }
-    h4 {
-        font-size: min(max(#{$min}px, #{$preferred * 1.5}vw), #{$max}px);
-        line-height: min(max(#{$min}px, #{$preferred * 1.5}vw), #{$max}px);
-    }
-    p {
-        font-size: min(max(#{$min}px, #{$preferred}vw), #{$max}px);
-        line-height: min(max(#{$min}px, #{$preferred}vw), #{$max}px);
-    }
+  h1 {
+    font-size: min(max(#{$min}px, #{$preferred * 5}vw), #{$max}px);
+    line-height: min(max(#{$min}px, #{$preferred * 5}vw), #{$max}px);
+  }
+  h2 {
+    font-size: min(max(#{$min}px, #{$preferred * 4}vw), #{$max}px);
+    line-height: min(max(#{$min}px, #{$preferred * 4}vw), #{$max}px);
+  }
+  h3 {
+    font-size: min(max(#{$min}px, #{$preferred * 2.2}vw), #{$max}px);
+    line-height: min(max(#{$min}px, #{$preferred * 2.2}vw), #{$max}px);
+  }
+  h4 {
+    font-size: min(max(#{$min}px, #{$preferred * 1.5}vw), #{$max}px);
+    line-height: min(max(#{$min}px, #{$preferred * 1.8}vw), #{$max}px);
+  }
+  p {
+    font-size: min(max(#{$min}px, #{$preferred}vw), #{$max}px);
+    line-height: min(max(#{$min * 1.6}px, #{$preferred}vw), #{$max}px);
+  }
 }
 
 @mixin article-responsive-new() {
-    @media (min-width: $breakMobile) {
-        @include article-responsive(14, 4, 40);
-        h3 {
-            @include line-height-responsive(40, 11, 100);
-            margin: 0 0 55px 0;
-        }
-        h4 {
-            @include line-height-responsive(10, 10, 50);
-            margin: 0 0 35px 0;
-        }
-        p {
-            @include line-height-responsive(20, 7, 50);
-            margin: 0 0 15px 0;
-        }
+  @media (min-width: $breakMobile) {
+    @include article-responsive(16, 4, 40);
+    h3 {
+      margin: 0 0 55px 0;
     }
+    h4 {
+      margin: 0 0 35px 0;
+    }
+    p {
+      margin: 0 0 15px 0;
+    }
+  }
 
-    @media (min-width: $breakTablet) {
-        @include article-responsive(14, 1.7, 65);
-        h3 {
-            @include line-height-responsive(26, 4, 100);
-            margin: 0 0 30px 0;
-        }
-        h4 {
-            @include line-height-responsive(26, 4, 100);
-            margin: 0 0 20px 0;
-        }
-        p {
-            @include line-height-responsive(20, 3, 50);
-        }
+  @media (min-width: $breakTablet) {
+    @include article-responsive(14, 1.7, 65);
+    h3 {
+      @include line-height-responsive(26, 4, 100);
+      margin: 0 0 30px 0;
     }
+    h4 {
+      @include line-height-responsive(26, 4, 100);
+      margin: 0 0 20px 0;
+    }
+    p {
+      @include line-height-responsive(20, 3, 50);
+    }
+  }
 
-    @media (min-width: $breakDesktop) {
-        @include article-responsive(16, 1.5, 100);
-        h3 {
-            @include line-height-responsive(26, 3.5, 100);
-            margin: 0 0 60px 0;
-        }
-        h4 {
-            @include line-height-responsive(26, 3.5, 100);
-            margin: 0 0 40px 0;
-        }
-        p {
-            @include line-height-responsive(16, 2.6, 50);
-        }
+  @media (min-width: $breakDesktop) {
+    @include article-responsive(16, 1.5, 100);
+    h3 {
+      @include line-height-responsive(26, 3.5, 100);
+      margin: 0 0 60px 0;
     }
+    h4 {
+      @include line-height-responsive(26, 3.5, 100);
+      margin: 0 0 40px 0;
+    }
+    p {
+      @include line-height-responsive(16, 2.6, 50);
+    }
+  }
 
-    @media (min-width: $breakDesktopLarge) {
-        @include article-responsive(20, 1.5, 100);
-        h3 {
-            @include line-height-responsive(26, 4, 150);
-            margin: 0 0 80px 0;
-        }
-        h4 {
-            @include line-height-responsive(26, 3, 150);
-            margin: 0 0 50px 0;
-        }
-        p {
-            @include type-setting-responsive(24, 1, 35);
-            @include line-height-responsive(35, 1.8, 55);
-            margin: 0 0 20px 0;
-        }
+  @media (min-width: $breakDesktopLarge) {
+    @include article-responsive(20, 1.5, 100);
+    h3 {
+      @include line-height-responsive(26, 4, 150);
+      margin: 0 0 80px 0;
     }
+    h4 {
+      @include line-height-responsive(26, 3, 150);
+      margin: 0 0 50px 0;
+    }
+    p {
+      @include type-setting-responsive(24, 1, 35);
+      @include line-height-responsive(35, 1.8, 55);
+      margin: 0 0 20px 0;
+    }
+  }
 }

@@ -1,182 +1,183 @@
-@import "../../styles/base/variables";
-@import "../../styles/mixins/mixins";
+@import '../../styles/base/variables';
+@import '../../styles/mixins/mixins';
 
 // ==========================================================================
 // Global
 // ==========================================================================
 .section {
-    &.darkMode {
-        .title,
-        .projectTitle,
-        .projectTags {
-            color: $white;
-        }
-        .filterWrap {
-            border-bottom: 1px solid $grey;
-        }
-        .projectView,
-        .filterList {
-            p {
-                color: $grey;
-            }
-            .filterBtn {
-                color: $grey;
-                &.activeFilterBtn {
-                    color: $white;
-                }
-            }
-        }
+  &.darkMode {
+    .title,
+    .projectTitle,
+    .projectTags {
+      color: $white;
     }
-    &.lightMode {
-        .title,
-        .projectTitle,
-        .projectTags {
-            color: $black;
-        }
-        .filterWrap {
-            border-bottom: 1px solid $black;
-        }
-        .projectView,
-        .filterList {
-            p {
-                color: $black;
-            }
-            .filterBtn {
-                color: $grey;
-                &.activeFilterBtn {
-                    color: $black;
-                }
-            }
-        }
+    .filterWrap {
+      border-bottom: 1px solid $grey;
     }
+    .projectView,
+    .filterList {
+      p {
+        color: $grey;
+      }
+      .filterBtn {
+        color: $grey;
+        &.activeFilterBtn {
+          color: $white;
+        }
+      }
+    }
+  }
+  &.lightMode {
+    .title,
+    .projectTitle,
+    .projectTags {
+      color: $black;
+    }
+    .filterWrap {
+      border-bottom: 1px solid $black;
+    }
+    .projectView,
+    .filterList {
+      p {
+        color: $black;
+      }
+      .filterBtn {
+        color: $grey;
+        &.activeFilterBtn {
+          color: $black;
+        }
+      }
+    }
+  }
 }
 
 .title {
-    width: fit-content;
+  width: fit-content;
+  font-family: $melodramaRegular;
 }
 
 .filterWrap,
 .projectView,
 .filterList {
-    user-select: none;
-    p {
-        text-transform: uppercase;
-    }
-    .filterBtn {
-        transition: color 1s cubic-bezier(0.16, 1, 0.3, 1) 0s;
-    }
+  user-select: none;
+  p {
+    text-transform: uppercase;
+  }
+  .filterBtn {
+    transition: color 1s cubic-bezier(0.16, 1, 0.3, 1) 0s;
+  }
 }
 
 .projectView {
-    .filterBtn {
-        cursor: not-allowed;
-    }
+  .filterBtn {
+    cursor: not-allowed;
+  }
 }
 
 .filterWrap {
-    padding-bottom: 15px;
-    justify-content: space-between;
+  padding-bottom: 15px;
+  justify-content: space-between;
 }
 
 .projectItem {
-    cursor: pointer;
-    .thumbmailImage {
-        overflow: hidden;
-        position: relative;
-        transition: height 0.5s ease-in-out;
-        .overlay {
-            opacity: 0;
-            z-index: 1;
-            position: absolute;
-            background: rgba(0, 0, 0, 0.4);
-            height: 100%;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.5s ease-in-out;
-            span {
-                height: 120px;
-                width: 120px;
-                background: red;
-                border-radius: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                transition: transform 0.5s ease-in-out;
-                transform: scale(0.2);
-            }
-        }
-        img {
-            transition: transform 0.5s ease-in-out;
-        }
-        &:hover {
-            img {
-                transform: scale(1.06);
-            }
-            .overlay {
-                opacity: 1;
-                span {
-                    transform: scale(1);
-                }
-            }
-        }
+  cursor: pointer;
+  .thumbmailImage {
+    overflow: hidden;
+    position: relative;
+    transition: height 0.5s ease-in-out;
+    .overlay {
+      opacity: 0;
+      z-index: 1;
+      position: absolute;
+      background: rgba(0, 0, 0, 0.4);
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.5s ease-in-out;
+      span {
+        height: 120px;
+        width: 120px;
+        background: red;
+        border-radius: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: transform 0.5s ease-in-out;
+        transform: scale(0.2);
+      }
     }
-    .projectTags {
-        line-height: 25px;
+    img {
+      transition: transform 0.5s ease-in-out;
     }
+    &:hover {
+      img {
+        transform: scale(1.06);
+      }
+      .overlay {
+        opacity: 1;
+        span {
+          transform: scale(1);
+        }
+      }
+    }
+  }
+  .projectTags {
+    line-height: 25px;
+  }
 }
 
 // ==========================================================================
 // Mobile
 // ==========================================================================
 @media (min-width: $breakMobile) {
-    .section {
-        padding: 40px 0 40px 0;
+  .section {
+    padding: 40px 0 40px 0;
+  }
+  .title {
+    grid-column: 1/13;
+    margin: auto;
+    @include type-setting-responsive(40, 13, 100);
+  }
+  .filterWrap {
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+    margin: 90px 0 0 0;
+  }
+  .projectView,
+  .filterList {
+    gap: 30px;
+    p {
+      font-size: 12px;
+      margin: 0 30px 0 0;
     }
-    .title {
-        grid-column: 1/13;
-        margin: auto;
-        @include type-setting-responsive(40, 13, 100);
+  }
+  .projectFeedMobile {
+    grid-column: 1/13;
+    display: flex;
+    flex-direction: column;
+    margin: 90px 0 0 0;
+  }
+  .projectItem {
+    gap: 20px;
+    padding: 20px 0 20px 0;
+    .thumbmailImage {
+      width: 100%;
+      height: 300px;
     }
-    .filterWrap {
-        display: none;
-        flex-direction: column;
-        gap: 20px;
-        margin: 90px 0 0 0;
+    .projectTitleWrap {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      gap: 15px;
+      margin: 20px 0 0 0;
     }
-    .projectView,
-    .filterList {
-        gap: 30px;
-        p {
-            font-size: 12px;
-            margin: 0 30px 0 0;
-        }
+    .projectTitle {
+      font-size: 30px;
     }
-    .projectFeedMobile {
-        grid-column: 1/13;
-        display: flex;
-        flex-direction: column;
-        margin: 90px 0 0 0;
-    }
-    .projectItem {
-        gap: 20px;
-        padding: 20px 0 20px 0;
-        .thumbmailImage {
-            width: 100%;
-            height: 300px;
-        }
-        .projectTitleWrap {
-            display: flex;
-            justify-content: space-between;
-            flex-direction: column;
-            gap: 15px;
-            margin: 20px 0 0 0;
-        }
-        .projectTitle {
-            font-size: 30px;
-        }
-    }
+  }
 }
 
 // ==========================================================================
@@ -189,82 +190,82 @@
 // Tablet
 // ==========================================================================
 @media (min-width: $breakTablet) {
-    .section {
-        padding: 40px 0 60px 0;
+  .section {
+    padding: 40px 0 60px 0;
+  }
+  .title {
+    @include type-setting-responsive(40, 13, 100);
+  }
+  .projectItem {
+    .thumbmailImage {
+      height: 450px;
     }
-    .title {
-        @include type-setting-responsive(40, 13, 100);
-    }
-    .projectItem {
-        .thumbmailImage {
-            height: 450px;
-        }
-    }
+  }
 }
 
 // ==========================================================================
 // Desktop
 // ==========================================================================
 @media (min-width: $breakDesktop) {
-    .section {
-        padding: 0;
+  .section {
+    padding: 0;
+  }
+  .title {
+    margin: 0 0 0 auto;
+    @include type-setting-responsive(50, 7, 150);
+  }
+  .filterWrap {
+    grid-column: 1/13;
+  }
+  .filterWrap,
+  .projectView,
+  .filterList {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .projectView,
+  .filterList {
+    gap: 45px;
+    p {
+      font-size: 16px;
+      margin: 0 90px 0 0;
     }
-    .title {
-        margin: 0 0 0 auto;
-        @include type-setting-responsive(50, 7, 150);
+  }
+  .projectFeedDesktop {
+    grid-column: 1/13;
+    margin: 90px 0 0 0;
+  }
+  .projectItem {
+    display: block;
+    padding: 0;
+    margin: 0 0 120px 0;
+    &:nth-child(even) {
+      grid-column: 1/11;
     }
-    .filterWrap {
-        grid-column: 1/13;
+    &:nth-child(odd) {
+      grid-column: 3/13;
     }
-    .filterWrap,
-    .projectView,
-    .filterList {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
+    .thumbmailImage {
+      height: 600px;
     }
-    .projectView,
-    .filterList {
-        gap: 45px;
-        p {
-            font-size: 16px;
-            margin: 0 90px 0 0;
-        }
+    .projectTitle {
+      font-size: 30px;
+      margin: 20px 0 0 0;
     }
-    .projectFeedDesktop {
-        grid-column: 1/13;
-        margin: 90px 0 0 0;
-    }
-    .projectItem {
-        display: block;
-        padding: 0;
-        margin: 0 0 120px 0;
-        &:nth-child(even) {
-            grid-column: 1/11;
-        }
-        &:nth-child(odd) {
-            grid-column: 3/13;
-        }
-        .thumbmailImage {
-            height: 600px;
-        }
-        .projectTitle {
-            font-size: 30px;
-            margin: 20px 0 0 0;
-        }
-    }
+  }
 }
 
 // ==========================================================================
 // Desktop Large
 // ==========================================================================
 @media (min-width: $breakDesktopLarge) {
-    .projectItem {
-        .projectTitle {
-            font-size: 40px;
-        }
-        .thumbmailImage {
-            height: 900px;
-        }
+  .projectItem {
+    .projectTitle {
+      font-size: 40px;
     }
+    .thumbmailImage {
+      height: 900px;
+    }
+  }
 }

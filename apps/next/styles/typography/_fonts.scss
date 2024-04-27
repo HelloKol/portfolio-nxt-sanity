@@ -1,45 +1,58 @@
 @font-face {
-  font-family: 'Chillax-Regular';
+  font-family: 'Melodrama-Light';
   src:
-    url('../../static/fonts/chillax/Chillax-Regular.woff2') format('woff2'),
-    url('../../static/fonts/chillax/Chillax-Regular.woff') format('woff'),
-    url('../../static/fonts/chillax/Chillax-Regular.ttf') format('truetype');
+    url('../../static/fonts/melodrama/Melodrama-Light.woff2') format('woff2'),
+    url('../../static/fonts/melodrama/Melodrama-Light.woff') format('woff'),
+    url('../../static/fonts/melodrama/Melodrama-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Melodrama-Regular';
+  src:
+    url('../../static/fonts/melodrama/Melodrama-Regular.woff2') format('woff2'),
+    url('../../static/fonts/melodrama/Melodrama-Regular.woff') format('woff'),
+    url('../../static/fonts/melodrama/Melodrama-Regular.ttf') format('truetype');
   font-weight: 400;
   font-display: swap;
   font-style: normal;
 }
-
 @font-face {
-  font-family: 'Chillax-Medium';
+  font-family: 'Melodrama-Medium';
   src:
-    url('../../static/fonts/chillax/Chillax-Medium.woff2') format('woff2'),
-    url('../../static/fonts/chillax/Chillax-Medium.woff') format('woff'),
-    url('../../static/fonts/chillax/Chillax-Medium.ttf') format('truetype');
+    url('../../static/fonts/melodrama/Melodrama-Medium.woff2') format('woff2'),
+    url('../../static/fonts/melodrama/Melodrama-Medium.woff') format('woff'),
+    url('../../static/fonts/melodrama/Melodrama-Medium.ttf') format('truetype');
   font-weight: 500;
   font-display: swap;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'PPNeueMontreal-Bold';
-  src: url('../../static/fonts/neueMontreal/PPNeueMontreal-Bold.otf') format('otf');
-  font-weight: 700;
-  font-display: swap;
+  font-family: 'PP Neue Montreal Book';
   font-style: normal;
+  font-weight: normal;
+  src: url('../../static/fonts/neueMontreal/ppneuemontreal-book.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'PPNeueMontreal-Medium';
-  src: url('../../static/fonts/neueMontreal/PPNeueMontreal-Medium.otf') format('otf');
-  font-weight: 500;
-  font-display: swap;
+  font-family: 'PP Neue Montreal Thin';
   font-style: normal;
+  font-weight: normal;
+  src: url('../../static/fonts/neueMontreal/ppneuemontreal-thin.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'PPNeueMontreal-Book';
-  src: url('../../static/fonts/neueMontreal/PPNeueMontreal-Book.otf') format('otf');
-  font-weight: 400;
-  font-display: swap;
+  font-family: 'PP Neue Montreal Medium';
   font-style: normal;
+  font-weight: normal;
+  src: url('../../static/fonts/neueMontreal/ppneuemontreal-medium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'PP Neue Montreal Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../../static/fonts/neueMontreal/ppneuemontreal-bold.woff') format('woff');
 }

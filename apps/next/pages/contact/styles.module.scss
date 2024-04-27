@@ -1,9 +1,12 @@
-@import "../../styles/base/variables";
-@import "../../styles/mixins/mixins";
+@import '../../styles/base/variables';
+@import '../../styles/mixins/mixins';
 
 // ==========================================================================
 // Global
 // ==========================================================================
+.title {
+  font-family: $melodramaRegular;
+}
 
 // ==========================================================================
 // Mobile

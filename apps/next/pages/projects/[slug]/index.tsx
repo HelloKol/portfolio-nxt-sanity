@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import Link from 'next/link';
 import { GetStaticPaths, GetStaticPropsResult } from 'next/types';
 import groq from 'groq';
 import SplitType from 'split-type';
@@ -215,13 +216,9 @@ export default function Page({ page, work }: Page): JSX.Element | null {
                 <div className={styles.divider} />
                 <p>Next</p>
                 {nextIndex !== null && (
-                  <Button
-                    className={styles.nextProjectLink}
-                    href={`/projects/${work[nextIndex].slug.current}`}
-                    variant="text"
-                  >
+                  <Link className={styles.nextProjectLink} href={`/projects/${work[nextIndex].slug.current}`}>
                     {work[nextIndex].title}
-                  </Button>
+                  </Link>
                 )}
               </div>
             </Grid>
