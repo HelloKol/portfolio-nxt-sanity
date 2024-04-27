@@ -1,5 +1,6 @@
 export * from 'gsap';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
-gsap.registerPlugin(useGSAP);
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 export { useGSAP };

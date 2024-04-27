@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { GetStaticPaths, GetStaticPropsResult } from 'next/types';
 import groq from 'groq';
+import SplitType from 'split-type';
 import { Button, BlockContent, Container, Grid, ImageTag, Main, Section, Seo } from '@/components';
 import { useTheme } from '@/providers';
 import { Project, SEO } from '@/types';
@@ -25,11 +26,32 @@ export default function Page({ page, work }: Page): JSX.Element | null {
   const currentIndex = work.findIndex((item) => item.slug.current === slug.current);
   const nextIndex = currentIndex < work.length - 1 ? currentIndex + 1 : 0;
 
+  const textRef = useRef(null);
   const containerRef = useRef(null);
   const imageRef = useRef(null);
 
   useGSAP(
     () => {
+      // Text reveal
+      const split = new SplitType(textRef.current, { type: 'chars' });
+      const chars = split.chars;
+
+      gsap.fromTo(
+        chars,
+        {
+          y: 150,
+          opacity: 0
+        },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.05,
+          duration: 1.5,
+          ease: 'power4.out'
+        }
+      );
+
+      // Image block reveal
       gsap.set(imageRef.current, {
         scale: 1.3,
         filter: 'blur(50px)'
@@ -83,7 +105,11 @@ export default function Page({ page, work }: Page): JSX.Element | null {
       <Main>
         <Section className={`${styles.section} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
           <Container className={styles.container} isFluid={false}>
-            {title && <h1 className={styles.title}>{title}</h1>}
+            {title && (
+              <h1 ref={textRef} className={styles.title}>
+                {title}
+              </h1>
+            )}
           </Container>
 
           {/* {coverImage && (
