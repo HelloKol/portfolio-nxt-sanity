@@ -15,11 +15,14 @@
       color: $black;
     }
   }
+
   .title {
     font-family: $melodramaRegular;
     text-transform: uppercase;
+    overflow: hidden;
     span {
       display: block;
+      overflow: hidden;
     }
     .titleCenter {
       text-align: center;
@@ -37,7 +40,7 @@
   .heroSection {
     padding: 60px 0 0 0;
     .title {
-      font-size: 17vw;
+      font-size: 16vw;
       line-height: 17vw;
     }
   }

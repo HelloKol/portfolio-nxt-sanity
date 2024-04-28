@@ -1,5 +1,8 @@
+import React, { useEffect, useRef } from 'react';
 import { Container, Section } from '@/components';
+import { useGSAP, gsap } from '@/lib';
 import { useTheme } from '@/providers';
+import SplitType from 'split-type';
 import styles from './styles.module.scss';
 
 interface Props {
@@ -10,7 +13,38 @@ interface Props {
 
 const HeroSection = ({ data }: Props): JSX.Element | null => {
   const { theme } = useTheme();
+  const titleRef1 = useRef<HTMLHeadingElement>(null);
+  const titleRef2 = useRef<HTMLHeadingElement>(null);
+  const titleRef3 = useRef<HTMLHeadingElement>(null);
   const isDarkMode = theme === 'dark-theme';
+
+  useGSAP(() => {
+    const split1 = new SplitType(titleRef1.current!, { types: 'chars' });
+    const split2 = new SplitType(titleRef2.current!, { types: 'chars' });
+    const split3 = new SplitType(titleRef3.current!, { types: 'chars' });
+
+    const animateTitle = (split: any, delay: number) => {
+      gsap.fromTo(
+        split.chars,
+        {
+          y: 150,
+          opacity: 0
+        },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.1,
+          duration: 1.5,
+          delay: delay,
+          ease: 'power4.out'
+        }
+      );
+    };
+
+    animateTitle(split1, 0);
+    animateTitle(split2, 0.5);
+    animateTitle(split3, 0.7);
+  });
 
   if (!data) return null;
   const { title } = data;
@@ -24,9 +58,15 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
       <Container isFluid={false}>
         {title && (
           <h1 className={styles.title}>
-            <span className={styles.titleLeft}>{heroTitle1}</span>
-            <span className={styles.titleRight}>{heroTitle2}</span>
-            <span className={styles.titleCenter}>{heroTitle3}</span>
+            <span className={styles.titleLeft} ref={titleRef1}>
+              {heroTitle1}
+            </span>
+            <span className={styles.titleRight} ref={titleRef2}>
+              {heroTitle2}
+            </span>
+            <span className={styles.titleCenter} ref={titleRef3}>
+              {heroTitle3}
+            </span>
           </h1>
         )}
       </Container>
