@@ -192,18 +192,8 @@ export default function Page({ page, work }: Page): JSX.Element | null {
             )}
           </Container>
 
-          <div style={{ position: 'relative', overflow: 'hidden' }} className={`${styles.projectThumbnail}`}>
-            <div
-              ref={containerRef}
-              style={{
-                width: '100%',
-                height: '100%',
-                position: 'absolute',
-                background: '#0F0F0F',
-                transformOrigin: 'left',
-                zIndex: 2
-              }}
-            />
+          <div className={`${styles.projectThumbnail}`}>
+            <div ref={containerRef} className={styles.block} />
             <ImageTag
               imageRef={imageRef}
               src={`${coverImage?.asset?.url}`}

@@ -122,18 +122,8 @@ export default function About({ page }: Page): JSX.Element | null {
           <Container isFluid={false}>
             <div className={styles.left}>
               {featuredImage && (
-                <div style={{ position: 'relative', overflow: 'hidden' }} className={styles.imageWrapper}>
-                  <div
-                    ref={containerRef}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      position: 'absolute',
-                      background: '#0F0F0F',
-                      transformOrigin: 'left',
-                      zIndex: 2
-                    }}
-                  />
+                <div className={styles.imageWrapper}>
+                  <div ref={containerRef} className={styles.block} />
                   <ImageTag
                     imageRef={imageRef}
                     src={`${featuredImage?.asset?.url}`}

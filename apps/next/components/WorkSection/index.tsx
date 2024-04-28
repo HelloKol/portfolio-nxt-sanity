@@ -206,20 +206,8 @@ const WorkSection = ({ data }: Props): JSX.Element | null => {
                     <span>View project</span>
                   </div>
 
-                  <div
-                    ref={(el) => (listItemRefs.current[index] = el)}
-                    style={{ position: 'relative', overflow: 'hidden', height: '100%', width: '100%' }}
-                  >
-                    <div
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        position: 'absolute',
-                        background: '#0F0F0F',
-                        transformOrigin: 'left',
-                        zIndex: 2
-                      }}
-                    />
+                  <div ref={(el) => (listItemRefs.current[index] = el)} className={styles.blockWrapper}>
+                    <div className={styles.block} />
                     <ImageTag
                       src={`${coverImage?.asset?.url}`}
                       alt="project Image"
