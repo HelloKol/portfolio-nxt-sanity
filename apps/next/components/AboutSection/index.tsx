@@ -22,6 +22,35 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
 
   useGSAP(
     () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: titleRef?.current,
+          start: 'top bottom', // when the top of the trigger hits the bottom of the viewport
+          end: 'bottom center', // end after scrolling 500px beyond the start
+          onEnter: () => tl.play()
+        }
+      });
+
+      tl.fromTo(
+        titleRef?.current,
+        {
+          x: -20,
+          opacity: 0
+        },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1,
+          delay: 0.2,
+          ease: 'power4.out'
+        }
+      );
+    },
+    { scope: titleRef }
+  );
+
+  useGSAP(
+    () => {
       const articleChildren = gsap.utils.toArray(articleRef?.current?.children!);
 
       const tl = gsap.timeline({
@@ -42,7 +71,7 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
         {
           y: 0,
           opacity: 1,
-          duration: 2,
+          duration: 1,
           delay: 0.2,
           ease: 'power4.out',
           stagger: {
