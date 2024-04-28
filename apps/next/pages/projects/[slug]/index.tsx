@@ -155,7 +155,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
         }
       );
     },
-    { scope: projectInfoRef }
+    { scope: projectInfoRef, dependencies: [slug.current] }
   );
 
   const renderCta = () => {
@@ -186,7 +186,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
         <Section className={`${styles.section} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
           <Container className={styles.container} isFluid={false}>
             {title && (
-              <h1 ref={titleRef} key={title} className={styles.title}>
+              <h1 ref={titleRef} key={slug.current} className={styles.title}>
                 {title}
               </h1>
             )}
@@ -218,7 +218,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
 
           <Container className={styles.containerProjectInfo} isFluid={false}>
             <Grid>
-              <div ref={projectInfoRef} className={styles.projectInfoWrapper}>
+              <div ref={projectInfoRef} key={slug.current} className={styles.projectInfoWrapper}>
                 {formattedDate && (
                   <div className={styles.projectInfo}>
                     <span className={styles.greyInfo}>Date</span>
