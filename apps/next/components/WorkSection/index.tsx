@@ -1,9 +1,11 @@
+import { useRef } from 'react';
 import Link from 'next/link';
 import { Button, Container, Grid, ImageTag, Section } from '@/components';
 import { useTheme } from '@/providers';
 import { Project } from '@/types';
-import styles from './styles.module.scss';
+import { useGSAP, gsap } from '@/lib';
 import { formatDate } from '@/utils';
+import styles from './styles.module.scss';
 
 interface Props {
   data: {
@@ -23,11 +25,51 @@ interface Props {
 
 const WorkSection = ({ data }: Props): JSX.Element | null => {
   const { theme } = useTheme();
+  const listItemRefs = useRef<HTMLDivElement[] | null[]>([]);
   const isDarkMode = theme === 'dark-theme';
 
   if (!data) return null;
   const { title, cta, workList } = data;
   const projectLength = workList ? (workList.length < 10 ? `0${workList.length}` : workList.length) : `00`;
+
+  useGSAP(() => {
+    listItemRefs.current.forEach((ref) => {
+      gsap.set(ref?.children[0], { scaleX: 1 });
+      gsap.set(ref, {
+        scale: 1.5,
+        filter: 'blur(50px)'
+      });
+
+      // Image block reveal
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ref,
+          start: 'top bottom', // when the top of the trigger hits the bottom of the viewport
+          end: 'bottom center', // end after scrolling 500px beyond the start
+          onEnter: () => tl.play()
+        }
+      });
+      tl.to(
+        ref?.children[0],
+        {
+          duration: 1.2,
+          scaleX: 0,
+          transformOrigin: 'left',
+          ease: 'power2.inOut'
+        },
+        '+=0.2'
+      ).to(
+        ref,
+        {
+          duration: 1.2,
+          scale: 1,
+          filter: 'blur(0px)',
+          ease: 'power2.inOut'
+        },
+        '-=1'
+      );
+    });
+  }, [listItemRefs]);
 
   const renderProjects = () =>
     workList &&
@@ -60,14 +102,30 @@ const WorkSection = ({ data }: Props): JSX.Element | null => {
                   <div className={styles.overlay}>
                     <span>View project</span>
                   </div>
-                  <ImageTag
-                    src={`${coverImage?.asset?.url}`}
-                    alt="project Image"
-                    layout="fill"
-                    objectFit="cover"
-                    quality={100}
-                    blurDataURL={coverImage?.asset?.metadata?.lqip}
-                  />
+
+                  <div
+                    ref={(el) => (listItemRefs.current[index] = el)}
+                    style={{ position: 'relative', overflow: 'hidden', height: '100%', width: '100%' }}
+                  >
+                    <div
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        position: 'absolute',
+                        background: '#0F0F0F',
+                        transformOrigin: 'left',
+                        zIndex: 20
+                      }}
+                    />
+                    <ImageTag
+                      src={`${coverImage?.asset?.url}`}
+                      alt="project Image"
+                      layout="fill"
+                      objectFit="cover"
+                      quality={100}
+                      blurDataURL={coverImage?.asset?.metadata?.lqip}
+                    />
+                  </div>
                 </Link>
               )}
             </Grid>

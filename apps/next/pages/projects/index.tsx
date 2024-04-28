@@ -133,11 +133,11 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
   };
 
   const renderProjects = () =>
-    filteredData.map((item: any, index: any) => {
-      const { title, color, slug, coverImage } = item;
+    filteredData.map((item, index) => {
+      const { _id, title, color, slug, coverImage } = item;
 
       return (
-        <Link key={index} href={`/projects/${slug.current}`} className={styles.projectItem}>
+        <Link key={_id} href={`/projects/${slug.current}`} className={styles.projectItem}>
           {coverImage && (
             <div className={styles.projectThumbnail}>
               <div className={styles.overlay}>
@@ -150,7 +150,6 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
                 className={`${styles.projectThumbnail}`}
               >
                 <div
-                  // ref={containerRef}
                   style={{
                     width: '100%',
                     height: '100%',

@@ -41,7 +41,7 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
           x: 0,
           opacity: 1,
           duration: 1,
-          delay: 0.2,
+          delay: 0.8,
           ease: 'power4.out'
         }
       );
@@ -72,7 +72,7 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
           y: 0,
           opacity: 1,
           duration: 1,
-          delay: 0.2,
+          delay: 0.3,
           ease: 'power4.out',
           stagger: {
             each: 0.3
