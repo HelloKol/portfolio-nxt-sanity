@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useCallback, useContext, useRef } from 'react';
 import { GetStaticProps } from 'next';
 import Link from 'next/link';
 import SplitType from 'split-type';
@@ -23,7 +23,7 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
   const { theme } = useTheme();
   const titleRef = useRef<HTMLHeadingElement>(null);
   const filterRef = useRef<HTMLDivElement>(null);
-  const listItemRefs = useRef<HTMLDivElement | null[]>([]);
+  const listItemRefs = useRef<HTMLDivElement[] | null[]>([]);
   const { projectFilterTag, setProjectFilterTag } = useContext(Context);
   const { title, seo } = page;
   const isDarkMode = theme === 'dark-theme';
@@ -80,16 +80,18 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
     { scope: filterRef }
   );
 
-  useGSAP(
-    () => {
-      listItemRefs.current.forEach((ref, index) => {
-        // Image block reveal
+  const animate = useCallback(
+    (delay = false) => {
+      listItemRefs.current.forEach((ref) => {
+        gsap.set(ref?.children[0], { scaleX: 1 });
         gsap.set(ref, {
           scale: 1.5,
           filter: 'blur(50px)'
         });
 
+        // Image block reveal
         const tl = gsap.timeline({
+          delay: delay ? 0.4 : 0,
           scrollTrigger: {
             trigger: ref,
             start: 'top bottom', // when the top of the trigger hits the bottom of the viewport
@@ -97,7 +99,6 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
             onEnter: () => tl.play()
           }
         });
-
         tl.to(
           ref?.children[0],
           {
@@ -119,8 +120,17 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
         );
       });
     },
-    { scope: listItemRefs }
+    [listItemRefs]
   );
+
+  useGSAP(() => animate(true), {
+    scope: listItemRefs
+  });
+
+  const handleChangeType = (type: string) => {
+    setProjectFilterTag(type);
+    animate();
+  };
 
   const renderProjects = () =>
     filteredData.map((item: any, index: any) => {
@@ -207,7 +217,7 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
                   <p>Type</p>
                   <button
                     className={`${styles.filterBtn} ${projectFilterTag === '' && styles.activeFilterBtn}`}
-                    onClick={() => setProjectFilterTag('')}
+                    onClick={() => handleChangeType('')}
                   >
                     All
                   </button>
@@ -215,13 +225,13 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
                     className={`${styles.filterBtn} ${
                       projectFilterTag === 'design' && styles.activeFilterBtn
                     }`}
-                    onClick={() => setProjectFilterTag('design')}
+                    onClick={() => handleChangeType('design')}
                   >
                     Design
                   </button>
                   <button
                     className={`${styles.filterBtn} ${projectFilterTag === 'web' && styles.activeFilterBtn}`}
-                    onClick={() => setProjectFilterTag('web')}
+                    onClick={() => handleChangeType('web')}
                   >
                     Web
                   </button>
@@ -235,7 +245,7 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
           </Container>
         </Section>
       </Main>
-      <ProjectFilter />
+      <ProjectFilter animate={animate} />
     </>
   );
 }
