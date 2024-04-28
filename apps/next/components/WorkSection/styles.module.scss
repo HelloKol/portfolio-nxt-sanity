@@ -44,6 +44,7 @@
     .projectThumbnail {
       overflow: hidden;
       position: relative;
+      border-radius: 8px;
       .overlay {
         opacity: 0;
         z-index: 1;
