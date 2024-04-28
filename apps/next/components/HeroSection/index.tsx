@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Container, Section } from '@/components';
 import { useGSAP, gsap } from '@/lib';
 import { useTheme } from '@/providers';
@@ -23,7 +23,7 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
     const split2 = new SplitType(titleRef2.current!, { types: 'chars' });
     const split3 = new SplitType(titleRef3.current!, { types: 'chars' });
 
-    const animateTitle = (split: any, delay: number) => {
+    const animateTitle = (split: SplitType, delay: number) => {
       gsap.fromTo(
         split.chars,
         {

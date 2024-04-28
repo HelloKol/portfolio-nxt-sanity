@@ -5,7 +5,7 @@ import { useTheme } from '@/providers';
 import styles from './styles.module.scss';
 
 type Props = {
-  animate: any;
+  animate: (delay?: boolean) => void;
 };
 
 export default function ProjectFilter({ animate }: Props) {

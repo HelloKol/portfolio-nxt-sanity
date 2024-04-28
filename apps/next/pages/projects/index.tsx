@@ -83,6 +83,7 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
   const animate = useCallback(
     (delay = false) => {
       listItemRefs.current.forEach((ref) => {
+        if (!ref?.children[0]) return;
         gsap.set(ref?.children[0], { scaleX: 1 });
         gsap.set(ref, {
           scale: 1.5,

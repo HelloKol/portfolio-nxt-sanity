@@ -29,6 +29,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
   const nextIndex = currentIndex < work.length - 1 ? currentIndex + 1 : 0;
 
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const projectInfoRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef(null);
   const imageRef = useRef(null);
   const articleRef = useRef<HTMLElement>(null);
@@ -124,6 +125,39 @@ export default function Page({ page, work }: Page): JSX.Element | null {
     { scope: articleRef, dependencies: [slug.current] }
   );
 
+  useGSAP(
+    () => {
+      const projectInfo = gsap.utils.toArray(projectInfoRef?.current?.children!);
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: projectInfoRef?.current,
+          start: 'top bottom', // when the top of the trigger hits the bottom of the viewport
+          end: 'bottom center', // end after scrolling 500px beyond the start
+          onEnter: () => tl.play()
+        }
+      });
+
+      tl.fromTo(
+        projectInfo,
+        {
+          x: -15,
+          opacity: 0
+        },
+        {
+          x: 0,
+          opacity: 1,
+          delay: 0.2,
+          stagger: {
+            each: 0.3,
+            ease: 'power2.inOut'
+          }
+        }
+      );
+    },
+    { scope: projectInfoRef }
+  );
+
   const renderCta = () => {
     if (!cta) return null;
 
@@ -184,32 +218,32 @@ export default function Page({ page, work }: Page): JSX.Element | null {
 
           <Container className={styles.containerProjectInfo} isFluid={false}>
             <Grid>
-              <div className={styles.projectInfo}>
+              <div ref={projectInfoRef} className={styles.projectInfoWrapper}>
                 {formattedDate && (
-                  <>
+                  <div className={styles.projectInfo}>
                     <span className={styles.greyInfo}>Date</span>
                     <span className={styles.whiteInfo}> {formattedDate}</span>
-                  </>
+                  </div>
                 )}
                 {type && (
-                  <>
+                  <div ref={projectInfoRef} className={styles.projectInfo}>
                     <span className={styles.greyInfo}>Role</span>
                     {type.map((item, index) => (
                       <span key={index} className={styles.whiteInfo}>
                         {item}
                       </span>
                     ))}
-                  </>
+                  </div>
                 )}
                 {tools && (
-                  <>
+                  <div ref={projectInfoRef} className={styles.projectInfo}>
                     <span className={styles.greyInfo}>Tools</span>
                     {tools.map((item, index) => (
                       <span key={index} className={styles.whiteInfo}>
                         {item}
                       </span>
                     ))}
-                  </>
+                  </div>
                 )}
               </div>
 

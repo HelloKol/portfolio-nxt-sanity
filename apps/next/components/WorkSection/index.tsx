@@ -38,6 +38,7 @@ const WorkSection = ({ data }: Props): JSX.Element | null => {
 
   useGSAP(() => {
     listItemRefs.current.forEach((ref) => {
+      if (!ref?.children[0]) return;
       gsap.set(ref?.children[0], { scaleX: 1 });
       gsap.set(ref, {
         scale: 1.5,
@@ -77,6 +78,8 @@ const WorkSection = ({ data }: Props): JSX.Element | null => {
 
   useGSAP(() => {
     projectTitleRef.current.forEach((ref) => {
+      if (!ref) return;
+
       // Text reveal
       const split = new SplitType(ref, { types: 'chars' });
       const chars = split.chars;
@@ -110,6 +113,8 @@ const WorkSection = ({ data }: Props): JSX.Element | null => {
 
   useGSAP(() => {
     projectTypeRef.current.forEach((ref) => {
+      if (!ref) return;
+
       const tags = gsap.utils.toArray(ref.children); // Convert HTMLCollection of tags to array
 
       const tl = gsap.timeline({

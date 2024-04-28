@@ -47,7 +47,7 @@
   }
 }
 
-.projectInfo {
+.projectInfoWrapper {
   .greyInfo {
     color: $white;
     font-family: $neueMontrealMedium;
@@ -112,16 +112,13 @@
     margin-top: 60px;
   }
 
-  .projectInfo {
+  .projectInfoWrapper {
     grid-column: 1/13;
+    .projectInfo {
+      margin: 25px 0 0 0;
+    }
     span {
       display: block;
-    }
-    .greyInfo {
-      margin: 25px 0 0 0;
-      &:nth-of-type(1) {
-        margin: 0;
-      }
     }
     .whiteInfo {
       margin: 10px 0 0 0;
@@ -175,7 +172,7 @@
     margin-top: 180px;
   }
 
-  .projectInfo {
+  .projectInfoWrapper {
     grid-column: 1/6;
     width: calc((100% / 3) * 1);
     padding-left: calc(45px / 2);
