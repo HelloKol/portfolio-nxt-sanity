@@ -4,7 +4,6 @@ import Link from 'next/link';
 import SplitType from 'split-type';
 import { Container, Grid, ImageTag, Main, ProjectFilter, Section, Seo } from '@/components';
 import { Context } from '@/contexts/Context';
-import { useWindowDimension } from '@/hooks';
 import { useTheme } from '@/providers';
 import { Project, SEO } from '@/types';
 import { sanityClient, useGSAP, gsap } from '@/lib';
@@ -24,7 +23,6 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
   const { theme } = useTheme();
   const titleRef = useRef<HTMLHeadingElement>(null);
   const { projectFilterTag, setProjectFilterTag } = useContext(Context);
-  const { isMobile, isMobileLarge, isTablet } = useWindowDimension();
   const { title, seo } = page;
   const isDarkMode = theme === 'dark-theme';
 
@@ -59,6 +57,41 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
     },
     { scope: titleRef }
   );
+
+  const renderProjects = () =>
+    filteredData.map((item: any, index: any) => {
+      const { title, color, slug, coverImage } = item;
+
+      return (
+        <Link key={index} href={`/projects/${slug.current}`} className={styles.projectItem}>
+          {coverImage && (
+            <div className={styles.projectThumbnail}>
+              <div className={styles.overlay}>
+                <span>View project</span>
+              </div>
+              <ImageTag
+                src={`${coverImage?.asset?.url}`}
+                alt="project Image"
+                layout="fill"
+                objectFit="cover"
+                quality={100}
+                blurDataURL={coverImage?.asset?.metadata?.lqip}
+              />
+            </div>
+          )}
+          {title && (
+            <h1
+              className={styles.projectTitle}
+              style={{
+                color: color.value
+              }}
+            >
+              {title}
+            </h1>
+          )}
+        </Link>
+      );
+    });
 
   return (
     <>
@@ -111,86 +144,9 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
                   </button>
                 </div>
               </div>
-              {isMobile || isMobileLarge || isTablet ? (
-                <ul className={styles.projectFeedMobile}>
-                  {filteredData.map((item, index) => {
-                    const { title, color, slug, tools, coverImage } = item;
-
-                    return (
-                      <Link key={index} href={`/projects/${slug.current}`} className={styles.projectItem}>
-                        {coverImage && (
-                          <div className={styles.thumbmailImage}>
-                            <ImageTag
-                              src={`${coverImage?.asset?.url}`}
-                              alt="project Image"
-                              layout="fill"
-                              objectFit="cover"
-                              quality={100}
-                              blurDataURL={coverImage?.asset?.metadata?.lqip}
-                            />
-                          </div>
-                        )}
-                        <div className={styles.projectTitleWrap}>
-                          {title && (
-                            <h1
-                              className={styles.projectTitle}
-                              style={{
-                                color: color.value
-                              }}
-                            >
-                              {title}
-                            </h1>
-                          )}
-                          <div className={styles.projectTags}>
-                            {tools &&
-                              tools.map((item, index) => {
-                                return <p key={index}>{item}</p>;
-                              })}
-                          </div>
-                        </div>
-                      </Link>
-                    );
-                  })}
-                </ul>
-              ) : (
-                <ul className={styles.projectFeedDesktop}>
-                  <Grid>
-                    {filteredData.map((item: any, index: any) => {
-                      const { title, color, slug, tools, coverImage } = item;
-
-                      return (
-                        <Link key={index} href={`/projects/${slug.current}`} className={styles.projectItem}>
-                          {coverImage && (
-                            <div className={styles.thumbmailImage}>
-                              <div className={styles.overlay}>
-                                <span>View project</span>
-                              </div>
-                              <ImageTag
-                                src={`${coverImage?.asset?.url}`}
-                                alt="project Image"
-                                layout="fill"
-                                objectFit="cover"
-                                quality={100}
-                                blurDataURL={coverImage?.asset?.metadata?.lqip}
-                              />
-                            </div>
-                          )}
-                          {title && (
-                            <h1
-                              className={styles.projectTitle}
-                              style={{
-                                color: color.value
-                              }}
-                            >
-                              {title}
-                            </h1>
-                          )}
-                        </Link>
-                      );
-                    })}
-                  </Grid>
-                </ul>
-              )}
+              <ul className={styles.projectFeed}>
+                <Grid>{renderProjects()}</Grid>
+              </ul>
             </Grid>
           </Container>
         </Section>

@@ -82,7 +82,7 @@
 
 .projectItem {
   cursor: pointer;
-  .thumbmailImage {
+  .projectThumbnail {
     overflow: hidden;
     position: relative;
     transition: height 0.5s ease-in-out;
@@ -98,6 +98,7 @@
       justify-content: center;
       align-items: center;
       transition: opacity 0.5s ease-in-out;
+      font-family: $neueMontrealMedium;
       span {
         height: 120px;
         width: 120px;
@@ -140,7 +141,7 @@
   .title {
     grid-column: 1/13;
     margin: auto;
-    @include type-setting-responsive(40, 13, 100);
+    @include type-setting-responsive(40, 13, 120);
   }
   .filterWrap {
     display: none;
@@ -156,7 +157,7 @@
       margin: 0 30px 0 0;
     }
   }
-  .projectFeedMobile {
+  .projectFeed {
     grid-column: 1/13;
     display: flex;
     flex-direction: column;
@@ -165,9 +166,10 @@
   .projectItem {
     gap: 20px;
     padding: 20px 0 20px 0;
-    .thumbmailImage {
+    grid-column: 1/13;
+    .projectThumbnail {
       width: 100%;
-      height: 300px;
+      height: 350px;
     }
     .projectTitleWrap {
       display: flex;
@@ -186,6 +188,11 @@
 // Mobile Large
 // ==========================================================================
 @media (min-width: $breakMobileLarge) {
+  .projectItem {
+    .projectThumbnail {
+      height: 450px;
+    }
+  }
 }
 
 // ==========================================================================
@@ -196,11 +203,11 @@
     padding: 40px 0 60px 0;
   }
   .title {
-    @include type-setting-responsive(40, 13, 100);
+    @include type-setting-responsive(40, 13, 160);
   }
   .projectItem {
-    .thumbmailImage {
-      height: 450px;
+    .projectThumbnail {
+      height: 500px;
     }
   }
 }
@@ -214,7 +221,7 @@
   }
   .title {
     margin: 0 0 0 auto;
-    @include type-setting-responsive(50, 7, 150);
+    @include type-setting-responsive(50, 7, 160);
   }
   .filterWrap {
     grid-column: 1/13;
@@ -234,7 +241,7 @@
       margin: 0 90px 0 0;
     }
   }
-  .projectFeedDesktop {
+  .projectFeed {
     grid-column: 1/13;
     margin: 90px 0 0 0;
   }
@@ -248,8 +255,8 @@
     &:nth-child(odd) {
       grid-column: 3/13;
     }
-    .thumbmailImage {
-      height: 600px;
+    .projectThumbnail {
+      height: 700px;
     }
     .projectTitle {
       font-size: 30px;
@@ -266,7 +273,7 @@
     .projectTitle {
       font-size: 40px;
     }
-    .thumbmailImage {
+    .projectThumbnail {
       height: 900px;
     }
   }

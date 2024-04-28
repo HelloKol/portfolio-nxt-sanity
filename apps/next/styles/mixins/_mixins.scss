@@ -8,7 +8,7 @@
 
 @mixin type-setting-responsive($min, $preferred, $max) {
   font-size: min(max(#{$min}px, #{$preferred}vw), #{$max}px);
-  line-height: min(max(#{$min}px, #{$preferred}vw), #{$max}px);
+  line-height: min(max(#{$min}px, #{$preferred * 1.5}vw), #{$max}px);
 }
 
 @mixin line-height-responsive($min, $preferred, $max) {

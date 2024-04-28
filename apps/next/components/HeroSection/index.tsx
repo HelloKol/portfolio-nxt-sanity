@@ -33,8 +33,8 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
         {
           y: 0,
           opacity: 1,
-          stagger: 0.1,
-          duration: 1.5,
+          stagger: 0.03,
+          duration: 2,
           delay: delay,
           ease: 'power4.out'
         }

@@ -45,8 +45,8 @@
 
 .projectInfo {
   .greyInfo {
-    font-weight: 700;
     color: $white;
+    font-family: $neueMontrealMedium;
   }
 }
 
@@ -98,7 +98,7 @@
     @include type-setting-responsive(40, 13, 100);
   }
 
-  .thumbmailImage {
+  .projectThumbnail {
     height: 85vh;
     max-height: 1400px;
     margin: 45px 0 0 0;

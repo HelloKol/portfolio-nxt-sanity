@@ -116,7 +116,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
             )}
           </Container>
 
-          <div style={{ position: 'relative', overflow: 'hidden' }} className={`${styles.thumbmailImage}`}>
+          <div style={{ position: 'relative', overflow: 'hidden' }} className={`${styles.projectThumbnail}`}>
             <div
               ref={containerRef}
               style={{
