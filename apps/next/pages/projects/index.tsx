@@ -22,6 +22,8 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
   if (!page) return null;
   const { theme } = useTheme();
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const viewRef = useRef<HTMLDivElement>(null);
+  const typeRef = useRef<HTMLDivElement>(null);
   const listItemRefs = useRef<HTMLDivElement | null[]>([]);
   const { projectFilterTag, setProjectFilterTag } = useContext(Context);
   const { title, seo } = page;
@@ -57,6 +59,26 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
       );
     },
     { scope: titleRef }
+  );
+
+  useGSAP(
+    () => {
+      gsap.fromTo(
+        viewRef?.current,
+        {
+          y: 20,
+          opacity: 0
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.5,
+          delay: 1,
+          ease: 'power4.out'
+        }
+      );
+    },
+    { scope: viewRef }
   );
 
   useGSAP(
@@ -170,7 +192,8 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
                   {title}
                 </h1>
               )}
-              <div className={styles.filterWrap}>
+
+              <div ref={viewRef} className={styles.filterWrap}>
                 <div className={styles.projectView}>
                   <p>Change view</p>
                   <button className={`${styles.filterBtn} ${styles.activeFilterBtn}`} disabled>
@@ -205,6 +228,7 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
                   </button>
                 </div>
               </div>
+
               <ul className={styles.projectFeed}>
                 <Grid>{renderProjects()}</Grid>
               </ul>
