@@ -21,7 +21,7 @@ interface Page {
 export default function Page({ page, work }: Page): JSX.Element | null {
   if (!page) return null;
   const { theme } = useTheme();
-  const { title, excerpt, body, slug, createdDate, tools, type, cta, coverImage, featuredImage, seo } = page;
+  const { title, excerpt, body, slug, createdDate, tools, type, cta, coverImage, seo } = page;
   const formattedDate = formatDate(createdDate);
   const isDarkMode = theme === 'dark-theme';
   const currentIndex = work.findIndex((item) => item.slug.current === slug.current);
@@ -33,6 +33,12 @@ export default function Page({ page, work }: Page): JSX.Element | null {
 
   useGSAP(
     () => {
+      gsap.set(containerRef.current, { scaleX: 1 });
+      gsap.set(imageRef.current, {
+        scale: 1.5,
+        filter: 'blur(50px)'
+      });
+
       // Text reveal
       const split = new SplitType(titleRef.current!, { types: 'chars' });
       const chars = split.chars;
@@ -53,11 +59,6 @@ export default function Page({ page, work }: Page): JSX.Element | null {
       );
 
       // Image block reveal
-      gsap.set(imageRef.current, {
-        scale: 1.5,
-        filter: 'blur(50px)'
-      });
-
       const tl = gsap.timeline();
       tl.to(
         containerRef.current,
@@ -79,7 +80,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
         '-=1'
       );
     },
-    { scope: containerRef }
+    { scope: containerRef, dependencies: [slug.current] }
   );
 
   const renderCta = () => {
