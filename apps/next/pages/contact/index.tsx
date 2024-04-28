@@ -23,11 +23,11 @@ interface Props {
 }
 
 export default function Page({ page }: Props): JSX.Element | null {
-  const { theme } = useTheme();
   if (!page) return null;
+  const { theme } = useTheme();
+  const titleRef = useRef<HTMLHeadingElement>(null);
   const { title, contactForm, seo } = page;
   const isDarkMode = theme === 'dark-theme';
-  const textRef = useRef(null);
   const defaultProps = {
     center: {
       lat: 51.514715,
@@ -79,7 +79,7 @@ export default function Page({ page }: Props): JSX.Element | null {
   useGSAP(
     () => {
       // Text reveal
-      const split = new SplitType(textRef.current, { type: 'chars' });
+      const split = new SplitType(titleRef.current!, { types: 'chars' });
       const chars = split.chars;
 
       gsap.fromTo(
@@ -97,7 +97,7 @@ export default function Page({ page }: Props): JSX.Element | null {
         }
       );
     },
-    { scope: textRef }
+    { scope: titleRef }
   );
 
   return (
@@ -108,7 +108,7 @@ export default function Page({ page }: Props): JSX.Element | null {
         <Section className={`${styles.section} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
           <Container isFluid={false}>
             {title && (
-              <h1 ref={textRef} className={styles.title}>
+              <h1 ref={titleRef} className={styles.title}>
                 {title}
               </h1>
             )}
