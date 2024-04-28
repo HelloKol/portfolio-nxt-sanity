@@ -63,6 +63,7 @@
   user-select: none;
   p {
     text-transform: uppercase;
+    font-family: $neueMontrealMedium;
   }
   .filterBtn {
     transition: color 1s cubic-bezier(0.16, 1, 0.3, 1) 0s;

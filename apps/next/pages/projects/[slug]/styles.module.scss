@@ -7,9 +7,11 @@
 .section {
   &.darkMode {
     color: $white;
-    .whiteInfo,
     .greyInfo {
       color: $white;
+    }
+    .whiteInfo {
+      color: $greyLight;
     }
     .excerpt,
     .bodyCopy {
@@ -25,9 +27,11 @@
   }
   &.lightMode {
     color: $black;
-    .whiteInfo,
     .greyInfo {
       color: $black;
+    }
+    .whiteInfo {
+      color: $grey;
     }
     .excerpt,
     .bodyCopy {

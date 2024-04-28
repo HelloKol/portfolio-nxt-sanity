@@ -7,7 +7,9 @@
 .workSection {
   &.darkMode {
     .projectFeedItem {
-      .tags,
+      .tags {
+        color: $greyLight;
+      }
       .projectIndex,
       .projectCreated {
         color: $white;
@@ -16,7 +18,9 @@
   }
   &.lightMode {
     .projectFeedItem {
-      .tags,
+      .tags {
+        color: $grey;
+      }
       .projectIndex,
       .projectCreated {
         color: $black;
@@ -27,7 +31,6 @@
   .projectFeedItem {
     .projectIndex,
     .projectCreated {
-      color: $white;
       font-family: $neueMontrealMedium;
     }
   }
