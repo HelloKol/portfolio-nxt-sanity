@@ -22,6 +22,7 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
   if (!page) return null;
   const { theme } = useTheme();
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const listItemRefs = useRef<HTMLDivElement | null[]>([]);
   const { projectFilterTag, setProjectFilterTag } = useContext(Context);
   const { title, seo } = page;
   const isDarkMode = theme === 'dark-theme';
@@ -58,6 +59,48 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
     { scope: titleRef }
   );
 
+  useGSAP(
+    () => {
+      listItemRefs.current.forEach((ref, index) => {
+        // Image block reveal
+        gsap.set(ref, {
+          scale: 1.5,
+          filter: 'blur(50px)'
+        });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: ref,
+            start: 'top bottom', // when the top of the trigger hits the center of the viewport
+            end: 'bottom center', // end after scrolling 500px beyond the start
+            onEnter: () => tl.play()
+          }
+        });
+
+        tl.to(
+          ref?.children[0],
+          {
+            duration: 1.2,
+            scaleX: 0,
+            transformOrigin: 'left',
+            ease: 'power2.inOut'
+          },
+          '+=0.2'
+        ).to(
+          ref,
+          {
+            duration: 1.2,
+            scale: 1,
+            filter: 'blur(0px)',
+            ease: 'power2.inOut'
+          },
+          '-=1'
+        );
+      });
+    },
+    { scope: listItemRefs }
+  );
+
   const renderProjects = () =>
     filteredData.map((item: any, index: any) => {
       const { title, color, slug, coverImage } = item;
@@ -69,14 +112,32 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
               <div className={styles.overlay}>
                 <span>View project</span>
               </div>
-              <ImageTag
-                src={`${coverImage?.asset?.url}`}
-                alt="project Image"
-                layout="fill"
-                objectFit="cover"
-                quality={100}
-                blurDataURL={coverImage?.asset?.metadata?.lqip}
-              />
+
+              <div
+                ref={(el) => (listItemRefs.current[index] = el)}
+                style={{ position: 'relative', overflow: 'hidden' }}
+                className={`${styles.projectThumbnail}`}
+              >
+                <div
+                  // ref={containerRef}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    position: 'absolute',
+                    background: '#0F0F0F',
+                    transformOrigin: 'left',
+                    zIndex: 2
+                  }}
+                />
+                <ImageTag
+                  src={`${coverImage?.asset?.url}`}
+                  alt="project Image"
+                  layout="fill"
+                  objectFit="cover"
+                  quality={100}
+                  blurDataURL={coverImage?.asset?.metadata?.lqip}
+                />
+              </div>
             </div>
           )}
           {title && (
