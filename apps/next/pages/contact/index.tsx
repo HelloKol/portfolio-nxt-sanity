@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { GetStaticProps } from 'next';
+import SplitType from 'split-type';
 // @ts-ignore
 import GoogleMapReact from 'google-map-react';
 import { ContactForm, Container, Main, Section, Seo } from '@/components';
 import { useTheme } from '@/providers';
 import { SEO } from '@/types';
-import { sanityClient } from '@/lib';
+import { sanityClient, useGSAP, gsap } from '@/lib';
 import { env } from '@/utils/env';
 import { CONTACT_QUERY } from '@/services/queries';
 import styles from './styles.module.scss';
@@ -26,6 +27,7 @@ export default function Page({ page }: Props): JSX.Element | null {
   if (!page) return null;
   const { title, contactForm, seo } = page;
   const isDarkMode = theme === 'dark-theme';
+  const textRef = useRef(null);
   const defaultProps = {
     center: {
       lat: 51.514715,
@@ -74,13 +76,43 @@ export default function Page({ page }: Props): JSX.Element | null {
     }
   };
 
+  useGSAP(
+    () => {
+      // Text reveal
+      const split = new SplitType(textRef.current, { type: 'chars' });
+      const chars = split.chars;
+
+      gsap.fromTo(
+        chars,
+        {
+          y: 150,
+          opacity: 0
+        },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.05,
+          duration: 1.5,
+          ease: 'power4.out'
+        }
+      );
+    },
+    { scope: textRef }
+  );
+
   return (
     <>
       <Seo seo={seo} />
 
       <Main withPadding>
         <Section className={`${styles.section} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
-          <Container isFluid={false}>{title && <h1 className={styles.title}>{title}</h1>}</Container>
+          <Container isFluid={false}>
+            {title && (
+              <h1 ref={textRef} className={styles.title}>
+                {title}
+              </h1>
+            )}
+          </Container>
 
           <ContactForm data={contactForm} />
 

@@ -1,17 +1,11 @@
-import Image from 'next/image';
+import { RefObject } from 'react';
+import Image, { ImageProps } from 'next/image'; // Importing ImageProps from Next.js
 import styles from './styles.module.scss';
 
-interface props {
-  src: string;
-  alt?: string;
-  height?: number;
-  width?: number;
-  layout: 'responsive' | 'fill' | 'intrinsic' | 'fixed';
-  priority?: boolean;
+interface Props extends ImageProps {
+  imageRef?: RefObject<HTMLImageElement>;
   imgClassName?: string;
-  fadeUp?: boolean;
-  quality?: number;
-  blurDataURL?: string;
+  layout: 'responsive' | 'fill' | 'intrinsic' | 'fixed';
   objectFit?:
     | 'contain'
     | 'cover'
@@ -22,22 +16,21 @@ interface props {
     | 'initial'
     | 'unset'
     | 'revert';
-  imageRef: any;
 }
 
 const ImageTag = ({
+  imageRef,
+  imgClassName = '',
   src,
   alt,
   height,
   width,
   layout,
-  priority = false,
-  imgClassName = '',
-  quality,
   objectFit,
-  blurDataURL,
-  imageRef
-}: props): JSX.Element => {
+  priority = false,
+  quality,
+  blurDataURL
+}: Props): JSX.Element => {
   return (
     <div className={`${styles.imageWrap}`}>
       <Image

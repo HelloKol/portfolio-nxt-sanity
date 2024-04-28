@@ -27,14 +27,14 @@ export default function Page({ page, work }: Page): JSX.Element | null {
   const currentIndex = work.findIndex((item) => item.slug.current === slug.current);
   const nextIndex = currentIndex < work.length - 1 ? currentIndex + 1 : 0;
 
-  const textRef = useRef(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
   const containerRef = useRef(null);
   const imageRef = useRef(null);
 
   useGSAP(
     () => {
       // Text reveal
-      const split = new SplitType(textRef.current, { type: 'chars' });
+      const split = new SplitType(titleRef.current!, { types: 'chars' });
       const chars = split.chars;
 
       gsap.fromTo(
@@ -54,17 +54,21 @@ export default function Page({ page, work }: Page): JSX.Element | null {
 
       // Image block reveal
       gsap.set(imageRef.current, {
-        scale: 1.3,
+        scale: 1.5,
         filter: 'blur(50px)'
       });
 
       const tl = gsap.timeline();
-      tl.to(containerRef.current, {
-        duration: 1,
-        scaleX: 0,
-        transformOrigin: 'left',
-        ease: 'power2.inOut'
-      }).to(
+      tl.to(
+        containerRef.current,
+        {
+          duration: 1,
+          scaleX: 0,
+          transformOrigin: 'left',
+          ease: 'power2.inOut'
+        },
+        '+=0.2'
+      ).to(
         imageRef.current,
         {
           duration: 1,
@@ -72,7 +76,6 @@ export default function Page({ page, work }: Page): JSX.Element | null {
           filter: 'blur(0px)',
           ease: 'power2.inOut'
         },
-
         '-=1'
       );
     },
@@ -107,41 +110,11 @@ export default function Page({ page, work }: Page): JSX.Element | null {
         <Section className={`${styles.section} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
           <Container className={styles.container} isFluid={false}>
             {title && (
-              <h1 ref={textRef} className={styles.title}>
+              <h1 ref={titleRef} className={styles.title}>
                 {title}
               </h1>
             )}
           </Container>
-
-          {/* {coverImage && (
-            <div className={`thumbmailImageWrapper ${styles.thumbmailImage}`}>
-              <div
-                className="thumbnailImageBlock"
-                style={{
-                  height: '100%',
-                  width: `100%`
-                }}
-              >
-                <div
-                  className="thumbnailImageBlock"
-                  style={{
-                    height: '100%',
-                    width: `100%`
-                  }}
-                >
-                  <ImageTag
-                    src={`${coverImage?.asset?.url}`}
-                    alt="project Image"
-                    layout="fill"
-                    objectFit="cover"
-                    quality={100}
-                    priority={true}
-                    blurDataURL={coverImage?.asset?.metadata?.lqip}
-                  />
-                </div>
-              </div>
-            </div>
-          )} */}
 
           <div style={{ position: 'relative', overflow: 'hidden' }} className={`${styles.thumbmailImage}`}>
             <div

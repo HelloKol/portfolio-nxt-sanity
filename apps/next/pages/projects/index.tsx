@@ -1,12 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { GetStaticProps } from 'next';
 import Link from 'next/link';
+import SplitType from 'split-type';
 import { Container, Grid, ImageTag, Main, ProjectFilter, Section, Seo } from '@/components';
 import { Context } from '@/contexts/Context';
 import { useWindowDimension } from '@/hooks';
 import { useTheme } from '@/providers';
 import { Project, SEO } from '@/types';
-import { sanityClient } from '@/lib';
+import { sanityClient, useGSAP, gsap } from '@/lib';
 import { PROJECT_INDEX_LIST_QUERY, PROJECT_INDEX_QUERY } from '@/services/queries';
 import styles from './styles.module.scss';
 
@@ -21,6 +22,7 @@ interface Page {
 export default function Projects({ page, work }: Page): JSX.Element | null {
   if (!page) return null;
   const { theme } = useTheme();
+  const titleRef = useRef<HTMLHeadingElement>(null);
   const { projectFilterTag, setProjectFilterTag } = useContext(Context);
   const { isMobile, isMobileLarge, isTablet } = useWindowDimension();
   const { title, seo } = page;
@@ -34,6 +36,30 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
     )
     .sort((a, b) => a.rank - b.rank);
 
+  useGSAP(
+    () => {
+      // Text reveal
+      const split = new SplitType(titleRef.current!, { types: 'chars' });
+      const chars = split.chars;
+
+      gsap.fromTo(
+        chars,
+        {
+          y: 150,
+          opacity: 0
+        },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.05,
+          duration: 1.5,
+          ease: 'power4.out'
+        }
+      );
+    },
+    { scope: titleRef }
+  );
+
   return (
     <>
       <Seo seo={seo} />
@@ -43,7 +69,10 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
           <Container isFluid={false}>
             <Grid>
               {title && (
-                <h1 className={`${styles.title} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
+                <h1
+                  ref={titleRef}
+                  className={`${styles.title} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
+                >
                   {title}
                 </h1>
               )}
