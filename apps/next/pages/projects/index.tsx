@@ -22,8 +22,7 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
   if (!page) return null;
   const { theme } = useTheme();
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const viewRef = useRef<HTMLDivElement>(null);
-  const typeRef = useRef<HTMLDivElement>(null);
+  const filterRef = useRef<HTMLDivElement>(null);
   const listItemRefs = useRef<HTMLDivElement | null[]>([]);
   const { projectFilterTag, setProjectFilterTag } = useContext(Context);
   const { title, seo } = page;
@@ -64,7 +63,7 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
   useGSAP(
     () => {
       gsap.fromTo(
-        viewRef?.current,
+        filterRef?.current,
         {
           y: 20,
           opacity: 0
@@ -78,7 +77,7 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
         }
       );
     },
-    { scope: viewRef }
+    { scope: filterRef }
   );
 
   useGSAP(
@@ -93,7 +92,7 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: ref,
-            start: 'top bottom', // when the top of the trigger hits the center of the viewport
+            start: 'top bottom', // when the top of the trigger hits the bottom of the viewport
             end: 'bottom center', // end after scrolling 500px beyond the start
             onEnter: () => tl.play()
           }
@@ -193,7 +192,7 @@ export default function Projects({ page, work }: Page): JSX.Element | null {
                 </h1>
               )}
 
-              <div ref={viewRef} className={styles.filterWrap}>
+              <div ref={filterRef} className={styles.filterWrap}>
                 <div className={styles.projectView}>
                   <p>Change view</p>
                   <button className={`${styles.filterBtn} ${styles.activeFilterBtn}`} disabled>

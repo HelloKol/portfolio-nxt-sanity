@@ -1,6 +1,8 @@
+import { useRef } from 'react';
 import { PortableText } from '@portabletext/react';
 import { PortableTextBlock } from '@portabletext/types';
 import { Button, Container, Grid, Section } from '@/components';
+import { gsap, useGSAP } from '@/lib';
 import { useTheme } from '@/providers';
 import styles from './styles.module.scss';
 
@@ -14,7 +16,43 @@ interface Props {
 
 const AboutSection = ({ data }: Props): JSX.Element | null => {
   const { theme } = useTheme();
+  const articleRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
   const isDarkMode = theme === 'dark-theme';
+
+  useGSAP(
+    () => {
+      const articleChildren = gsap.utils.toArray(articleRef?.current?.children!);
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: articleRef?.current,
+          start: 'top bottom', // when the top of the trigger hits the bottom of the viewport
+          end: 'bottom center', // end after scrolling 500px beyond the start
+          onEnter: () => tl.play()
+        }
+      });
+
+      tl.fromTo(
+        articleChildren,
+        {
+          y: 30,
+          opacity: 0
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 2,
+          delay: 0.2,
+          ease: 'power4.out',
+          stagger: {
+            each: 0.3
+          }
+        }
+      );
+    },
+    { scope: articleRef }
+  );
 
   if (!data) return null;
   const { title, body, cvLink } = data;
@@ -23,9 +61,13 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
     <Section className={`${styles.aboutSection} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
       <Container isFluid={false}>
         <Grid>
-          {title && <h2 className={styles.title}>{title}</h2>}
+          {title && (
+            <h2 ref={titleRef} className={styles.title}>
+              {title}
+            </h2>
+          )}
           {body && (
-            <article className={styles.bodyCopy}>
+            <article ref={articleRef} className={styles.bodyCopy}>
               <PortableText value={body} />
             </article>
           )}
