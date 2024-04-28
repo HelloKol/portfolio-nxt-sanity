@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import Link from 'next/link';
+import SplitType from 'split-type';
 import { Button, Container, Grid, ImageTag, Section } from '@/components';
 import { useTheme } from '@/providers';
 import { Project } from '@/types';
@@ -26,6 +27,9 @@ interface Props {
 const WorkSection = ({ data }: Props): JSX.Element | null => {
   const { theme } = useTheme();
   const listItemRefs = useRef<HTMLDivElement[] | null[]>([]);
+  const projectTitleRef = useRef<HTMLHeadingElement[] | null[]>([]);
+  const projectTypeRef = useRef<HTMLDivElement[] | null[]>([]);
+  const projectCreatedRef = useRef<HTMLDivElement[] | null[]>([]);
   const isDarkMode = theme === 'dark-theme';
 
   if (!data) return null;
@@ -71,6 +75,100 @@ const WorkSection = ({ data }: Props): JSX.Element | null => {
     });
   }, [listItemRefs]);
 
+  useGSAP(() => {
+    projectTitleRef.current.forEach((ref) => {
+      // Text reveal
+      const split = new SplitType(ref, { types: 'chars' });
+      const chars = split.chars;
+
+      // Image block reveal
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ref,
+          start: 'top bottom', // when the top of the trigger hits the bottom of the viewport
+          end: 'bottom center', // end after scrolling 500px beyond the start
+          onEnter: () => tl.play()
+        }
+      });
+
+      tl.fromTo(
+        chars,
+        {
+          y: 150,
+          opacity: 0
+        },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.03,
+          duration: 1.5,
+          ease: 'power4.out'
+        }
+      );
+    });
+  }, [projectTitleRef]);
+
+  useGSAP(() => {
+    projectTypeRef.current.forEach((ref) => {
+      const tags = gsap.utils.toArray(ref.children); // Convert HTMLCollection of tags to array
+
+      const tl = gsap.timeline({
+        delay: 1,
+        scrollTrigger: {
+          trigger: ref,
+          start: 'top bottom', // when the top of the trigger hits the bottom of the viewport
+          end: 'bottom center', // end after scrolling 500px beyond the start
+          onEnter: () => tl.play()
+        }
+      });
+
+      tl.fromTo(
+        tags,
+        {
+          x: -20,
+          opacity: 0
+        },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1,
+          ease: 'power4.out',
+          stagger: {
+            each: 0.2
+          }
+        }
+      );
+    });
+  }, [projectTypeRef]);
+
+  useGSAP(() => {
+    projectCreatedRef.current.forEach((ref) => {
+      const tl = gsap.timeline({
+        delay: 0.8,
+        scrollTrigger: {
+          trigger: ref,
+          start: 'top bottom', // when the top of the trigger hits the bottom of the viewport
+          end: 'bottom center', // end after scrolling 500px beyond the start
+          onEnter: () => tl.play()
+        }
+      });
+
+      tl.fromTo(
+        ref,
+        {
+          x: -20,
+          opacity: 0
+        },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1,
+          ease: 'power4.out'
+        }
+      );
+    });
+  }, [projectCreatedRef]);
+
   const renderProjects = () =>
     workList &&
     workList
@@ -86,14 +184,14 @@ const WorkSection = ({ data }: Props): JSX.Element | null => {
               <p className={styles.projectIndex}>
                 {currentIndex}-{projectLength}
               </p>
-              <h3 className={styles.projectTitle}>
-                <Link href={`/projects/${slug.current}`} className={styles.projectThumbnail}>
-                  {title}
-                </Link>
+              <h3 ref={(el) => (projectTitleRef.current[index] = el)} className={styles.projectTitle}>
+                <Link href={`/projects/${slug.current}`}>{title}</Link>
               </h3>
               <div className={styles.projectTags}>
-                <p className={styles.projectCreated}>{formattedDate}</p>
-                <div className={styles.tags}>
+                <p ref={(el) => (projectCreatedRef.current[index] = el)} className={styles.projectCreated}>
+                  {formattedDate}
+                </p>
+                <div ref={(el) => (projectTypeRef.current[index] = el)} className={styles.tags}>
                   {type && type.map((item: string, index: number) => <p key={index}>{item}</p>)}
                 </div>
               </div>
@@ -114,7 +212,7 @@ const WorkSection = ({ data }: Props): JSX.Element | null => {
                         position: 'absolute',
                         background: '#0F0F0F',
                         transformOrigin: 'left',
-                        zIndex: 20
+                        zIndex: 2
                       }}
                     />
                     <ImageTag
