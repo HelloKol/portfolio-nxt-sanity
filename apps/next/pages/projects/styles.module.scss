@@ -36,6 +36,11 @@
     .filterWrap {
       border-bottom: 1px solid $black;
     }
+    .projectItem {
+      .overlay {
+        color: $white;
+      }
+    }
     .projectView,
     .filterList {
       p {
@@ -103,7 +108,7 @@
       span {
         height: 120px;
         width: 120px;
-        background: red;
+        background: $darkGreen;
         border-radius: 100%;
         display: flex;
         justify-content: center;
