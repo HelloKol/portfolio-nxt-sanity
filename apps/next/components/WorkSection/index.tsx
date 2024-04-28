@@ -113,7 +113,7 @@ const WorkSection = ({ data }: Props): JSX.Element | null => {
       const tags = gsap.utils.toArray(ref.children); // Convert HTMLCollection of tags to array
 
       const tl = gsap.timeline({
-        delay: 1,
+        delay: 0.8,
         scrollTrigger: {
           trigger: ref,
           start: 'top bottom', // when the top of the trigger hits the bottom of the viewport
@@ -144,7 +144,7 @@ const WorkSection = ({ data }: Props): JSX.Element | null => {
   useGSAP(() => {
     projectCreatedRef.current.forEach((ref) => {
       const tl = gsap.timeline({
-        delay: 0.8,
+        delay: 0.6,
         scrollTrigger: {
           trigger: ref,
           start: 'top bottom', // when the top of the trigger hits the bottom of the viewport

@@ -1,13 +1,13 @@
-import React from "react";
-import { GetStaticProps } from "next";
-import { PortableText } from "@portabletext/react";
-import { PortableTextBlock } from "@portabletext/types";
-import { Container, ImageTag, Main, Section, Button, Seo } from "@/components";
-import { useTheme } from "@/providers";
-import { SEO } from "@/types";
-import { sanityClient } from "@/lib";
-import { ABOUT_QUERY } from "@/services/queries";
-import styles from "./styles.module.scss";
+import React, { useRef } from 'react';
+import { GetStaticProps } from 'next';
+import { PortableText } from '@portabletext/react';
+import { PortableTextBlock } from '@portabletext/types';
+import { Container, ImageTag, Main, Section, Button, Seo } from '@/components';
+import { useTheme } from '@/providers';
+import { SEO } from '@/types';
+import { sanityClient, useGSAP, gsap } from '@/lib';
+import { ABOUT_QUERY } from '@/services/queries';
+import styles from './styles.module.scss';
 
 interface Page {
   page: {
@@ -33,8 +33,77 @@ interface Page {
 export default function About({ page }: Page): JSX.Element | null {
   if (!page) return null;
   const { theme } = useTheme();
+  const containerRef = useRef(null);
+  const imageRef = useRef(null);
+  const articleRef = useRef<HTMLElement>(null);
   const { name, body, featuredImage, skillsTitle, skills, seo } = page;
-  const isDarkMode = theme === "dark-theme";
+  const isDarkMode = theme === 'dark-theme';
+
+  useGSAP(
+    () => {
+      gsap.set(containerRef.current, { scaleX: 1 });
+      gsap.set(imageRef.current, {
+        scale: 1.5,
+        filter: 'blur(50px)'
+      });
+
+      // Image block reveal
+      const tl = gsap.timeline();
+      tl.to(
+        containerRef.current,
+        {
+          duration: 1,
+          scaleX: 0,
+          transformOrigin: 'left',
+          ease: 'power2.inOut'
+        },
+        '+=0.2'
+      ).to(
+        imageRef.current,
+        {
+          duration: 1,
+          scale: 1,
+          filter: 'blur(0px)',
+          ease: 'power2.inOut'
+        },
+        '-=1'
+      );
+    },
+    { scope: containerRef }
+  );
+
+  useGSAP(
+    () => {
+      const articleChildren = gsap.utils.toArray(articleRef?.current?.children!);
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: articleRef?.current,
+          start: 'top bottom', // when the top of the trigger hits the bottom of the viewport
+          end: 'bottom center', // end after scrolling 500px beyond the start
+          onEnter: () => tl.play()
+        }
+      });
+
+      tl.fromTo(
+        articleChildren,
+        {
+          y: 30,
+          opacity: 0
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: 'power4.out',
+          stagger: {
+            each: 0.2
+          }
+        }
+      );
+    },
+    { scope: articleRef }
+  );
 
   const renderSkills = () =>
     skills &&
@@ -49,16 +118,24 @@ export default function About({ page }: Page): JSX.Element | null {
       <Seo seo={seo} />
 
       <Main>
-        <Section
-          className={`${styles.section} ${
-            isDarkMode ? styles.darkMode : styles.lightMode
-          }`}
-        >
+        <Section className={`${styles.section} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
           <Container isFluid={false}>
             <div className={styles.left}>
               {featuredImage && (
-                <div className={styles.imageWrapper}>
+                <div style={{ position: 'relative', overflow: 'hidden' }} className={styles.imageWrapper}>
+                  <div
+                    ref={containerRef}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      position: 'absolute',
+                      background: '#0F0F0F',
+                      transformOrigin: 'left',
+                      zIndex: 2
+                    }}
+                  />
                   <ImageTag
+                    imageRef={imageRef}
                     src={`${featuredImage?.asset?.url}`}
                     alt="Background Image"
                     layout="fill"
@@ -72,7 +149,7 @@ export default function About({ page }: Page): JSX.Element | null {
             </div>
             <div className={styles.right}>
               {body && (
-                <article className={styles.bodyCopy}>
+                <article ref={articleRef} className={styles.bodyCopy}>
                   {name && <h3>{name}</h3>}
                   <PortableText value={body} />
                 </article>
@@ -92,9 +169,7 @@ export default function About({ page }: Page): JSX.Element | null {
                   </g>
                 </svg>
               </Button>
-              {skillsTitle && (
-                <p className={styles.skillsTitle}>{skillsTitle}</p>
-              )}
+              {skillsTitle && <p className={styles.skillsTitle}>{skillsTitle}</p>}
               <ul className={styles.skills}>{renderSkills()}</ul>
             </div>
           </Container>
@@ -111,7 +186,7 @@ export const getStaticProps: GetStaticProps = async () => {
     // render the 404 if there is an api error
     if (!page) {
       return {
-        notFound: true,
+        notFound: true
       };
     }
 
@@ -119,13 +194,13 @@ export const getStaticProps: GetStaticProps = async () => {
 
     return {
       props: {
-        page,
+        page
       },
-      revalidate: 30,
+      revalidate: 30
     };
   } catch (err) {
     return {
-      notFound: true,
+      notFound: true
     };
   }
 };

@@ -10,6 +10,7 @@ import { sanityClient, useGSAP, gsap } from '@/lib';
 import { PROJECT_QUERY } from '@/services/queries';
 import { formatDate } from '@/utils';
 import styles from './styles.module.scss';
+import { PortableText } from '@portabletext/react';
 
 interface Page {
   page: Project & {
@@ -30,15 +31,10 @@ export default function Page({ page, work }: Page): JSX.Element | null {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const containerRef = useRef(null);
   const imageRef = useRef(null);
+  const articleRef = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {
-      gsap.set(containerRef.current, { scaleX: 1 });
-      gsap.set(imageRef.current, {
-        scale: 1.5,
-        filter: 'blur(50px)'
-      });
-
       // Text reveal
       const split = new SplitType(titleRef.current!, { types: 'chars' });
       const chars = split.chars;
@@ -57,6 +53,17 @@ export default function Page({ page, work }: Page): JSX.Element | null {
           ease: 'power4.out'
         }
       );
+    },
+    { scope: titleRef, dependencies: [slug.current] }
+  );
+
+  useGSAP(
+    () => {
+      gsap.set(containerRef.current, { scaleX: 1 });
+      gsap.set(imageRef.current, {
+        scale: 1.5,
+        filter: 'blur(50px)'
+      });
 
       // Image block reveal
       const tl = gsap.timeline();
@@ -81,6 +88,40 @@ export default function Page({ page, work }: Page): JSX.Element | null {
       );
     },
     { scope: containerRef, dependencies: [slug.current] }
+  );
+
+  useGSAP(
+    () => {
+      const articleChildren = gsap.utils.toArray(articleRef?.current?.children!);
+
+      const tl = gsap.timeline({
+        delay: 0.2,
+        scrollTrigger: {
+          trigger: articleRef?.current,
+          start: 'top bottom', // when the top of the trigger hits the bottom of the viewport
+          end: 'bottom center', // end after scrolling 500px beyond the start
+          onEnter: () => tl.play()
+        }
+      });
+
+      tl.fromTo(
+        articleChildren,
+        {
+          y: 30,
+          opacity: 0
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: 'power4.out',
+          stagger: {
+            each: 0.2
+          }
+        }
+      );
+    },
+    { scope: articleRef, dependencies: [slug.current] }
   );
 
   const renderCta = () => {
@@ -111,7 +152,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
         <Section className={`${styles.section} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
           <Container className={styles.container} isFluid={false}>
             {title && (
-              <h1 ref={titleRef} className={styles.title}>
+              <h1 ref={titleRef} key={title} className={styles.title}>
                 {title}
               </h1>
             )}
@@ -173,8 +214,8 @@ export default function Page({ page, work }: Page): JSX.Element | null {
               </div>
 
               {excerpt && (
-                <article className={styles.excerpt}>
-                  <BlockContent value={excerpt} />
+                <article ref={articleRef} className={styles.excerpt}>
+                  <PortableText value={excerpt} />
                 </article>
               )}
 
