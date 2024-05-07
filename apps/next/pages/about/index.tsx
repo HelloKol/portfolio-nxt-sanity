@@ -146,9 +146,10 @@ export default function About({ page }: Page): JSX.Element | null {
               )}
               <Button
                 className={styles.downloadCvBtn}
-                href={`/static/pdf/updated_cv.pdf`}
+                href={`https://utfs.io/f/876b1740-6dc7-4222-8033-937ac9e958a1-4vwtqh.pdf`}
                 variant="primary"
                 download={true}
+                newTab
               >
                 Download CV
                 <svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
