@@ -19,14 +19,17 @@
   .title {
     font-family: $melodramaRegular;
     text-transform: uppercase;
+    overflow: hidden;
+
     span {
+      opacity: 0;
       display: block;
       overflow: hidden;
     }
-    .titleCenter {
+    span:nth-of-type(2) {
       text-align: center;
     }
-    .titleRight {
+    span:nth-of-type(3) {
       text-align: right;
     }
   }

@@ -7,6 +7,8 @@ import {simplerColorInput} from 'sanity-plugin-simpler-color-input'
 import {codeInput} from '@sanity/code-input'
 import {schemaTypes} from './schemaTypes'
 import config from './config'
+import {presentationTool} from 'sanity/presentation'
+import {locate} from './presentation/locate'
 
 // Define the actions that should be available for singleton documents
 const singletonActions = new Set(['publish', 'discardChanges', 'restore'])
@@ -17,6 +19,7 @@ const singletonTypes = new Set(['settings'])
 export default defineConfig({
   name: 'default',
   title: 'portfolio',
+  basePath: '/studio',
   projectId: config.projectId,
   dataset: config.dataset,
 
@@ -106,10 +109,20 @@ export default defineConfig({
           ])
       },
     }),
+    presentationTool({
+      locate,
+      previewUrl: {
+        origin: typeof location === 'undefined' ? '<http://localhost:3000>' : location.origin,
+        draftMode: {
+          enable: '/api/draft',
+        },
+      },
+    }),
     visionTool(),
   ],
 
   schema: {
+    // @ts-ignore
     types: schemaTypes,
     // Filter out singleton types from the global “New document” menu options
     templates: (templates) => templates.filter(({schemaType}) => !singletonTypes.has(schemaType)),

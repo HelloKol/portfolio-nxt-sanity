@@ -1,13 +1,17 @@
-import styles from "./styles.module.scss";
+import styles from './styles.module.scss';
 
 export default function Section({
   children,
-  className = "",
+  className = '',
+  elementRef
 }: {
   children: React.ReactNode | React.ReactNode[];
   className?: string;
+  elementRef?: string;
 }) {
   return (
-    <section className={`${className} ${styles.section}`}>{children}</section>
+    <section ref={elementRef} className={`${className} ${styles.section}`}>
+      {children}
+    </section>
   );
 }

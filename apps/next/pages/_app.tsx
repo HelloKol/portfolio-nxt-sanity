@@ -1,15 +1,28 @@
 import type { AppProps } from 'next/app';
-import { use, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Circles, CustomCursor, Layout } from '@/components';
 import { ConfigProvider, ThemeProvider } from '@/providers';
 import '@/styles/globals.scss';
+import { ScrollSmoother } from 'gsap/dist/ScrollSmoother';
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    let smoother: ScrollSmoother | null = null;
 
-  useEffect(() => setIsMounted(true), []);
+    if (typeof window !== 'undefined') {
+      smoother = ScrollSmoother.create({
+        wrapper: '#smooth-wrapper',
+        content: '#smooth-content',
+        smooth: 1.5,
+        effects: true,
+        smoothTouch: 0.1
+      });
+    }
 
-  if (!isMounted) return null;
+    return () => {
+      if (smoother) smoother.kill();
+    };
+  }, []);
 
   return (
     <ThemeProvider>

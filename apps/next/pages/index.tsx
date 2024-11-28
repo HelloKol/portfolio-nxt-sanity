@@ -1,3 +1,33 @@
+// // ./src/pages/index.tsx
+
+// import { SanityDocument } from 'next-sanity';
+// import { getClient } from '../../sanity/lib/client';
+// import { token } from '../../sanity/lib/token';
+// import { POSTS_QUERY } from '../../sanity/lib/queries';
+
+// type PageProps = {
+//   posts: SanityDocument[];
+//   draftMode: boolean;
+//   token: string;
+// };
+
+// export default function Home(props: PageProps) {
+//   return <>Home page</>;
+// }
+
+// export const getStaticProps = async ({ draftMode = false }) => {
+//   const client = getClient(draftMode ? token : undefined);
+//   const posts = await client.fetch<SanityDocument[]>(POSTS_QUERY);
+
+//   return {
+//     props: {
+//       posts,
+//       draftMode,
+//       token: draftMode ? token : ''
+//     }
+//   };
+// };
+
 import React from 'react';
 import { GetStaticProps } from 'next/types';
 import { PortableTextBlock } from '@portabletext/types';
@@ -40,12 +70,9 @@ export default function Home({ page }: Page): JSX.Element | null {
   return (
     <>
       <Seo seo={seo} />
-
       <Main>
         <HeroSection data={heroSection} />
-
         <AboutSection data={aboutSection} />
-
         <WorkSection data={workSection} />
       </Main>
     </>
