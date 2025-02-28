@@ -1,10 +1,11 @@
-import { useRef } from 'react';
-import { PortableText } from '@portabletext/react';
-import { PortableTextBlock } from '@portabletext/types';
-import { Button, Container, Grid, Section } from '@/components';
-import { gsap, useGSAP } from '@/lib';
-import { useTheme } from '@/providers';
-import styles from './styles.module.scss';
+import { useRef } from "react";
+import { PortableText } from "@portabletext/react";
+import { PortableTextBlock } from "@portabletext/types";
+import { Button, Container, Grid, Section } from "@/components";
+import { gsap, useGSAP } from "@/lib";
+import { useTheme } from "@/providers";
+import styles from "./styles.module.scss";
+import { RainbowButton } from "@/components/RainbowButton";
 
 interface Props {
   data: {
@@ -18,76 +19,92 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
   const { theme } = useTheme();
   const articleRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const isDarkMode = theme === 'dark-theme';
+  const isDarkMode = theme === "dark-theme";
 
   useGSAP(
     () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: titleRef?.current,
-          start: 'top bottom', // when the top of the trigger hits the bottom of the viewport
-          end: 'bottom center', // end after scrolling 500px beyond the start
-          onEnter: () => tl.play()
-        }
+          start: "top bottom", // when the top of the trigger hits the bottom of the viewport
+          end: "bottom center", // end after scrolling 500px beyond the start
+          onEnter: () => tl.play(),
+        },
       });
 
       tl.fromTo(
         titleRef?.current,
         {
           x: -20,
-          opacity: 0
+          opacity: 0,
         },
         {
           x: 0,
           opacity: 1,
           duration: 1,
           delay: 0.8,
-          ease: 'power4.out'
-        }
+          ease: "power4.out",
+        },
       );
     },
-    { scope: titleRef }
+    { scope: titleRef },
   );
 
   useGSAP(
     () => {
-      const articleChildren = gsap.utils.toArray(articleRef?.current?.children!);
+      const articleChildren = gsap.utils.toArray(
+        articleRef?.current?.children!,
+      );
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: articleRef?.current,
-          start: 'top bottom', // when the top of the trigger hits the bottom of the viewport
-          end: 'bottom center', // end after scrolling 500px beyond the start
-          onEnter: () => tl.play()
-        }
+          start: "top bottom", // when the top of the trigger hits the bottom of the viewport
+          end: "bottom center", // end after scrolling 500px beyond the start
+          onEnter: () => tl.play(),
+        },
       });
 
       tl.fromTo(
         articleChildren,
         {
           y: 30,
-          opacity: 0
+          opacity: 0,
         },
         {
           y: 0,
           opacity: 1,
           duration: 1,
           delay: 0.3,
-          ease: 'power4.out',
+          ease: "power4.out",
           stagger: {
-            each: 0.3
-          }
-        }
+            each: 0.3,
+          },
+        },
       );
     },
-    { scope: articleRef }
+    { scope: articleRef },
   );
 
   if (!data) return null;
   const { title, body, cvLink } = data;
 
   return (
-    <Section className={`${styles.aboutSection} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
+    <section className="pt-[220px]">
+      <div className="container mx-auto">
+        <h2 className="text-center text-xl">{title}</h2>
+        <article className="mt-4 text-center text-5xl leading-tight">
+          <PortableText value={body} />
+        </article>
+        <RainbowButton>Get Unlimited Access</RainbowButton>;
+      </div>
+    </section>
+  );
+
+  return (
+    <Section
+      className={`${styles.aboutSection} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
+    >
       <Container isFluid={false}>
         <Grid>
           {title && (
@@ -100,7 +117,13 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
               <PortableText value={body} />
             </article>
           )}
-          <Button className={styles.downloadCvBtn} href={cvLink} variant="primary" download={true} newTab>
+          <Button
+            className={styles.downloadCvBtn}
+            href={cvLink}
+            variant="primary"
+            download={true}
+            newTab
+          >
             Download CV
             <svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
               <title />

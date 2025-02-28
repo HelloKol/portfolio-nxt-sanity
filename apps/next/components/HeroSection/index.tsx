@@ -13,43 +13,57 @@ interface Props {
 
 const HeroSection = ({ data }: Props): JSX.Element | null => {
   const { theme } = useTheme();
-  const titleRef = useRef<HTMLSpanElement | null>([]);
+  const titleRef = useRef<(HTMLSpanElement | null)[]>([]);
   const isDarkMode = theme === 'dark-theme';
 
   useGSAP(() => {
     const ctx = gsap.context(() => {
-      const timeline = gsap.timeline({});
-      timeline.fromTo(
-        titleRef.current,
-        {
-          y: 150,
-          opacity: 0
-        },
-        { y: 0, opacity: 1, stagger: 0.3, duration: 2, ease: 'power4.out' }
-      );
+      const timeline = gsap.timeline();
+
+      titleRef.current.forEach((wordRef, index) => {
+        if (wordRef) {
+          const splitText = new SplitText(wordRef, { type: 'chars' }); // Split the word into characters
+
+          // Set visibility to visible for animation
+          gsap.set(splitText.chars, { visibility: 'visible' });
+
+          timeline.fromTo(
+            splitText.chars,
+            {
+              y: 350
+            },
+            {
+              y: 0,
+              stagger: 0.03,
+              duration: 2.5,
+              ease: 'power4.out'
+            },
+            index === 0 ? 0 : `-=${2.2}` // Overlap animations by 1.5 seconds
+          );
+        }
+      });
     });
 
-    return () => ctx.revert(); // Clean up on unmount
+    return () => ctx.revert();
   });
 
   if (!data) return null;
   const { title } = data;
+
+  // Split the title into an array of words
   const heroTitleSplit = title.split(' ');
   const heroTitle1 = heroTitleSplit.slice(0, 2).join(' ');
   const heroTitle2 = heroTitleSplit[2];
   const heroTitle3 = heroTitleSplit[3];
-  const test = [heroTitle1, heroTitle2, heroTitle3];
+  const words = [heroTitle1, heroTitle2, heroTitle3];
 
   return (
     <Section className={`${styles.heroSection} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
       <Container isFluid={false}>
         <h1 className={styles.title}>
-          {test.map((word, index) => (
-            <span
-              key={index}
-              ref={(el) => (titleRef.current[index] = el)} // Assign each word to the ref array
-            >
-              {word}&nbsp;
+          {words.map((word, index) => (
+            <span key={index} ref={(el) => (titleRef.current[index] = el)}>
+              {word}
             </span>
           ))}
         </h1>

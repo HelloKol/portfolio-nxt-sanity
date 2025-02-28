@@ -14,13 +14,13 @@ export default function Layout({ children }: props) {
 
   return (
     <>
-      <SiteHeader />
       <div id="smooth-wrapper">
         <div id="smooth-content">
+          <SiteHeader />
           <div className={`${theme} app`}>{children}</div>
+          {!isFooterHidden && <SiteFooter />}
         </div>
       </div>
-      {!isFooterHidden && <SiteFooter />}
     </>
   );
 }
