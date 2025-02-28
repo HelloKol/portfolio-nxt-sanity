@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { GetStaticProps } from "next/types";
 import { PortableTextBlock } from "@portabletext/types";
 import {
@@ -11,6 +11,7 @@ import {
 import { sanityClient } from "@/lib";
 import { Project, SEO } from "@/types";
 import { HOME_QUERY } from "@/services/queries";
+import { ReactLenis } from "lenis/react";
 
 interface Page {
   page: {
@@ -40,18 +41,22 @@ interface Page {
 }
 
 export default function Home({ page }: Page): JSX.Element | null {
+  const container = useRef();
+
   if (!page) return null;
   const { heroSection, aboutSection, workSection, seo } = page;
 
   return (
-    <>
+    <ReactLenis root>
       <Seo seo={seo} />
       <Main>
-        <HeroSection data={heroSection} />
-        <AboutSection data={aboutSection} />
-        <WorkSection data={workSection} />
+        <div ref={container}>
+          <HeroSection data={heroSection} />
+          <WorkSection data={workSection} />
+          <AboutSection data={aboutSection} />
+        </div>
       </Main>
-    </>
+    </ReactLenis>
   );
 }
 

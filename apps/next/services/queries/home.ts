@@ -1,5 +1,5 @@
-import groq from 'groq';
-import SEO from '../seo';
+import groq from "groq";
+import SEO from "../seo";
 
 const HOME_QUERY = groq`
 *[_type == "home" && !(_id in path('drafts.**'))][0] {
@@ -23,6 +23,7 @@ const HOME_QUERY = groq`
       workList[]->{
         _id,
         title,
+        excerpt,
         slug,
         createdDate,
         type,
