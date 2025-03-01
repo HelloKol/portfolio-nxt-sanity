@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import SpotlightCard from "../SpotlightCard";
 
 const cards = [
   {
@@ -36,18 +37,22 @@ const cards = [
 
 const CardList = () => {
   return (
-    <section className="skills h-[300px]">
+    <section className="skills h-[340px]">
       <div className="container mx-auto">
-        <h1 className="text-md text-center font-bold text-white">
+        <h1 className="text-md text-center font-bold text-black">
           Frameworks and Tools I Use
         </h1>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {cards.map((card) => (
             <div
               key={card.id}
               className="group relative h-48 overflow-hidden rounded-lg bg-gray-900 p-4 transition-all duration-300 hover:h-64"
             >
+              {/* <SpotlightCard
+                className="custom-spotlight-card p-4"
+                spotlightColor="rgba(33, 11, 157, 0.57)"
+              > */}
               {/* Image */}
               <Image
                 src={card.image}
@@ -65,15 +70,17 @@ const CardList = () => {
               </div>
 
               {/* Description (Initially Hidden) */}
-              <div className="absolute top-44 right-4 left-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <div className="opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                 <p className="text-white">{card.description}</p>
               </div>
 
               {/* Gradient Blobs - Bottom Left */}
-              <div className="absolute -bottom-20 -left-10 h-34 w-34 rounded-full bg-gradient-to-br from-purple-400 via-pink-400 to-red-400 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-60"></div>
+              <div className="absolute -bottom-20 -left-8 h-34 w-44 rounded-full bg-gradient-to-br from-purple-400 via-pink-400 to-red-400 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-60"></div>
 
               {/* Gradient Blobs - Bottom Right */}
-              <div className="absolute -right-10 -bottom-20 h-34 w-34 rounded-full bg-gradient-to-bl from-blue-400 via-teal-400 to-green-400 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-60"></div>
+              <div className="absolute -right-10 -bottom-20 h-44 w-34 rounded-full bg-gradient-to-bl from-blue-400 via-blue-400 to-blue-400 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-60"></div>
+
+              {/* </SpotlightCard> */}
             </div>
           ))}
         </div>

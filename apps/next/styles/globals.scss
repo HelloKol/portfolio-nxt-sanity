@@ -6,6 +6,7 @@
 // ==========================================================================
 // Global
 // ==========================================================================
+
 :root {
   --text-primary-light: #000000;
   --text-primary-dark: #ffffff;
@@ -82,7 +83,7 @@ h6 {
 
 .app {
   min-height: 100vh;
-  background-color: var(--bg-primary);
+  // background-color: var(--bg-primary);
   color: var(--text-primary);
   will-change: background-color, color;
   transition: background-color 0.2s ease-in-out;
@@ -112,18 +113,47 @@ h6 {
   position: relative;
 }
 
+.card .gradient-box {
+  z-index: 1;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.2s ease-in-out;
+  pointer-events: none;
+}
+
+.card:hover .gradient-box {
+  opacity: 1;
+  background: radial-gradient(
+    circle at top right,
+    rgba(80, 64, 190, 0.7) 10%,
+    rgba(80, 64, 190, 0.5) 15%,
+    rgba(80, 64, 190, 0.1) 35%
+  );
+
+  // background: radial-gradient(
+  //   circle 150px at top right,
+  //   rgba(186, 85, 211, 0.9) 0%,
+  //   rgba(186, 85, 211, 0.5) 30%,
+  //   rgba(186, 85, 211, 0) 70%
+  // );
+}
+
 .card-inner {
-  position: relative;
-  will-change: transform;
   width: 100%;
   height: 100%;
   padding: 2rem;
-  display: flex;
-  gap: 4rem;
 }
 
 .card-content {
   flex: 3;
+}
+
+.card:hover .card-img {
+  transform: rotate(-4deg);
 }
 
 .card-img {
@@ -131,24 +161,44 @@ h6 {
   aspect-ratio: 16 / 9;
   border-radius: 10px;
   overflow: hidden;
-}
-
-#card-1 .card-inner {
-  background-color: #5ab1cc;
-}
-
-#card-2 .card-inner {
-  background-color: #e376f6;
-}
-
-#card-3 .card-inner {
-  background-color: #e9ece2;
+  transition: transform 0.2s ease-in-out;
 }
 
 // .WorkListModal {
 //   will-change: transform;
 //   transform: translateY(100%);
 // }
+
+.card-spotlight {
+  position: relative;
+  background-color: #111;
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  --spotlight-color: rgba(255, 255, 255, 0.05);
+  height: 100%;
+}
+
+.card-spotlight::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle at var(--mouse-x) var(--mouse-y),
+    var(--spotlight-color),
+    transparent 80%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.card-spotlight:hover::before,
+.card-spotlight:focus-within::before {
+  opacity: 0.6;
+}
 
 // ==========================================================================
 // Mobile

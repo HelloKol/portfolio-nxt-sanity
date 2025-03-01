@@ -107,7 +107,7 @@ const MenuToggle = () => {
     return (
       <div
         ref={buttonRef}
-        className="open-menu-button top-[20px] right-[20px] flex h-[50px] w-[50px] cursor-pointer items-center overflow-hidden rounded-full bg-black hover:rounded-[15px]"
+        className="open-menu-button top-[20px] right-[20px] flex h-[50px] w-[50px] cursor-pointer items-center overflow-hidden rounded-full hover:rounded-[15px]"
         onClick={toggleMenu}
       >
         {!isNavOpen && (
@@ -167,7 +167,7 @@ const MenuToggle = () => {
       {renderOpenMenuButton()}
       <div
         ref={menuRef}
-        className="invisible fixed top-0 right-0 flex flex-col items-start justify-center overflow-hidden rounded-[30px] bg-black p-4"
+        className="invisible fixed top-0 right-0 flex flex-col items-start justify-center overflow-hidden rounded-[30px] bg-[#37269E] p-4"
         style={{ width: 0, minWidth: 0, height: 0 }}
       >
         {renderCloseMenuButton()}

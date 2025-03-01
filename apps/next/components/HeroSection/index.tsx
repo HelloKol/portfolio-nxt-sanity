@@ -4,7 +4,7 @@ import { SplitText } from "gsap/dist/SplitText";
 import { useGSAP, gsap } from "@/lib";
 import { useTheme } from "@/providers";
 import styles from "./styles.module.scss";
-
+import Image from "next/image";
 interface Props {
   data: {
     title: string;
@@ -59,16 +59,25 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
 
   return (
     <Section
-      className={`hero ${styles.heroSection} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
+      className={`hero h-[110vh] ${styles.heroSection} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
     >
-      <Container isFluid={false}>
-        <h1 className={styles.title}>
-          {words.map((word, index) => (
-            <span key={index} ref={(el) => (titleRef.current[index] = el)}>
-              {word}
-            </span>
-          ))}
-        </h1>
+      <Image
+        src="/image/background-2.png"
+        alt="hero-bg"
+        width={3000}
+        height={3000}
+        className="absolute inset-0 h-[110vh] w-full object-cover"
+      />
+      <Container isFluid={false} className="relative h-full">
+        <div className="absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2">
+          <h1 className={styles.title}>
+            {words.map((word, index) => (
+              <span key={index} ref={(el) => (titleRef.current[index] = el)}>
+                {word}
+              </span>
+            ))}
+          </h1>
+        </div>
       </Container>
     </Section>
   );

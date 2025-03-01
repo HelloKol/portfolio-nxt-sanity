@@ -90,13 +90,13 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
   const { title, body, cvLink } = data;
 
   return (
-    <section className="about pt-[220px]">
+    <section className="about mt-[110px]">
       <div className="container mx-auto">
         <h2 className="text-center text-xl">{title}</h2>
         <article className="mt-4 text-center text-5xl leading-tight">
           <PortableText value={body} />
         </article>
-        <RainbowButton>Get Unlimited Access</RainbowButton>;
+        {/* <RainbowButton>Get Unlimited Access</RainbowButton>; */}
       </div>
     </section>
   );

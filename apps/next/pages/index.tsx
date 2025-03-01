@@ -13,6 +13,9 @@ import { Project, SEO } from "@/types";
 import { HOME_QUERY } from "@/services/queries";
 import { ReactLenis } from "lenis/react";
 import Skills from "@/components/Skills";
+import ContactSection from "@/components/ContactSection";
+import WorkListModal from "@/components/WorkListModal";
+
 interface Page {
   page: {
     heroSection: {
@@ -47,18 +50,27 @@ export default function Home({ page }: Page): JSX.Element | null {
   const { heroSection, aboutSection, workSection, seo } = page;
 
   return (
-    <ReactLenis root>
+    // <ReactLenis root>
+    <>
       <Seo seo={seo} />
-      <Main>
+      <Main withPadding={false}>
         <div ref={container}>
           <HeroSection data={heroSection} />
-          <WorkSection data={workSection} />
-          <AboutSection data={aboutSection} />
           <Skills />
           <AboutSection data={aboutSection} />
+
+          <section className="mt-[200px]">
+            <div className="container mx-auto">
+              <h1 className="text-center text-xl">Work</h1>
+              <WorkSection data={workSection} />
+              <WorkListModal data={workSection} />
+            </div>
+          </section>
+          <ContactSection />
         </div>
       </Main>
-    </ReactLenis>
+    </>
+    // </ReactLenis>
   );
 }
 

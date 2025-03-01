@@ -11,33 +11,6 @@ import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { PortableText } from "@portabletext/react";
 import WorkListModal from "../WorkListModal";
 
-const cards = [
-  {
-    title: "The Beauty of Nature",
-    description:
-      "Nature offers breathtaking landscapes, from towering mountains to serene beaches. It provides fresh air, wildlife, and endless exploration opportunities. Protecting nature ensures future generations can enjoy its wonders. Hiking, camping, and photography allow us to connect with the environment and appreciate its beauty.",
-    image: "https://placehold.co/600x400",
-  },
-  {
-    title: "Advancements in Technology",
-    description:
-      "Technology evolves rapidly, shaping our daily lives. From artificial intelligence to renewable energy, innovations enhance communication, healthcare, and productivity. The rise of automation and smart devices makes tasks more efficient. Staying updated on tech trends helps individuals and businesses adapt to the fast-changing digital world.",
-    image: "https://placehold.co/600x400",
-  },
-  {
-    title: "The Importance of Education",
-    description:
-      "Education is a powerful tool for personal and societal growth. It fosters knowledge, critical thinking, and problem-solving skills. Quality education empowers individuals to achieve their goals. Schools, online courses, and lifelong learning opportunities help people acquire new skills and contribute to a better future.",
-    image: "https://placehold.co/600x400",
-  },
-  {
-    title: "The Future of Space Exploration",
-    description:
-      "Space exploration pushes humanity beyond Earth’s boundaries. Missions to Mars, lunar bases, and deep-space travel drive scientific discoveries. Advancements in rockets and satellites enable further exploration. The dream of interstellar travel fuels innovation, inspiring future generations to reach for the stars.",
-    image: "https://placehold.co/600x400",
-  },
-];
-
 interface Props {
   data: {
     title: string;
@@ -54,87 +27,44 @@ interface Props {
   };
 }
 
-const Card = ({ title, excerpt, coverImage, index }) => {
+const Card = ({ title, excerpt, coverImage }) => {
   return (
-    <div className="card" id={`card-${index + 1}`}>
+    <Link
+      href={`/projects/${title}`}
+      className="card mb-10 block h-[660px] overflow-hidden rounded-[30px] bg-[#f5f5f5]"
+    >
       <div className="card-inner">
         <div className="card-content">
           <h1 className="card-title text-6xl font-bold">{title}</h1>
           <article className="card-description text-2xl">
-            <PortableText value={excerpt} />
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
+              quos.
+            </p>
+
+            {/* <PortableText value={excerpt} /> */}
           </article>
         </div>
 
-        <div className="card-img">
+        <div className="card-img mx-auto mt-40 w-[80%]">
           <img src={`${coverImage?.asset?.url}`} alt="" />
         </div>
       </div>
-    </div>
+
+      <div className="gradient-box"></div>
+    </Link>
   );
 };
 
-const WorkSection = ({ data, containerRef }: Props): JSX.Element | null => {
+const WorkSection = ({ data }: Props): JSX.Element | null => {
   const { workList } = data;
 
-  useGSAP(
-    () => {
-      const cards = gsap.utils.toArray(".card");
-      ScrollTrigger.create({
-        trigger: cards[0],
-        start: "top 35%",
-        endTrigger: cards[cards.length - 1],
-        end: "top 30%",
-        pin: ".hero",
-        pinSpacing: false,
-      });
-
-      cards.forEach((card, index) => {
-        const isLastCard = index === cards.length - 1;
-        const cardInner = card.querySelector(".card-inner");
-
-        if (!isLastCard) {
-          ScrollTrigger.create({
-            trigger: card,
-            start: "top 35%",
-            endTrigger: ".about",
-            end: "top 65%",
-            pin: true,
-            pinSpacing: false,
-          });
-        }
-
-        gsap.to(cardInner, {
-          y: `-${(cards.length - index) * 14}vh`,
-          ease: "none",
-          scrollTrigger: {
-            trigger: card,
-            start: "top 35%",
-            endTrigger: ".about",
-            end: "top 65%",
-            scrub: true,
-          },
-        });
-      });
-
-      return () => {
-        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-      };
-    },
-    {
-      scope: containerRef,
-    },
-  );
-
   return (
-    <section>
-      <WorkListModal />
-
-      <section className="work">
-        {workList.map((card, index) => (
-          <Card key={index} {...card} index={index} />
-        ))}
-      </section>
-    </section>
+    <>
+      {workList.map((card, index) => (
+        <Card key={index} {...card} />
+      ))}
+    </>
   );
 };
 

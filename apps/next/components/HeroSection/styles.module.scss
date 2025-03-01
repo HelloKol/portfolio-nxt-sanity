@@ -1,5 +1,5 @@
-@import '../../styles/base/variables';
-@import '../../styles/mixins/mixins';
+@import "../../styles/base/variables";
+@import "../../styles/mixins/mixins";
 
 // ==========================================================================
 // Global
@@ -17,7 +17,7 @@
   }
 
   .title {
-    font-family: $melodramaRegular;
+    // font-family: $melodramaRegular;
     text-transform: uppercase;
     overflow: hidden;
     visibility: hidden;
@@ -26,8 +26,12 @@
       display: block;
       overflow: hidden;
     }
+    span:nth-of-type(1) {
+      color: $white;
+    }
     span:nth-of-type(2) {
       text-align: right;
+      color: $white;
     }
     span:nth-of-type(3) {
       text-align: center;

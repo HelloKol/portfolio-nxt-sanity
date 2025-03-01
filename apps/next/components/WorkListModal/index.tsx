@@ -1,8 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { gsap } from "gsap";
+import WorkSection from "../WorkSection";
+import { Project } from "@/types";
 
-const WorkListModal = (): JSX.Element | null => {
+interface Props {
+  data: {
+    workList: Project[];
+  };
+}
+
+const WorkListModal = ({ data }: Props): JSX.Element | null => {
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -107,13 +115,13 @@ const WorkListModal = (): JSX.Element | null => {
       />
       <div
         ref={modalRef}
-        className="WorkListModal fixed right-0 bottom-0 left-0 z-50 hidden h-[90vh] rounded-t-4xl bg-white p-4 shadow-lg"
+        className="WorkListModal fixed right-0 bottom-0 left-0 z-50 hidden h-[95vh] rounded-t-4xl bg-white p-4 pt-24 shadow-lg"
         style={{ opacity: 0 }}
       >
-        <div className="WorkListModal-inner">
-          <div className="WorkListModal-content">
+        <div className="WorkListModal-inner h-full">
+          <div className="WorkListModal-content h-full overflow-y-auto">
             {renderCloseMenuButton()}
-            <h1 className="WorkListModal-title">Work List Modal</h1>
+            <WorkSection data={data} />
           </div>
         </div>
       </div>
@@ -122,7 +130,10 @@ const WorkListModal = (): JSX.Element | null => {
 
   return (
     <>
-      <button className="WorkListModal-button" onClick={() => setIsOpen(true)}>
+      <button
+        className="WorkListModal-button mx-auto w-fit"
+        onClick={() => setIsOpen(true)}
+      >
         See Work List
       </button>
 

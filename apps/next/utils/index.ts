@@ -1,2 +1,2 @@
 export { default as formatDate } from "./formatDate";
-export { cn } from "./tailwindMerge";
+export { cn } from "./cn";
