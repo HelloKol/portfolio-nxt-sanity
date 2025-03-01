@@ -1,11 +1,24 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { PortableText } from "@portabletext/react";
 import { PortableTextBlock } from "@portabletext/types";
 import { Button, Container, Grid, Section } from "@/components";
 import { gsap, useGSAP } from "@/lib";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { SplitText } from "gsap/dist/SplitText";
 import { useTheme } from "@/providers";
 import styles from "./styles.module.scss";
 import { RainbowButton } from "@/components/RainbowButton";
+
+// Register plugins
+gsap.registerPlugin(ScrollTrigger, SplitText);
+
+const components = {
+  types: {},
+  block: {
+    // Override the default rendering of <p> tags
+    normal: ({ children }) => <>{children}</>,
+  },
+};
 
 interface Props {
   data: {
@@ -16,10 +29,50 @@ interface Props {
 }
 
 const AboutSection = ({ data }: Props): JSX.Element | null => {
-  const { theme } = useTheme();
   const articleRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const isDarkMode = theme === "dark-theme";
+  const headerRef = useRef(null);
+
+  useEffect(() => {
+    const split = new SplitText(headerRef.current, { type: "lines" });
+
+    const makeItHappen = () => {
+      split.lines.forEach((target) => {
+        gsap.to(target, {
+          backgroundPositionX: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: target,
+            markers: true, // Remove this in production
+            scrub: 0.5,
+            start: "top center",
+            end: "bottom center",
+          },
+        });
+      });
+    };
+
+    const someDelay = gsap.delayedCall(0.2, newTriggers).pause();
+    const resizeListener = () => someDelay.restart(true);
+
+    function newTriggers() {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      if (headerRef.current) {
+        split.split(headerRef.current);
+        makeItHappen();
+      }
+    }
+
+    makeItHappen();
+
+    window.addEventListener("resize", resizeListener);
+
+    return () => {
+      window.removeEventListener("resize", resizeListener);
+      someDelay.kill();
+      split.revert(); // Clean up SplitText when component unmounts
+    };
+  }, []);
 
   useGSAP(
     () => {
@@ -93,18 +146,26 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
     <section className="about mt-[110px]">
       <div className="container mx-auto">
         <h2 className="text-center text-xl">{title}</h2>
-        <article className="mt-4 text-center text-5xl leading-tight">
+
+        <article className="mt-4 text-center text-5xl leading-tight font-bold">
           <PortableText value={body} />
         </article>
+
+        {/* <div className="special-text">
+          <article
+            ref={headerRef}
+            className="mt-4 text-center text-5xl leading-tight font-bold"
+          >
+            <PortableText value={body} components={components} />
+          </article>
+        </div> */}
         {/* <RainbowButton>Get Unlimited Access</RainbowButton>; */}
       </div>
     </section>
   );
 
   return (
-    <Section
-      className={`${styles.aboutSection} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
-    >
+    <Section className={`${styles.aboutSection} ${styles.lightMode}`}>
       <Container isFluid={false}>
         <Grid>
           {title && (

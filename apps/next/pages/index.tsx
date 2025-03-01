@@ -11,10 +11,11 @@ import {
 import { sanityClient } from "@/lib";
 import { Project, SEO } from "@/types";
 import { HOME_QUERY } from "@/services/queries";
-import { ReactLenis } from "lenis/react";
+// import { ReactLenis } from "lenis/react";
 import Skills from "@/components/Skills";
 import ContactSection from "@/components/ContactSection";
 import WorkListModal from "@/components/WorkListModal";
+import ScrollHighlightText from "@/components/ScrollHighlightText";
 
 interface Page {
   page: {
@@ -58,7 +59,6 @@ export default function Home({ page }: Page): JSX.Element | null {
           <HeroSection data={heroSection} />
           <Skills />
           <AboutSection data={aboutSection} />
-
           <section className="mt-[200px]">
             <div className="container mx-auto">
               <h1 className="text-center text-xl">Work</h1>

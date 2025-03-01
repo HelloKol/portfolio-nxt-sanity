@@ -199,6 +199,17 @@ h6 {
 .card-spotlight:focus-within::before {
   opacity: 0.6;
 }
+.special-text > article > div {
+  background: linear-gradient(to right, #000000 50%, #a4a4a4 50%);
+  background-size: 200% 100%;
+  background-position-x: 100%;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  margin-left: 50px;
+  line-height: 1.2;
+  font-size: 50px;
+}
 
 // ==========================================================================
 // Mobile
