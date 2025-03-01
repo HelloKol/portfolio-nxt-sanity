@@ -12,7 +12,7 @@ import { sanityClient } from "@/lib";
 import { Project, SEO } from "@/types";
 import { HOME_QUERY } from "@/services/queries";
 import { ReactLenis } from "lenis/react";
-
+import Skills from "@/components/Skills";
 interface Page {
   page: {
     heroSection: {
@@ -53,6 +53,8 @@ export default function Home({ page }: Page): JSX.Element | null {
         <div ref={container}>
           <HeroSection data={heroSection} />
           <WorkSection data={workSection} />
+          <AboutSection data={aboutSection} />
+          <Skills />
           <AboutSection data={aboutSection} />
         </div>
       </Main>
