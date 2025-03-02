@@ -1,16 +1,5 @@
-import { useRef } from "react";
 import Link from "next/link";
-import SplitType from "split-type";
-import { Button, Container, Grid, ImageTag, Section } from "@/components";
-import { useTheme } from "@/providers";
 import { Project } from "@/types";
-import { useGSAP, gsap } from "@/lib";
-import { formatDate } from "@/utils";
-import styles from "./styles.module.scss";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { PortableText } from "@portabletext/react";
-import WorkListModal from "../WorkListModal";
-import SpotlightCard from "../SpotlightCard";
 
 interface Props {
   data: {
@@ -32,29 +21,26 @@ const Card = ({ title, excerpt, coverImage }: Project) => {
   return (
     <Link
       href={`/projects/${title}`}
-      className="card mb-10 block h-[700px] overflow-hidden rounded-[30px] bg-[#f5f5f5]"
+      className="card mb-10 block h-[410px] overflow-hidden rounded-[30px] bg-[#f5f5f5] lg:h-[500px] xl:h-[530px] 2xl:h-[680px]"
     >
-      <SpotlightCard
-        className="custom-spotlight-card"
-        spotlightColor="rgba(34, 0, 255, 0.24)"
-      >
-        <div className="card-inner">
-          <div className="card-content">
-            <h1 className="card-title text-6xl font-bold">{title}</h1>
-            <article className="card-description text-2xl">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis
-              tempore excepturi alias illo consequuntur omnis
-              {/* <PortableText value={excerpt} /> */}
-            </article>
-          </div>
-
-          <div className="card-img mx-auto mt-34 w-[80%]">
-            <img src={`${coverImage?.asset?.url}`} alt="" />
-          </div>
+      <div className="card-inner p-5 lg:p-10">
+        <div className="card-content">
+          <h1 className="card-title text-3xl font-bold lg:text-[40px]">
+            {title}
+          </h1>
+          <article className="card-description w-10/12 text-lg lg:text-xl">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis
+            tempore excepturi alias illo consequuntur omnis
+            {/* <PortableText value={excerpt} /> */}
+          </article>
         </div>
-      </SpotlightCard>
 
-      {/* <div className="gradient-box"></div> */}
+        <div className="card-img mx-auto mt-10 w-[100%] sm:mt-16 sm:w-[80%] 2xl:mt-20">
+          <img src={`${coverImage?.asset?.url}`} alt="" />
+        </div>
+      </div>
+
+      <div className="gradient-box"></div>
     </Link>
   );
 };

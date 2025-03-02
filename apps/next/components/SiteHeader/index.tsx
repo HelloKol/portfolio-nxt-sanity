@@ -45,7 +45,7 @@ export default function SiteHeader() {
       }`}
     >
       <nav className={styles.nav}>
-        <Container isFluid={false}>
+        <Container className="w-full">
           <ul className={styles.navList} ref={navListRef}>
             <li className={styles.navItem}>
               <Link href={`/`}>est. {year}</Link>

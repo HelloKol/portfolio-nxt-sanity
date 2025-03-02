@@ -150,39 +150,31 @@ h6 {
   position: relative;
 }
 
-// .card .gradient-box {
-//   z-index: 1;
-//   opacity: 0;
-//   position: absolute;
-//   top: 0;
-//   right: 0;
-//   width: 100%;
-//   height: 100%;
-//   transition: opacity 0.2s ease-in-out;
-//   pointer-events: none;
-// }
+.card .gradient-box {
+  z-index: 1;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.2s ease-in-out;
+  pointer-events: none;
+}
 
-// .card:hover .gradient-box {
-//   opacity: 1;
-//   background: radial-gradient(
-//     circle at top right,
-//     rgba(80, 64, 190, 0.7) 10%,
-//     rgba(80, 64, 190, 0.5) 15%,
-//     rgba(80, 64, 190, 0.1) 35%
-//   );
-
-//   // background: radial-gradient(
-//   //   circle 150px at top right,
-//   //   rgba(186, 85, 211, 0.9) 0%,
-//   //   rgba(186, 85, 211, 0.5) 30%,
-//   //   rgba(186, 85, 211, 0) 70%
-//   // );
-// }
+.card:hover .gradient-box {
+  opacity: 1;
+  background: radial-gradient(
+    circle at top right,
+    rgba(80, 64, 190, 0.7) 10%,
+    rgba(80, 64, 190, 0.5) 15%,
+    rgba(80, 64, 190, 0.1) 35%
+  );
+}
 
 .card-inner {
   width: 100%;
   height: 100%;
-  padding: 2rem;
 }
 
 .card-content {
