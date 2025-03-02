@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Container from "../Container";
+import { MarqueeSection } from "../MarqueeSection";
 
 const cards = [
   {
@@ -37,23 +38,20 @@ const cards = [
 
 const CardList = () => {
   return (
-    <section className="skills h-[400px]">
+    <section className="skills h-[200px]">
       <Container>
-        <h1 className="text-md text-center font-bold text-black">
-          Frameworks and Tools I Use
+        <h1 className="text-md text-center font-bold tracking-widest text-black">
+          Framework and Tools i use
         </h1>
 
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <MarqueeSection />
+
+        {/* <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {cards.map((card) => (
             <div
               key={card.id}
               className="relative h-60 overflow-hidden rounded-lg bg-[#18181A] p-4"
             >
-              {/* <SpotlightCard
-                className="custom-spotlight-card p-4"
-                spotlightColor="rgba(33, 11, 157, 0.57)"
-              > */}
-              {/* Image */}
               <Image
                 src={card.image}
                 alt={card.title}
@@ -62,28 +60,20 @@ const CardList = () => {
                 className="rounded-full object-cover"
               />
 
-              {/* Title */}
               <div className="mt-14">
                 <h3 className="text-3xl font-semibold text-white">
                   {card.title}
                 </h3>
               </div>
 
-              {/* Description (Initially Hidden) */}
-              <div className="">
-                <p className="text-white">{card.description}</p>
-              </div>
+              <p className="text-white">{card.description}</p>
 
-              {/* Gradient Blobs - Bottom Left */}
               <div className="absolute -bottom-34 -left-8 h-34 w-44 rounded-full bg-gradient-to-br from-purple-400 via-pink-400 to-red-400 blur-2xl"></div>
 
-              {/* Gradient Blobs - Bottom Right */}
               <div className="absolute -right-10 -bottom-34 h-44 w-34 rounded-full bg-gradient-to-bl from-blue-400 via-blue-400 to-blue-400 blur-2xl"></div>
-
-              {/* </SpotlightCard> */}
             </div>
           ))}
-        </div>
+        </div> */}
       </Container>
     </section>
   );

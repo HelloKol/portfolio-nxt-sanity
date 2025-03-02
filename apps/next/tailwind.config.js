@@ -1,5 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       colors: {
@@ -11,11 +15,15 @@ module.exports = {
       },
       animation: {
         rainbow: "rainbow var(--speed, 2s) infinite linear",
+        marquee: "marquee var(--duration, 30s) linear infinite",
       },
       keyframes: {
         rainbow: {
           "0%": { "background-position": "0%" },
           "100%": { "background-position": "200%" },
+        },
+        marquee: {
+          to: { transform: "translateX(-50%)" },
         },
       },
     },
