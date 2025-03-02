@@ -12,10 +12,16 @@ export default ({linkableContentTypes}: {linkableContentTypes: string[]}) => ({
     {
       title: 'Content',
       name: 'content',
-      type: 'reference',
-      to: linkableContentTypes.map((type) => ({type})),
+      type: 'string',
       validation: (Rule: {required: () => boolean}) => Rule.required(),
     },
+    // {
+    //   title: 'Content',
+    //   name: 'content',
+    //   type: 'reference',
+    //   to: linkableContentTypes.map((type) => ({type})),
+    //   validation: (Rule: {required: () => boolean}) => Rule.required(),
+    // },
   ],
   preview: {
     select: {

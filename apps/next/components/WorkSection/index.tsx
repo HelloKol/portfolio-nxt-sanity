@@ -10,6 +10,7 @@ import styles from "./styles.module.scss";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { PortableText } from "@portabletext/react";
 import WorkListModal from "../WorkListModal";
+import SpotlightCard from "../SpotlightCard";
 
 interface Props {
   data: {
@@ -27,31 +28,33 @@ interface Props {
   };
 }
 
-const Card = ({ title, excerpt, coverImage }) => {
+const Card = ({ title, excerpt, coverImage }: Project) => {
   return (
     <Link
       href={`/projects/${title}`}
-      className="card mb-10 block h-[660px] overflow-hidden rounded-[30px] bg-[#f5f5f5]"
+      className="card mb-10 block h-[700px] overflow-hidden rounded-[30px] bg-[#f5f5f5]"
     >
-      <div className="card-inner">
-        <div className="card-content">
-          <h1 className="card-title text-6xl font-bold">{title}</h1>
-          <article className="card-description text-2xl">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-              quos.
-            </p>
+      <SpotlightCard
+        className="custom-spotlight-card"
+        spotlightColor="rgba(34, 0, 255, 0.24)"
+      >
+        <div className="card-inner">
+          <div className="card-content">
+            <h1 className="card-title text-6xl font-bold">{title}</h1>
+            <article className="card-description text-2xl">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis
+              tempore excepturi alias illo consequuntur omnis
+              {/* <PortableText value={excerpt} /> */}
+            </article>
+          </div>
 
-            {/* <PortableText value={excerpt} /> */}
-          </article>
+          <div className="card-img mx-auto mt-34 w-[80%]">
+            <img src={`${coverImage?.asset?.url}`} alt="" />
+          </div>
         </div>
+      </SpotlightCard>
 
-        <div className="card-img mx-auto mt-40 w-[80%]">
-          <img src={`${coverImage?.asset?.url}`} alt="" />
-        </div>
-      </div>
-
-      <div className="gradient-box"></div>
+      {/* <div className="gradient-box"></div> */}
     </Link>
   );
 };

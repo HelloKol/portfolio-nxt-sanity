@@ -1,4 +1,5 @@
 import Link from "next/link";
+// import CustomCursor from "../Cursor";
 
 export default function ContactSection() {
   const socials = [
@@ -58,7 +59,11 @@ export default function ContactSection() {
   };
 
   return (
-    <section className="contact mt-[200px] rounded-tl-[50px] rounded-tr-[50px] bg-black pt-34 pb-20">
+    <section
+      id="contact"
+      className="contact mt-[200px] rounded-tl-[50px] rounded-tr-[50px] bg-black pt-34 pb-20"
+    >
+      {/* <CustomCursor /> */}
       <div className="container mx-auto">
         <div className="grid grid-cols-12 gap-10">
           <div className="left-side col-span-12 space-y-6 md:col-span-6">

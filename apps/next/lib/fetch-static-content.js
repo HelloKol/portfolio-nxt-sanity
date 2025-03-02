@@ -1,8 +1,9 @@
-const client = require('../lib/sanity');
+const client = require("../lib/sanity");
 
-const fs = require('fs');
+const fs = require("fs");
 
-const createDirectory = async () => fs.promises.mkdir('./data', { recursive: true });
+const createDirectory = async () =>
+  fs.promises.mkdir("./data", { recursive: true });
 
 const fetchSiteSettings = async () => {
   const data = await client.fetch(`
@@ -12,9 +13,7 @@ const fetchSiteSettings = async () => {
       headerNavigation[] {
         title,
         _type,
-        content -> {
-          slug
-        }
+        content
       },
       socialMediaLinks[] {
         title,
@@ -38,7 +37,7 @@ const fetchSiteSettings = async () => {
     }
   `);
 
-  fs.writeFileSync('./data/settings.json', JSON.stringify(data));
+  fs.writeFileSync("./data/settings.json", JSON.stringify(data));
 };
 
 (async () => {

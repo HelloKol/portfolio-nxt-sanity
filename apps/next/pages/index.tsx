@@ -16,7 +16,7 @@ import Skills from "@/components/Skills";
 import ContactSection from "@/components/ContactSection";
 import WorkListModal from "@/components/WorkListModal";
 import ScrollHighlightText from "@/components/ScrollHighlightText";
-
+import ThreeDViewer from "@/components/ThreeViewer";
 interface Page {
   page: {
     heroSection: {
@@ -45,7 +45,7 @@ interface Page {
 }
 
 export default function Home({ page }: Page): JSX.Element | null {
-  const container = useRef();
+  const container = useRef<HTMLDivElement>(null);
 
   if (!page) return null;
   const { heroSection, aboutSection, workSection, seo } = page;
@@ -57,9 +57,9 @@ export default function Home({ page }: Page): JSX.Element | null {
       <Main withPadding={false}>
         <div ref={container}>
           <HeroSection data={heroSection} />
-          <Skills />
           <AboutSection data={aboutSection} />
-          <section className="mt-[200px]">
+          <Skills />
+          <section id="work" className="mt-[200px]">
             <div className="container mx-auto">
               <h1 className="text-center text-xl">Work</h1>
               <WorkSection data={workSection} />

@@ -5,6 +5,8 @@ import { useGSAP, gsap } from "@/lib";
 import { useTheme } from "@/providers";
 import styles from "./styles.module.scss";
 import Image from "next/image";
+import windowDimension from "@/hooks/useWindowDimension";
+
 interface Props {
   data: {
     title: string;
@@ -15,6 +17,7 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
   const { theme } = useTheme();
   const titleRef = useRef<(HTMLSpanElement | null)[]>([]);
   const isDarkMode = theme === "dark-theme";
+  const { isMobile, isMobileLarge } = windowDimension();
 
   useGSAP(() => {
     const ctx = gsap.context(() => {
@@ -51,14 +54,15 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
   const { title } = data;
 
   // Split the title into an array of words
-  const heroTitleSplit = title.split(" ");
-  const heroTitle1 = heroTitleSplit.slice(0, 2).join(" ");
-  const heroTitle2 = heroTitleSplit[2];
-  const heroTitle3 = heroTitleSplit[3];
-  const words = [heroTitle1, heroTitle2, heroTitle3];
+  const words = title.split(" ");
+  // const heroTitle1 = heroTitleSplit.slice(0, 2).join(" ");
+  // const heroTitle2 = heroTitleSplit[2];
+  // const heroTitle3 = heroTitleSplit[3];
+  // const words = [heroTitle1, heroTitle2, heroTitle3];
 
   return (
     <Section
+      id="hero"
       className={`hero h-[110vh] ${styles.heroSection} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
     >
       <Image
@@ -69,15 +73,44 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
         className="absolute inset-0 h-[110vh] w-full object-cover"
       />
       <Container isFluid={false} className="relative h-full">
-        <div className="absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2">
+        <div className="mt-30 w-full sm:absolute sm:top-[35%] sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-[35%]">
           <h1 className={styles.title}>
             {words.map((word, index) => (
-              <span key={index} ref={(el) => (titleRef.current[index] = el)}>
+              <span
+                className="text-white"
+                key={index}
+                ref={(el) => (titleRef.current[index] = el)}
+              >
                 {word}
               </span>
             ))}
           </h1>
         </div>
+
+        {isMobile || isMobileLarge ? (
+          <div className="mt-20 font-bold sm:absolute sm:top-[37%] sm:left-16">
+            <div className={`text-white ${styles.heroParagraph}`}>
+              Motto® is the leading global branding consultancy for
+              positioning, scaling, and reinventing companies in the tech and
+              innovation space.
+            </div>
+          </div>
+        ) : (
+          <div className="mt-20 font-bold sm:absolute sm:top-[37%] sm:left-16">
+            <div className={`text-white sm:pl-20 ${styles.heroParagraph}`}>
+              Motto® is the leading global branding
+            </div>
+            <div className={`text-white ${styles.heroParagraph}`}>
+              consultancy for positioning, scaling, and
+            </div>
+            <div className={`text-white ${styles.heroParagraph}`}>
+              reinventing companies in the tech and
+            </div>
+            <div className={`text-white ${styles.heroParagraph}`}>
+              innovation space.
+            </div>
+          </div>
+        )}
       </Container>
     </Section>
   );

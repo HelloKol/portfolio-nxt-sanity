@@ -107,7 +107,7 @@ const WorkListModal = ({ data }: Props): JSX.Element | null => {
   };
 
   const modalContent = (
-    <>
+    <div>
       <div
         ref={backdropRef}
         className="fixed inset-0 z-40 hidden bg-black/30 backdrop-blur-sm"
@@ -121,11 +121,13 @@ const WorkListModal = ({ data }: Props): JSX.Element | null => {
         <div className="WorkListModal-inner h-full">
           <div className="WorkListModal-content h-full overflow-y-auto">
             {renderCloseMenuButton()}
-            <WorkSection data={data} />
+            <div className="container mx-auto">
+              <WorkSection data={data} />
+            </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 
   return (

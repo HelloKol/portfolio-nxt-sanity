@@ -143,7 +143,7 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
   const { title, body, cvLink } = data;
 
   return (
-    <section className="about mt-[110px]">
+    <section id="about" className="about mt-[110px]">
       <div className="container mx-auto">
         <h2 className="text-center text-xl">{title}</h2>
 
