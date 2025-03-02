@@ -1,4 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
+import TiltedCard from "../TitledCard";
+import Container from "../Container";
 // import CustomCursor from "../Cursor";
 
 export default function ContactSection() {
@@ -43,7 +46,7 @@ export default function ContactSection() {
         href={social.href}
         target="_blank"
         rel="noopener noreferrer"
-        className="mb-2 block"
+        className="mb-2 block w-fit"
       >
         <span className="text-white">{social.name}</span>
       </Link>
@@ -52,7 +55,7 @@ export default function ContactSection() {
 
   const renderNavigation = () => {
     return navigation.map((item) => (
-      <Link key={item.name} href={item.href} className="block">
+      <Link key={item.name} href={item.href} className="block w-fit">
         <span className="text-white">{item.name}</span>
       </Link>
     ));
@@ -61,14 +64,15 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="contact mt-[200px] rounded-tl-[50px] rounded-tr-[50px] bg-black pt-34 pb-20"
+      className="contact relative mt-[200px] h-[500px] rounded-tl-[50px] rounded-tr-[50px] bg-[#18181A] pt-16 pb-20 xl:h-[600px] xl:pt-34"
     >
-      {/* <CustomCursor /> */}
-      <div className="container mx-auto">
+      <Container>
         <div className="grid grid-cols-12 gap-10">
           <div className="left-side col-span-12 space-y-6 md:col-span-6">
             <h1 className="text-xl font-bold text-white">Socials</h1>
-            <div className="social-links mt-6 text-5xl">{renderSocials()}</div>
+            <div className="social-links mt-6 text-4xl xl:text-5xl">
+              {renderSocials()}
+            </div>
           </div>
 
           <div className="right-side col-span-12 space-y-6 text-right md:col-span-6">
@@ -77,7 +81,7 @@ export default function ContactSection() {
               href="https://x.com/0x_josh"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 block text-5xl"
+              className="mt-6 ml-auto block w-fit text-4xl xl:text-5xl"
             >
               <span className="text-white">Info@shehab.uk</span>
             </Link>
@@ -92,6 +96,14 @@ export default function ContactSection() {
             &copy; {new Date().getFullYear()} Shehab Emon
           </p>
         </div>
+      </Container>
+
+      <div className="absolute top-1/2 left-1/2 z-10 h-[700px] w-[500px] -translate-x-1/2 -translate-y-1/2 xl:h-[900px] xl:w-[580px]">
+        <TiltedCard
+          imageSrc="/image/david-full.png"
+          rotateAmplitude={8}
+          scaleOnHover={1.02}
+        />
       </div>
     </section>
   );

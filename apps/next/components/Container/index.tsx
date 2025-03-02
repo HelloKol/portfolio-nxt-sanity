@@ -1,19 +1,13 @@
-import styles from "./styles.module.scss";
-
 export default function Container({
   children,
   className = "",
-  isFluid = true,
 }: {
   children: React.ReactNode | React.ReactNode[];
   className?: string;
-  isFluid?: boolean;
 }) {
   return (
     <div
-      className={`${className} ${styles.container} ${
-        isFluid ? styles.fluid : styles.notFluid
-      }`}
+      className={`${className} mx-auto px-4 sm:px-6 md:px-8 xl:max-w-[1536px]`}
     >
       {children}
     </div>

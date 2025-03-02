@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { gsap } from "gsap";
 import WorkSection from "../WorkSection";
 import { Project } from "@/types";
-
+import Container from "../Container";
 interface Props {
   data: {
     workList: Project[];
@@ -121,9 +121,9 @@ const WorkListModal = ({ data }: Props): JSX.Element | null => {
         <div className="WorkListModal-inner h-full">
           <div className="WorkListModal-content h-full overflow-y-auto">
             {renderCloseMenuButton()}
-            <div className="container mx-auto">
+            <Container>
               <WorkSection data={data} />
-            </div>
+            </Container>
           </div>
         </div>
       </div>

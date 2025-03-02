@@ -122,7 +122,7 @@ const MenuToggle = () => {
           className="mb-4 block w-fit text-5xl opacity-0"
           onClick={toggleMenu}
         >
-          <span className="block text-gray-500 transition-all duration-200 hover:text-white">
+          <span className="block text-white transition-all duration-200 hover:text-white">
             {title}
           </span>
         </Link>
@@ -217,7 +217,7 @@ const MenuToggle = () => {
 
       <div
         ref={menuRef}
-        className="invisible fixed top-0 right-0 z-10 overflow-hidden rounded-[30px] bg-[#37269E] pt-[30px] pl-6"
+        className="invisible fixed top-0 right-0 z-10 overflow-hidden rounded-[30px] bg-[#5A04FF] pt-[30px] pl-6"
         style={{ width: 0, minWidth: 0, height: 0 }}
       >
         {renderCloseMenuButton()}

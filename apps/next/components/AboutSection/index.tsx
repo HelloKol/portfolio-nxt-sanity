@@ -32,7 +32,8 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
       split && split.revert();
       tl && tl.revert();
 
-      split = new SplitText(textRef.current, { type: "chars" });
+      // Split by words instead of characters to avoid breaking words
+      split = new SplitText(textRef.current, { type: "words" });
 
       tl = gsap
         .timeline({
@@ -45,7 +46,7 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
             markers: false, // Remove markers in production
           },
         })
-        .set(split.chars, { color: "#ffffff", stagger: 0.05 }, 0.1);
+        .set(split.words, { color: "#ffffff", stagger: 0.05 }, 0.1);
     };
 
     createSplit();
@@ -88,27 +89,21 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
       id="about"
       className="relative h-screen overflow-hidden"
     >
-      {/* <Image
-        src="/image/background-2.png"
-        alt="hero-bg"
-        width={3000}
-        height={3000}
-        className="absolute inset-0 h-[110vh] w-full rotate-180 object-cover"
-      /> */}
-
       <div className="absolute top-0 left-0 h-full w-full">
         <ThreeDViewer rotation={rotation} />
       </div>
 
-      <div className="relative z-10 container mx-auto">
-        <h2 className="text-center text-xl">{title}</h2>
+      <div className="relative z-10 container mx-auto flex h-full items-center justify-center">
+        <div className="">
+          <h2 className="text-center text-xl text-white">{title}</h2>
 
-        <article
-          ref={textRef}
-          className="mt-4 text-center text-5xl leading-tight font-bold text-gray-400"
-        >
-          <PortableText value={body} />
-        </article>
+          <article
+            ref={textRef}
+            className="about-section-text mt-4 text-center leading-tight font-bold text-gray-400"
+          >
+            <PortableText value={body} />
+          </article>
+        </div>
       </div>
     </section>
   );

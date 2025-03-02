@@ -7,6 +7,7 @@ import {
   Main,
   WorkSection,
   Seo,
+  Container,
 } from "@/components";
 import { sanityClient } from "@/lib";
 import { Project, SEO } from "@/types";
@@ -15,8 +16,7 @@ import { HOME_QUERY } from "@/services/queries";
 import Skills from "@/components/Skills";
 import ContactSection from "@/components/ContactSection";
 import WorkListModal from "@/components/WorkListModal";
-import ScrollHighlightText from "@/components/ScrollHighlightText";
-import ThreeDViewer from "@/components/ThreeViewer";
+
 interface Page {
   page: {
     heroSection: {
@@ -57,13 +57,13 @@ export default function Home({ page }: Page): JSX.Element | null {
       <Main withPadding={false}>
         <div ref={container}>
           <HeroSection data={heroSection} />
-          <AboutSection data={aboutSection} />
+          {/* <AboutSection data={aboutSection} /> */}
           <section id="work" className="mt-[200px]">
-            <div className="container mx-auto">
+            <Container>
               <h1 className="text-center text-xl">Work</h1>
               <WorkSection data={workSection} />
               <WorkListModal data={workSection} />
-            </div>
+            </Container>
           </section>
           <Skills />
           <ContactSection />
