@@ -58,7 +58,6 @@ export default function Home({ page }: Page): JSX.Element | null {
         <div ref={container}>
           <HeroSection data={heroSection} />
           <AboutSection data={aboutSection} />
-          <Skills />
           <section id="work" className="mt-[200px]">
             <div className="container mx-auto">
               <h1 className="text-center text-xl">Work</h1>
@@ -66,6 +65,7 @@ export default function Home({ page }: Page): JSX.Element | null {
               <WorkListModal data={workSection} />
             </div>
           </section>
+          <Skills />
           <ContactSection />
         </div>
       </Main>

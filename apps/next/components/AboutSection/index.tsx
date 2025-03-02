@@ -1,24 +1,12 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PortableText } from "@portabletext/react";
 import { PortableTextBlock } from "@portabletext/types";
-import { Button, Container, Grid, Section } from "@/components";
-import { gsap, useGSAP } from "@/lib";
+import { gsap } from "@/lib";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { SplitText } from "gsap/dist/SplitText";
-import { useTheme } from "@/providers";
-import styles from "./styles.module.scss";
-import { RainbowButton } from "@/components/RainbowButton";
-
-// Register plugins
+import ThreeDViewer from "../ThreeViewer";
+import Image from "next/image";
 gsap.registerPlugin(ScrollTrigger, SplitText);
-
-const components = {
-  types: {},
-  block: {
-    // Override the default rendering of <p> tags
-    normal: ({ children }) => <>{children}</>,
-  },
-};
 
 interface Props {
   data: {
@@ -29,174 +17,100 @@ interface Props {
 }
 
 const AboutSection = ({ data }: Props): JSX.Element | null => {
-  const articleRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const headerRef = useRef(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  const [rotation, setRotation] = useState(0);
 
   useEffect(() => {
-    const split = new SplitText(headerRef.current, { type: "lines" });
+    const section = sectionRef.current;
+    if (!section) return;
 
-    const makeItHappen = () => {
-      split.lines.forEach((target) => {
-        gsap.to(target, {
-          backgroundPositionX: 0,
-          ease: "none",
+    let split: SplitText;
+    let tl: gsap.core.Timeline;
+
+    const createSplit = () => {
+      split && split.revert();
+      tl && tl.revert();
+
+      split = new SplitText(textRef.current, { type: "chars" });
+
+      tl = gsap
+        .timeline({
           scrollTrigger: {
-            trigger: target,
-            markers: true, // Remove this in production
-            scrub: 0.5,
-            start: "top center",
-            end: "bottom center",
+            trigger: section,
+            start: "top top",
+            end: "+=150%",
+            pin: true, // 🔥 Locks the section
+            scrub: 0.75,
+            markers: false, // Remove markers in production
           },
-        });
-      });
+        })
+        .set(split.chars, { color: "#ffffff", stagger: 0.05 }, 0.1);
     };
 
-    const someDelay = gsap.delayedCall(0.2, newTriggers).pause();
-    const resizeListener = () => someDelay.restart(true);
+    createSplit();
+    const debouncer = gsap.delayedCall(0.2, createSplit).pause();
+    window.addEventListener("resize", () => debouncer.restart(true));
 
-    function newTriggers() {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-      if (headerRef.current) {
-        split.split(headerRef.current);
-        makeItHappen();
-      }
-    }
-
-    makeItHappen();
-
-    window.addEventListener("resize", resizeListener);
+    // Background color change when fully in view
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top center",
+      end: "bottom center",
+      onEnter: () =>
+        gsap.to(section, { backgroundColor: "#18181A", duration: 0.5 }),
+      onLeaveBack: () =>
+        gsap.to(section, { backgroundColor: "#ffffff", duration: 0.5 }),
+    });
 
     return () => {
-      window.removeEventListener("resize", resizeListener);
-      someDelay.kill();
-      split.revert(); // Clean up SplitText when component unmounts
+      split?.revert();
+      ScrollTrigger.getAll().forEach((st) => st.kill());
     };
   }, []);
 
-  useGSAP(
-    () => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: titleRef?.current,
-          start: "top bottom", // when the top of the trigger hits the bottom of the viewport
-          end: "bottom center", // end after scrolling 500px beyond the start
-          onEnter: () => tl.play(),
-        },
-      });
+  // Rotate 3D model based on scroll
+  useEffect(() => {
+    const handleScroll = (event: WheelEvent) => {
+      setRotation((prev) => prev + (event.deltaY > 0 ? 0.025 : -0.025)); // Left/Right rotation
+    };
 
-      tl.fromTo(
-        titleRef?.current,
-        {
-          x: -20,
-          opacity: 0,
-        },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 1,
-          delay: 0.8,
-          ease: "power4.out",
-        },
-      );
-    },
-    { scope: titleRef },
-  );
-
-  useGSAP(
-    () => {
-      const articleChildren = gsap.utils.toArray(
-        articleRef?.current?.children!,
-      );
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: articleRef?.current,
-          start: "top bottom", // when the top of the trigger hits the bottom of the viewport
-          end: "bottom center", // end after scrolling 500px beyond the start
-          onEnter: () => tl.play(),
-        },
-      });
-
-      tl.fromTo(
-        articleChildren,
-        {
-          y: 30,
-          opacity: 0,
-        },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          delay: 0.3,
-          ease: "power4.out",
-          stagger: {
-            each: 0.3,
-          },
-        },
-      );
-    },
-    { scope: articleRef },
-  );
+    window.addEventListener("wheel", handleScroll);
+    return () => window.removeEventListener("wheel", handleScroll);
+  }, []);
 
   if (!data) return null;
-  const { title, body, cvLink } = data;
+  const { title, body } = data;
 
   return (
-    <section id="about" className="about mt-[110px]">
-      <div className="container mx-auto">
+    <section
+      ref={sectionRef}
+      id="about"
+      className="relative h-screen overflow-hidden"
+    >
+      {/* <Image
+        src="/image/background-2.png"
+        alt="hero-bg"
+        width={3000}
+        height={3000}
+        className="absolute inset-0 h-[110vh] w-full rotate-180 object-cover"
+      /> */}
+
+      <div className="absolute top-0 left-0 h-full w-full">
+        <ThreeDViewer rotation={rotation} />
+      </div>
+
+      <div className="relative z-10 container mx-auto">
         <h2 className="text-center text-xl">{title}</h2>
 
-        <article className="mt-4 text-center text-5xl leading-tight font-bold">
+        <article
+          ref={textRef}
+          className="mt-4 text-center text-5xl leading-tight font-bold text-gray-400"
+        >
           <PortableText value={body} />
         </article>
-
-        {/* <div className="special-text">
-          <article
-            ref={headerRef}
-            className="mt-4 text-center text-5xl leading-tight font-bold"
-          >
-            <PortableText value={body} components={components} />
-          </article>
-        </div> */}
-        {/* <RainbowButton>Get Unlimited Access</RainbowButton>; */}
       </div>
     </section>
-  );
-
-  return (
-    <Section className={`${styles.aboutSection} ${styles.lightMode}`}>
-      <Container isFluid={false}>
-        <Grid>
-          {title && (
-            <h2 ref={titleRef} className={styles.title}>
-              {title}
-            </h2>
-          )}
-          {body && (
-            <article ref={articleRef} className={styles.bodyCopy}>
-              <PortableText value={body} />
-            </article>
-          )}
-          <Button
-            className={styles.downloadCvBtn}
-            href={cvLink}
-            variant="primary"
-            download={true}
-            newTab
-          >
-            Download CV
-            <svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
-              <title />
-              <g>
-                <path d="M90,54a5.9966,5.9966,0,0,0-6,6V78H12V60A6,6,0,0,0,0,60V84a5.9966,5.9966,0,0,0,6,6H90a5.9966,5.9966,0,0,0,6-6V60A5.9966,5.9966,0,0,0,90,54Z" />
-                <path d="M43.7578,64.2422a5.9979,5.9979,0,0,0,8.4844,0l18-18a5.9994,5.9994,0,0,0-8.4844-8.4844L54,45.5156V12a6,6,0,0,0-12,0V45.5156l-7.7578-7.7578a5.9994,5.9994,0,0,0-8.4844,8.4844Z" />
-              </g>
-            </svg>
-          </Button>
-        </Grid>
-      </Container>
-    </Section>
   );
 };
 
