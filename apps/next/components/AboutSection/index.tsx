@@ -58,10 +58,10 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
       trigger: section,
       start: "top center",
       end: "bottom center",
-      onEnter: () =>
-        gsap.to(section, { backgroundColor: "#18181A", duration: 0.5 }),
-      onLeaveBack: () =>
-        gsap.to(section, { backgroundColor: "#ffffff", duration: 0.5 }),
+      // onEnter: () =>
+      //   gsap.to(section, { backgroundColor: "#ffffff", duration: 0.5 }),
+      // onLeaveBack: () =>
+      //   gsap.to(section, { backgroundColor: "#ffffff", duration: 0.5 }),
     });
 
     return () => {
@@ -89,11 +89,25 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
       id="about"
       className="relative h-screen overflow-hidden"
     >
+      <Image
+        src="/image/background-2.png"
+        alt="hero-bg"
+        width={3000}
+        height={3000}
+        className="absolute inset-0 h-[110vh] w-full rotate-180 object-cover"
+        style={{
+          maskImage:
+            "linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 15%)", // Fade out from top to bottom
+          WebkitMaskImage:
+            "linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 15%)",
+        }}
+      />
+
       <div className="absolute top-0 left-0 h-full w-full">
         <ThreeDViewer rotation={rotation} />
       </div>
 
-      <div className="relative z-10 container mx-auto flex h-full items-center justify-center">
+      <div className="relative z-10 container mx-auto flex h-full items-center justify-center px-4 sm:px-6 md:px-8 xl:max-w-[1536px]">
         <div className="">
           <h2 className="text-center text-xl text-white">{title}</h2>
 

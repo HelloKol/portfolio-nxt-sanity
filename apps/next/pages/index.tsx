@@ -57,10 +57,10 @@ export default function Home({ page }: Page): JSX.Element | null {
       <Main withPadding={false}>
         <div ref={container}>
           <HeroSection data={heroSection} />
-          {/* <AboutSection data={aboutSection} /> */}
+          <AboutSection data={aboutSection} />
           <section id="work" className="mt-[200px]">
             <Container>
-              <div className="flex w-full items-center justify-between">
+              <div className="mb-10 flex w-full items-center justify-between">
                 <h1 className="text-center text-xl">Work</h1>
                 <WorkListModal data={workSection} />
               </div>

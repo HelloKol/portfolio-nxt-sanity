@@ -21,7 +21,7 @@ const Card = ({ title, excerpt, coverImage }: Project) => {
   return (
     <Link
       href={`/projects/${title}`}
-      className="card mb-10 block h-[410px] overflow-hidden rounded-[30px] bg-[#f5f5f5] lg:h-[500px] xl:h-[530px] 2xl:h-[680px]"
+      className="card mb-10 block h-[410px] overflow-hidden rounded-[30px] bg-[#f5f5f5] last:mb-0 lg:h-[500px] xl:h-[530px] 2xl:h-[680px]"
     >
       <div className="card-inner p-5 lg:p-10">
         <div className="card-content">

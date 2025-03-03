@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import WorkSection from "../WorkSection";
 import { Project } from "@/types";
 import Container from "../Container";
+import { RainbowButton } from "../RainbowButton";
 interface Props {
   data: {
     workList: Project[];
@@ -115,11 +116,11 @@ const WorkListModal = ({ data }: Props): JSX.Element | null => {
       />
       <div
         ref={modalRef}
-        className="WorkListModal fixed right-0 bottom-0 left-0 z-50 hidden h-[95vh] rounded-t-4xl bg-white p-4 pt-24 shadow-lg"
+        className="WorkListModal fixed right-0 bottom-0 left-0 z-50 hidden h-[95vh] rounded-t-4xl bg-white pt-24 shadow-lg"
         style={{ opacity: 0 }}
       >
         <div className="WorkListModal-inner h-full">
-          <div className="WorkListModal-content h-full overflow-y-auto">
+          <div className="WorkListModal-content h-[98%] overflow-y-auto">
             {renderCloseMenuButton()}
             <Container>
               <WorkSection data={data} />
@@ -132,13 +133,9 @@ const WorkListModal = ({ data }: Props): JSX.Element | null => {
 
   return (
     <>
-      <div
-        role="button"
-        className="WorkListModal-button w-fit cursor-pointer rounded-full bg-black px-4 py-2 text-white"
-        onClick={() => setIsOpen(true)}
-      >
+      <RainbowButton onClick={() => setIsOpen(true)}>
         See Work List
-      </div>
+      </RainbowButton>
 
       {mounted ? createPortal(modalContent, document.body) : null}
     </>

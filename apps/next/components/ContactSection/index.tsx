@@ -64,7 +64,7 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="contact relative mt-[200px] rounded-tl-[50px] rounded-tr-[50px] bg-[#18181A] pt-16 pb-10 md:h-[450px] md:pb-20 lg:h-[430px] xl:h-[530px] xl:pt-24"
+      className="contact relative mt-[150px] rounded-tl-[50px] rounded-tr-[50px] bg-[#18181A] pt-16 pb-10 sm:mt-[200px] md:h-[450px] md:pb-20 lg:h-[430px] xl:h-[530px] xl:pt-24"
     >
       <Container className="relative z-20 md:z-0">
         <div className="grid grid-cols-12 gap-10">

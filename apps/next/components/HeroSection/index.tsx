@@ -57,14 +57,20 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
   return (
     <Section
       id="hero"
-      className={`hero h-[110vh] ${styles.heroSection} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
+      className={`hero h-screen ${styles.heroSection} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
     >
       <Image
         src="/image/background-2.png"
         alt="hero-bg"
         width={3000}
         height={3000}
-        className="absolute inset-0 h-[110vh] w-full object-cover"
+        className="absolute inset-0 h-screen w-full object-cover"
+        style={{
+          maskImage:
+            "linear-gradient(to bottom, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%)", // Fix the gradient to start at full opacity
+          WebkitMaskImage:
+            "linear-gradient(to bottom, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%)",
+        }}
       />
 
       <Container className="relative h-full">
