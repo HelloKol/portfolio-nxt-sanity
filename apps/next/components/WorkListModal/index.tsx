@@ -132,12 +132,13 @@ const WorkListModal = ({ data }: Props): JSX.Element | null => {
 
   return (
     <>
-      <button
-        className="WorkListModal-button mx-auto w-fit"
+      <div
+        role="button"
+        className="WorkListModal-button w-fit cursor-pointer rounded-full bg-black px-4 py-2 text-white"
         onClick={() => setIsOpen(true)}
       >
         See Work List
-      </button>
+      </div>
 
       {mounted ? createPortal(modalContent, document.body) : null}
     </>

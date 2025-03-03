@@ -52,13 +52,7 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
 
   if (!data) return null;
   const { title } = data;
-
-  // Split the title into an array of words
   const words = title.split(" ");
-  // const heroTitle1 = heroTitleSplit.slice(0, 2).join(" ");
-  // const heroTitle2 = heroTitleSplit[2];
-  // const heroTitle3 = heroTitleSplit[3];
-  // const words = [heroTitle1, heroTitle2, heroTitle3];
 
   return (
     <Section
@@ -72,7 +66,8 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
         height={3000}
         className="absolute inset-0 h-[110vh] w-full object-cover"
       />
-      <Container isFluid={false} className="relative h-full">
+
+      <Container className="relative h-full">
         <div className="mt-30 w-full sm:absolute sm:top-[35%] sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-[35%]">
           <h1 className={styles.title}>
             {words.map((word, index) => (
