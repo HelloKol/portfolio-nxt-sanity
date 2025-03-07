@@ -103,7 +103,7 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
         }}
       />
 
-      <div className="absolute top-0 left-0 h-full w-full">
+      <div className="absolute -top-[60px] left-0 h-full w-full sm:top-0">
         <ThreeDViewer rotation={rotation} />
       </div>
 

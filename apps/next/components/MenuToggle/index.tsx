@@ -1,12 +1,11 @@
-import { Context } from "@/contexts/Context";
-import { gsap } from "gsap";
-import { useEffect, useRef, useState } from "react";
+import React, { useContext, useRef } from "react";
 import Link from "next/link";
-import React, { useContext } from "react";
+import { gsap } from "gsap";
+import { Context } from "@/contexts/Context";
 import settings from "../../data/settings.json";
 import Email from "../svg/Email";
-import { createPortal } from "react-dom";
 import Download from "../svg/Download";
+import Portal from "../Portal";
 
 const MenuToggle = () => {
   const { isNavOpen, setIsNavOpen } = useContext(Context);
@@ -14,11 +13,6 @@ const MenuToggle = () => {
   const buttonRef = useRef<HTMLDivElement | null>(null);
   const linksRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const backdropRef = useRef<HTMLDivElement | null>(null);
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   if (!settings) return null;
   const { headerNavigation } = settings;
@@ -112,22 +106,26 @@ const MenuToggle = () => {
   };
 
   const renderNavigation = () => {
-    return headerNavigation.map((item, index) => {
-      const { title, content } = item;
-      return (
-        <Link
-          key={index}
-          href={content}
-          ref={(el) => (linksRef.current[index] = el)}
-          className="mb-4 block w-fit text-5xl opacity-0"
-          onClick={toggleMenu}
-        >
-          <span className="block text-white transition-all duration-200 hover:text-white">
-            {title}
-          </span>
-        </Link>
-      );
-    });
+    return (
+      <div className="group w-fit">
+        {headerNavigation.map((item, index) => {
+          const { title, content } = item;
+          return (
+            <Link
+              key={index}
+              href={content}
+              ref={(el) => (linksRef.current[index] = el)}
+              className="group mb-4 block w-fit text-5xl opacity-0"
+              onClick={toggleMenu}
+            >
+              <span className="block text-white transition-all duration-200 group-hover:text-gray-400 hover:text-white">
+                {title}
+              </span>
+            </Link>
+          );
+        })}
+      </div>
+    );
   };
 
   const renderOpenMenuButton = () => {
@@ -228,7 +226,7 @@ const MenuToggle = () => {
         </div>
       </div>
 
-      {isMounted && createPortal(renderBackdrop(), document.body)}
+      <Portal>{renderBackdrop()}</Portal>
     </>
   );
 };

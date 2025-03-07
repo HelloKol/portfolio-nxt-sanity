@@ -74,7 +74,7 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
       />
 
       <Container className="relative h-full">
-        <div className="mt-30 w-full sm:absolute sm:top-[35%] sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-[35%]">
+        <div className="mt-30 w-full sm:absolute sm:top-[25%] sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-[35%]">
           <h1 className={styles.title}>
             {words.map((word, index) => (
               <span
@@ -89,7 +89,7 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
         </div>
 
         {isMobile || isMobileLarge ? (
-          <div className="mt-20 font-bold sm:absolute sm:top-[37%] sm:left-16">
+          <div className="mt-14 font-bold sm:absolute sm:top-[37%] sm:left-16">
             <div className={`text-white ${styles.heroParagraph}`}>
               Motto® is the leading global branding consultancy for
               positioning, scaling, and reinventing companies in the tech and
@@ -97,7 +97,7 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
             </div>
           </div>
         ) : (
-          <div className="mt-20 font-bold sm:absolute sm:top-[37%] sm:left-16">
+          <div className="mt-20 font-bold sm:absolute sm:top-[32%] sm:left-16">
             <div className={`text-white sm:pl-20 ${styles.heroParagraph}`}>
               Motto® is the leading global branding
             </div>

@@ -100,7 +100,7 @@ export default function ContactSection() {
         </div>
       </Container>
 
-      <div className="absolute right-0 bottom-0 z-10 h-[370px] w-[300px] md:top-1/2 md:left-1/2 md:h-[500px] md:w-[400px] md:-translate-x-1/2 md:-translate-y-1/2 lg:h-[700px] lg:w-[500px] xl:h-[900px] xl:w-[580px]">
+      <div className="absolute right-0 bottom-0 z-10 h-[370px] w-[300px] md:top-1/2 md:left-1/2 md:h-[500px] md:w-[400px] md:-translate-x-1/2 md:-translate-y-1/2 lg:h-[700px] lg:w-[500px] xl:h-[700px] xl:w-[580px]">
         <TiltedCard
           imageSrc="/image/david-full.png"
           rotateAmplitude={8}

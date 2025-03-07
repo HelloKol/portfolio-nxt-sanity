@@ -136,6 +136,10 @@ body {
   font-weight: $baseFontWeight;
 }
 
+main {
+  overflow: hidden;
+}
+
 article,
 h1,
 h2,
@@ -210,7 +214,7 @@ h6 {
 }
 
 .card:hover .card-img {
-  transform: rotate(-4deg);
+  transform: translateY(-52%);
 }
 
 .card-img {
