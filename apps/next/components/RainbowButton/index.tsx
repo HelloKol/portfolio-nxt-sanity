@@ -10,7 +10,7 @@ export function RainbowButton({
   ...props
 }: RainbowButtonProps) {
   return (
-    <div
+    <button
       className={cn(
         "group focus-visible:ring-ring relative inline-flex h-11 animate-[var(--animation-rainbow)] cursor-pointer items-center justify-center rounded-full border-0 bg-[length:200%] [background-clip:padding-box,border-box,border-box] [background-origin:border-box] px-8 py-2 font-medium text-white transition-colors [border:calc(0.08*1rem)_solid_transparent] focus-visible:ring-1 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",
 
@@ -25,6 +25,6 @@ export function RainbowButton({
       {...props}
     >
       {children}
-    </div>
+    </button>
   );
 }

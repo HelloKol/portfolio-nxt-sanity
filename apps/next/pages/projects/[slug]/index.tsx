@@ -18,8 +18,9 @@ import { Project, SEO } from "@/types";
 import { sanityClient, useGSAP, gsap } from "@/lib";
 import { PROJECT_QUERY } from "@/services/queries";
 import { formatDate } from "@/utils";
-import styles from "./styles.module.scss";
 import { PortableText } from "@portabletext/react";
+import { RainbowButton } from "@/components/RainbowButton";
+import styles from "./styles.module.scss";
 
 interface Page {
   page: Project & {
@@ -194,15 +195,11 @@ export default function Page({ page, work }: Page): JSX.Element | null {
         index: number,
       ) => {
         return (
-          <Button
-            key={index}
-            href={`${item.url}`}
-            variant="primary"
-            newTab
-            withSvg
-          >
-            {item.title}
-          </Button>
+          <RainbowButton key={index}>
+            <Link href={`${item.url}`} target="_blank">
+              {item.title}
+            </Link>
+          </RainbowButton>
         );
       },
     );
@@ -216,18 +213,22 @@ export default function Page({ page, work }: Page): JSX.Element | null {
         <Section>
           <Container>
             {title && (
-              <h1 ref={titleRef} key={slug.current} className={"mb-4 text-3xl"}>
+              <h1
+                ref={titleRef}
+                key={slug.current}
+                className={"project-title mb-4 text-3xl md:mb-8"}
+              >
                 {title}
               </h1>
             )}
 
             {excerpt && (
-              <article className="card-description mb-8 w-10/12 text-lg lg:text-xl">
+              <article className="mb-8 text-lg md:mb-16 md:w-10/12 md:text-3xl lg:w-8/12">
                 <PortableText value={excerpt} />
               </article>
             )}
 
-            <div className="relative h-80 w-full max-w-full overflow-hidden rounded-lg transition-[height] sm:h-94 md:h-[500px] lg:h-[700px] xl:h-[850px]">
+            <div className="relative mb-16 h-80 w-full max-w-full overflow-hidden rounded-lg transition-[height] sm:h-94 md:h-[500px] lg:h-[700px] xl:h-[850px]">
               <Image
                 src={coverImage?.asset?.url}
                 alt="Project Image"
@@ -239,54 +240,66 @@ export default function Page({ page, work }: Page): JSX.Element | null {
             </div>
 
             <Grid>
-              <div
+              {/* <div
                 ref={projectInfoRef}
                 key={slug.current}
                 className={styles.projectInfoWrapper}
-              >
-                {formattedDate && (
-                  <div className={styles.projectInfo}>
-                    <span className={styles.greyInfo}>Date</span>
-                    <span className={styles.whiteInfo}> {formattedDate}</span>
-                  </div>
-                )}
-                {type && (
-                  <div ref={projectInfoRef} className={styles.projectInfo}>
-                    <span className={styles.greyInfo}>Role</span>
-                    {type.map((item, index) => (
-                      <span key={index} className={styles.whiteInfo}>
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                )}
-                {tools && (
-                  <div ref={projectInfoRef} className={styles.projectInfo}>
-                    <span className={styles.greyInfo}>Tools</span>
-                    {tools.map((item, index) => (
-                      <span key={index} className={styles.whiteInfo}>
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {excerpt && (
-                <article ref={articleRef} className={styles.excerpt}>
-                  <PortableText value={excerpt} />
-                </article>
-              )}
-
-              <div className={styles.btnWrap}>{renderCta()}</div>
+              > */}
+              {/* </div> */}
 
               {body && (
-                <article className={styles.bodyCopy}>
+                <article className={"col-span-12 mb-8 text-xl 2xl:col-span-7"}>
                   <BlockContent value={body} />
                 </article>
               )}
 
-              <div className={styles.nextProjectWrapper}>
+              <div
+                className={
+                  "col-span-12 mb-16 flex gap-24 2xl:col-start-9 2xl:col-end-13 2xl:row-start-1 2xl:mt-auto 2xl:mb-8 2xl:pt-30"
+                }
+              >
+                {renderCta()}
+              </div>
+
+              {type && (
+                <div
+                  ref={projectInfoRef}
+                  className={
+                    "col-span-6 2xl:col-start-9 2xl:col-end-11 2xl:row-start-1"
+                  }
+                >
+                  <p className={"text-sm md:text-base"}>Role</p>
+                  {type.map((item, index) => (
+                    <p
+                      key={index}
+                      className={"text-base md:text-lg lg:text-xl"}
+                    >
+                      {item}
+                    </p>
+                  ))}
+                </div>
+              )}
+
+              {tools && (
+                <div
+                  ref={projectInfoRef}
+                  className={
+                    "col-span-6 2xl:col-start-11 2xl:col-end-13 2xl:row-start-1"
+                  }
+                >
+                  <p className={"text-sm md:text-base"}>Tools</p>
+                  {tools.map((item, index) => (
+                    <p
+                      key={index}
+                      className={"text-base md:text-lg lg:text-xl"}
+                    >
+                      {item}
+                    </p>
+                  ))}
+                </div>
+              )}
+
+              <div className={"col-span-12"}>
                 <div className={styles.divider} />
                 <p>Next</p>
                 {nextIndex !== null && (
