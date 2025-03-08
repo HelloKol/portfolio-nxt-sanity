@@ -5,25 +5,22 @@ import { GetStaticPaths, GetStaticPropsResult } from "next/types";
 import groq from "groq";
 import SplitType from "split-type";
 import {
-  Button,
   BlockContent,
   Container,
   Grid,
-  ImageTag,
   Main,
   Section,
   Seo,
 } from "@/components";
-import { Project, SEO } from "@/types";
+import { Project, SEO, Layout } from "@/types";
 import { sanityClient, useGSAP, gsap } from "@/lib";
 import { PROJECT_QUERY } from "@/services/queries";
-import { formatDate } from "@/utils";
 import { PortableText } from "@portabletext/react";
 import { RainbowButton } from "@/components/RainbowButton";
-import styles from "./styles.module.scss";
 
 interface Page {
   page: Project & {
+    layout: Layout[];
     seo: SEO;
   };
   work: Project[];
@@ -36,14 +33,13 @@ export default function Page({ page, work }: Page): JSX.Element | null {
     excerpt,
     body,
     slug,
-    createdDate,
     tools,
     type,
     cta,
     coverImage,
     seo,
+    layout,
   } = page;
-  const formattedDate = formatDate(createdDate);
   const currentIndex = work.findIndex(
     (item) => item.slug.current === slug.current,
   );
@@ -205,7 +201,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
     );
   };
 
-  console.log(work[nextIndex]);
+  console.log(page);
 
   return (
     <>
@@ -305,6 +301,24 @@ export default function Page({ page, work }: Page): JSX.Element | null {
                 </div>
               )}
             </Grid>
+
+            {layout.map((item, index) => (
+              <div key={index}>
+                {item._type === "image" && (
+                  <Image
+                    src={item.asset.url}
+                    alt={item.alt}
+                    width={500}
+                    height={500}
+                  />
+                )}
+                {item._type === "layout.textSection" && (
+                  <article>
+                    <BlockContent value={item.body} />
+                  </article>
+                )}
+              </div>
+            ))}
           </Container>
         </Section>
 
@@ -378,7 +392,6 @@ export async function getStaticProps({
 
   let work = await sanityClient.fetch(groq`
   *[_type == "work" && !(_id in path('drafts.**'))] {
-    title,
     slug,
     coverImage {
       _type,

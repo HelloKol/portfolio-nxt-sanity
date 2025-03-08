@@ -8,6 +8,7 @@ import settings from './settings'
 import work from './work'
 import workIndex from './workIndex'
 // Objects
+import textSection from '../objects/layout/textSection'
 import blockContent from '../objects/common/blockContent'
 import emailLink from '../objects/common/email-link'
 import externalLink from '../objects/common/external-link'
@@ -33,6 +34,7 @@ export const schemaTypes = [
   emailLink,
   externalLink,
   internalLink({linkableContentTypes}),
+  textSection,
   youtube,
   seoPage,
   seoSettings,

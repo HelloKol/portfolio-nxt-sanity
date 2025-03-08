@@ -1,4 +1,4 @@
-import { PortableTextBlock } from '@portabletext/types';
+import { PortableTextBlock } from "@portabletext/types";
 
 export interface Project {
   _id: string;
@@ -45,4 +45,10 @@ export interface SEO {
       url?: string;
     };
   };
+}
+
+export interface Layout {
+  _type: string;
+  body: PortableTextBlock;
+  image: Media;
 }

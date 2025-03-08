@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 import sanityClient from '../lib/sanityClient'
 import CustomSelect from '../components/CustomSelect'
 
@@ -149,6 +149,20 @@ export default defineType({
       title: 'Call to action (CTA)',
       type: 'array',
       of: [{type: 'internalLink'}, {type: 'externalLink'}],
+      group: 'content',
+    }),
+    defineField({
+      name: 'layout',
+      title: 'Layout',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'layout.textSection',
+        }),
+        defineArrayMember({
+          type: 'image',
+        }),
+      ],
       group: 'content',
     }),
     defineField({
