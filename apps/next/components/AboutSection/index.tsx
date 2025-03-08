@@ -87,7 +87,7 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
     <section
       ref={sectionRef}
       id="about"
-      className="relative h-screen overflow-hidden"
+      className="relative mb-[100px] h-screen overflow-hidden xl:mb-[150px]"
     >
       <Image
         src="/image/background-2.png"

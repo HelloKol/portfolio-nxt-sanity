@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { createPortal } from "react-dom";
 import { gsap } from "gsap";
 import WorkSection from "../WorkSection";
 import { Project } from "@/types";
 import Container from "../Container";
 import { RainbowButton } from "../RainbowButton";
+import Portal from "../Portal";
 interface Props {
   data: {
     workList: Project[];
@@ -13,13 +13,8 @@ interface Props {
 
 const WorkListModal = ({ data }: Props): JSX.Element | null => {
   const [isOpen, setIsOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     if (modalRef.current && backdropRef.current) {
@@ -107,37 +102,35 @@ const WorkListModal = ({ data }: Props): JSX.Element | null => {
     );
   };
 
-  const modalContent = (
-    <div>
-      <div
-        ref={backdropRef}
-        className="fixed inset-0 z-40 hidden bg-black/30 backdrop-blur-sm"
-        onClick={() => setIsOpen(false)}
-      />
-      <div
-        ref={modalRef}
-        className="WorkListModal fixed right-0 bottom-0 left-0 z-50 hidden h-[95vh] rounded-t-4xl bg-white pt-24 shadow-lg"
-        style={{ opacity: 0 }}
-      >
-        <div className="WorkListModal-inner h-full">
-          <div className="WorkListModal-content h-[98%] overflow-y-auto">
-            {renderCloseMenuButton()}
-            <Container>
-              <WorkSection data={data} />
-            </Container>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
   return (
     <>
       <RainbowButton onClick={() => setIsOpen(true)}>
         See Work List
       </RainbowButton>
 
-      {mounted ? createPortal(modalContent, document.body) : null}
+      <Portal>
+        <div>
+          <div
+            ref={backdropRef}
+            className="fixed inset-0 z-40 hidden bg-black/30 backdrop-blur-sm"
+            onClick={() => setIsOpen(false)}
+          />
+          <div
+            ref={modalRef}
+            className="WorkListModal fixed right-0 bottom-0 left-0 z-50 hidden h-[95vh] rounded-t-4xl bg-white pt-24 shadow-lg"
+            style={{ opacity: 0 }}
+          >
+            <div className="WorkListModal-inner h-full">
+              <div className="WorkListModal-content h-[98%] overflow-y-auto">
+                {renderCloseMenuButton()}
+                <Container>
+                  <WorkSection data={data} />
+                </Container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Portal>
     </>
   );
 };

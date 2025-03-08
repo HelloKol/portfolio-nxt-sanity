@@ -58,7 +58,7 @@ export default function Home({ page }: Page): JSX.Element | null {
         <div ref={container}>
           <HeroSection data={heroSection} />
           <AboutSection data={aboutSection} />
-          <section id="work" className="mt-[200px]">
+          <section id="work" className="mb-[100px] xl:mb-[150px]">
             <Container>
               <div className="mb-10 flex w-full items-center justify-between">
                 <h1 className="text-center text-xl">Work</h1>
