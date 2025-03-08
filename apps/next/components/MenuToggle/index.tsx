@@ -227,7 +227,7 @@ const MenuToggle = ({ alternateHeader }: MenuToggleProps) => {
     return (
       <Link
         href="mailto:info@shehab.uk"
-        className="email-link block h-fit w-fit rounded-full border border-white p-1"
+        className="email-link block h-fit w-fit rounded-full border border-white p-1 hover:bg-[#6426db]"
       >
         <Email className="h-6 w-6" />
       </Link>
@@ -238,7 +238,7 @@ const MenuToggle = ({ alternateHeader }: MenuToggleProps) => {
     return (
       <Link
         href="mailto:info@shehab.uk"
-        className="resume-link ml-[60px] flex items-center gap-2 rounded-full border border-white pr-3 pl-2 text-xl normal-case"
+        className="resume-link absolute bottom-0 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white pr-3 pl-2 text-xl normal-case hover:bg-[#6426db]"
       >
         <Download className="h-6 w-6" />
         <span className="text-white">Resume</span>
@@ -257,7 +257,7 @@ const MenuToggle = ({ alternateHeader }: MenuToggleProps) => {
       >
         {renderCloseMenuButton()}
         <div className="menu-links">{renderNavigation()}</div>
-        <div className="social-links absolute right-0 bottom-[25px] left-6 flex w-full opacity-0">
+        <div className="social-links absolute right-6 bottom-[25px] left-6 flex opacity-0">
           {renderEmailLink()}
           {renderResumeLink()}
         </div>

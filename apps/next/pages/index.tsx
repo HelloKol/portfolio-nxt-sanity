@@ -7,7 +7,6 @@ import { Project, SEO } from "@/types";
 import { HOME_QUERY } from "@/services/queries";
 // import { ReactLenis } from "lenis/react";
 import SkillsSection from "@/components/SkillsSection";
-import ContactSection from "@/components/ContactSection";
 import WorkSection from "@/components/WorkSection";
 
 interface Page {
@@ -50,7 +49,6 @@ export default function Home({ page }: Page): JSX.Element | null {
         <AboutSection data={aboutSection} />
         <WorkSection data={workSection} />
         <SkillsSection />
-        <ContactSection />
       </Main>
     </>
     // </ReactLenis>

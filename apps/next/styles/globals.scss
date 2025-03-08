@@ -56,6 +56,12 @@
   font-family: $latoBold;
 }
 
+.next-project-title {
+  font-size: min(calc(10 * 100vw / var(--size)), 100px);
+  line-height: min(calc(10 * 100vw / var(--size)), 100px);
+  font-family: $latoRegular;
+}
+
 .about-section-text {
   font-size: min(calc(20 * 100vw / var(--size-about)), 50px);
   line-height: min(calc(25 * 100vw / var(--size-about)), 60px);

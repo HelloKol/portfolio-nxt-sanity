@@ -205,6 +205,8 @@ export default function Page({ page, work }: Page): JSX.Element | null {
     );
   };
 
+  console.log(work[nextIndex]);
+
   return (
     <>
       <Seo seo={seo} />
@@ -302,22 +304,42 @@ export default function Page({ page, work }: Page): JSX.Element | null {
                   ))}
                 </div>
               )}
-
-              <div className={"col-span-12"}>
-                <div className={styles.divider} />
-                <p>Next</p>
-                {nextIndex !== null && (
-                  <Link
-                    className={styles.nextProjectLink}
-                    href={`/projects/${work[nextIndex].slug.current}`}
-                  >
-                    {work[nextIndex].title}
-                  </Link>
-                )}
-              </div>
             </Grid>
           </Container>
         </Section>
+
+        {nextIndex !== null && (
+          <Section withMargin={false}>
+            <Container>
+              <Grid>
+                <Link
+                  href={`/projects/${work[nextIndex].slug.current}`}
+                  className={"col-span-12"}
+                >
+                  <Grid>
+                    <div className="relative col-span-12 h-[240px] w-full overflow-hidden rounded-lg transition-[height] sm:col-span-6 sm:h-[220px] md:h-[250px] lg:h-[350px] xl:h-[430px] 2xl:h-[550px]">
+                      <Image
+                        src={work[nextIndex].coverImage?.asset?.url}
+                        alt="Project Image"
+                        layout="fill"
+                        objectFit="cover"
+                        priority
+                        blurDataURL={
+                          work[nextIndex].coverImage?.asset?.metadata?.lqip
+                        }
+                      />
+                    </div>
+
+                    <h2 className="next-project-title col-span-12 uppercase sm:col-span-6 sm:mt-auto">
+                      <span className="block">Next</span>
+                      <span className="block">Project</span>
+                    </h2>
+                  </Grid>
+                </Link>
+              </Grid>
+            </Container>
+          </Section>
+        )}
       </Main>
     </>
   );
@@ -358,6 +380,16 @@ export async function getStaticProps({
   *[_type == "work" && !(_id in path('drafts.**'))] {
     title,
     slug,
+    coverImage {
+      _type,
+      asset->{
+        _id,
+        url,
+        metadata{
+          lqip
+        }
+      }
+    },
   }`);
 
   // render the 404 if there is an api error
