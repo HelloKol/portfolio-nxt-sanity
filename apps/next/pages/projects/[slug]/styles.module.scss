@@ -27,7 +27,6 @@
 }
 
 .title {
-  font-family: $melodramaRegular;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
 }
 
@@ -75,13 +74,9 @@
   }
 
   .projectThumbnail {
-    height: 85vh;
-    max-height: 1400px;
+    // height: 85vh;
+    // max-height: 1400px;
     margin: 45px 0 0 0;
-  }
-
-  .containerProjectInfo {
-    margin-top: 60px;
   }
 
   .projectInfoWrapper {
@@ -138,10 +133,6 @@
 @media (min-width: $breakTablet) {
   .title {
     @include type-setting-responsive(50, 7, 100);
-  }
-
-  .containerProjectInfo {
-    margin-top: 180px;
   }
 
   .projectInfoWrapper {

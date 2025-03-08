@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { GetStaticPaths, GetStaticPropsResult } from "next/types";
 import groq from "groq";
 import SplitType from "split-type";
@@ -215,27 +216,28 @@ export default function Page({ page, work }: Page): JSX.Element | null {
         <Section>
           <Container>
             {title && (
-              <h1 ref={titleRef} key={slug.current} className={styles.title}>
+              <h1 ref={titleRef} key={slug.current} className={"mb-4 text-3xl"}>
                 {title}
               </h1>
             )}
-          </Container>
 
-          <div className={`${styles.projectThumbnail}`}>
-            <div ref={containerRef} className={styles.block} />
-            <ImageTag
-              imageRef={imageRef}
-              src={`${coverImage?.asset?.url}`}
-              alt="project Image"
-              layout="fill"
-              objectFit="cover"
-              quality={100}
-              priority={true}
-              blurDataURL={coverImage?.asset?.metadata?.lqip}
-            />
-          </div>
+            {excerpt && (
+              <article className="card-description mb-8 w-10/12 text-lg lg:text-xl">
+                <PortableText value={excerpt} />
+              </article>
+            )}
 
-          <Container className={styles.containerProjectInfo}>
+            <div className="relative h-80 w-full max-w-full overflow-hidden rounded-lg transition-[height] sm:h-94 md:h-[500px] lg:h-[700px] xl:h-[850px]">
+              <Image
+                src={coverImage?.asset?.url}
+                alt="Project Image"
+                layout="fill"
+                objectFit="cover"
+                priority
+                blurDataURL={coverImage?.asset?.metadata?.lqip}
+              />
+            </div>
+
             <Grid>
               <div
                 ref={projectInfoRef}
@@ -346,9 +348,6 @@ export async function getStaticProps({
     return {
       notFound: true,
     };
-
-  page = JSON.parse(JSON.stringify(page));
-  work = JSON.parse(JSON.stringify(work));
 
   return {
     props: {
