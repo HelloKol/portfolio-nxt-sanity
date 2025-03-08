@@ -1,99 +1,12 @@
-@import "../../styles/base/variables";
-@import "../../styles/mixins/mixins";
-
 // ==========================================================================
 // Global
 // ==========================================================================
-.heroSection {
-  .title {
-    // font-family: $melodramaRegular;
-    text-transform: uppercase;
-    overflow: hidden;
-    visibility: hidden;
-
-    span {
-      display: block;
-      overflow: hidden;
-    }
-  }
-}
-
 .title {
   font-size: calc(10 * 100vw / var(--size));
   line-height: calc(10 * 100vw / var(--size));
-  font-family: "sans-serif";
 }
 
 .heroParagraph {
   font-size: calc(10 * 100vw / var(--size-p));
   line-height: calc(14 * 100vw / var(--size-p));
-  font-family: "sans-serif";
-}
-
-// ==========================================================================
-// Mobile
-// ==========================================================================
-@media (min-width: $breakMobile) {
-  .heroSection {
-    // padding: 60px 0 0 0;
-
-    // .title {
-    //   font-size: 16vw;
-    //   line-height: 17vw;
-    // }
-  }
-}
-
-@media (min-width: 650px) {
-  .heroSection {
-    span:nth-of-type(1) {
-      text-align: center;
-    }
-    span:nth-of-type(2) {
-      text-align: right;
-    }
-    span:nth-of-type(3) {
-      text-align: center;
-    }
-  }
-}
-
-// ==========================================================================
-// Mobile Large
-// ==========================================================================
-@media (min-width: $breakMobileLarge) {
-}
-
-// ==========================================================================
-// Tablet
-// ==========================================================================
-@media (min-width: $breakTablet) {
-  .heroSection {
-    padding: 0;
-    // .title {
-    //   @include type-setting-responsive(50, 10, 100);
-    // }
-  }
-}
-
-// ==========================================================================
-// Desktop
-// ==========================================================================
-@media (min-width: $breakDesktop) {
-  .heroSection {
-    // .title {
-    //   @include type-setting-responsive(50, 10, 255);
-    // }
-  }
-}
-
-// ==========================================================================
-// Desktop Large
-// ==========================================================================
-@media (min-width: $breakDesktopLarge) {
-  .heroSection {
-    // .title {
-    //   @include type-setting-responsive(50, 10, 255);
-    // }
-  }
 }

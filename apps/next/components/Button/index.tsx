@@ -1,13 +1,12 @@
-import Link from 'next/link';
-import { useTheme } from '@/providers';
-import styles from './styles.module.scss';
+import Link from "next/link";
+import styles from "./styles.module.scss";
 
 export default function Button({
   children,
   className,
-  variant = 'primary',
+  variant = "primary",
   withSvg,
-  type = 'button',
+  type = "button",
   href,
   newTab,
   onClick,
@@ -17,9 +16,9 @@ export default function Button({
 }: {
   children: React.ReactNode | React.ReactNode[];
   className?: string;
-  variant?: 'primary' | 'secondary' | 'text' | 'svg';
+  variant?: "primary" | "secondary" | "text" | "svg";
   withSvg?: boolean;
-  type?: 'button' | 'submit' | 'reset';
+  type?: "button" | "submit" | "reset";
   href?: string;
   newTab?: boolean;
   download?: boolean;
@@ -27,17 +26,13 @@ export default function Button({
   onClick?: () => void;
   rest?: any;
 }) {
-  const { theme } = useTheme();
-  const isDarkMode = theme === 'dark-theme';
   const isLink = href;
 
   return isLink ? (
     <Link
       href={href}
-      target={newTab ? '_blank' : ''}
-      className={`${className} ${styles.button} ${
-        isDarkMode ? styles.darkMode : styles.lightMode
-      } ${styles[variant]}`}
+      target={newTab ? "_blank" : ""}
+      className={`${className} ${styles.button} ${styles[variant]}`}
       {...rest}
       download={download}
     >
@@ -46,9 +41,7 @@ export default function Button({
     </Link>
   ) : (
     <button
-      className={`${className} ${styles.button} ${
-        isDarkMode ? styles.darkMode : styles.lightMode
-      } ${styles[variant]}`}
+      className={`${className} ${styles.button} ${styles[variant]}`}
       type={type}
       disabled={disabled}
       onClick={onClick}

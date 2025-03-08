@@ -1,21 +1,14 @@
-import React, { useRef } from "react";
+import React from "react";
 import { GetStaticProps } from "next/types";
 import { PortableTextBlock } from "@portabletext/types";
-import {
-  AboutSection,
-  HeroSection,
-  Main,
-  WorkSection,
-  Seo,
-  Container,
-} from "@/components";
+import { AboutSection, HeroSection, Main, Seo } from "@/components";
 import { sanityClient } from "@/lib";
 import { Project, SEO } from "@/types";
 import { HOME_QUERY } from "@/services/queries";
 // import { ReactLenis } from "lenis/react";
-import Skills from "@/components/Skills";
+import SkillsSection from "@/components/SkillsSection";
 import ContactSection from "@/components/ContactSection";
-import WorkListModal from "@/components/WorkListModal";
+import WorkSection from "@/components/WorkSection";
 
 interface Page {
   page: {
@@ -45,8 +38,6 @@ interface Page {
 }
 
 export default function Home({ page }: Page): JSX.Element | null {
-  const container = useRef<HTMLDivElement>(null);
-
   if (!page) return null;
   const { heroSection, aboutSection, workSection, seo } = page;
 
@@ -55,21 +46,11 @@ export default function Home({ page }: Page): JSX.Element | null {
     <>
       <Seo seo={seo} />
       <Main withPadding={false}>
-        <div ref={container}>
-          <HeroSection data={heroSection} />
-          <AboutSection data={aboutSection} />
-          <section id="work" className="mb-[100px] xl:mb-[150px]">
-            <Container>
-              <div className="mb-10 flex w-full items-center justify-between">
-                <h1 className="text-center text-xl">Work</h1>
-                <WorkListModal data={workSection} />
-              </div>
-              <WorkSection data={workSection} />
-            </Container>
-          </section>
-          <Skills />
-          <ContactSection />
-        </div>
+        <HeroSection data={heroSection} />
+        <AboutSection data={aboutSection} />
+        <WorkSection data={workSection} />
+        <SkillsSection />
+        <ContactSection />
       </Main>
     </>
     // </ReactLenis>
@@ -86,8 +67,6 @@ export const getStaticProps: GetStaticProps = async () => {
         notFound: true,
       };
     }
-
-    page = JSON.parse(JSON.stringify(page));
 
     return {
       props: {

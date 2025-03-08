@@ -4,41 +4,31 @@
 // Global
 // ==========================================================================
 .circles {
-    display: none;
-    &.darkMode {
-        span {
-            background: $white;
-        }
-    }
-    &.lightMode {
-        span {
-            background: $black;
-        }
-    }
+  display: none;
 
-    div {
-        &:first-of-type {
-            position: relative;
-        }
+  div {
+    &:first-of-type {
+      position: relative;
     }
+  }
 }
 
 .circlesWrap {
-    position: absolute;
-    top: 0;
-    right: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .circles {
-    span {
-        display: block;
-        border-radius: 100%;
-    }
+  span {
+    display: block;
+    border-radius: 100%;
+  }
 }
 
 .circle1 {
-    width: 200px;
-    height: 200px;
+  width: 200px;
+  height: 200px;
 }
 
 // ==========================================================================

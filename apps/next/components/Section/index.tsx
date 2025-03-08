@@ -1,21 +1,18 @@
-import styles from "./styles.module.scss";
-
 export default function Section({
   children,
   className = "",
-  id,
-  elementRef,
+  withMargin = true,
+  ref,
 }: {
   children: React.ReactNode | React.ReactNode[];
   className?: string;
-  elementRef?: string;
-  id?: string;
+  withMargin?: boolean;
+  ref?: React.RefObject<HTMLSelectElement>;
 }) {
   return (
     <section
-      ref={elementRef}
-      id={id}
-      className={`${className} ${styles.section}`}
+      ref={ref}
+      className={`${className} ${withMargin ? "mb-[100px] xl:mb-[150px]" : ""}`}
     >
       {children}
     </section>

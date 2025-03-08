@@ -1,25 +1,11 @@
-@import '../../styles/base/variables';
-@import '../../styles/mixins/mixins';
+@import "../../styles/base/variables";
+@import "../../styles/mixins/mixins";
 
 // ==========================================================================
 // Global
 // ==========================================================================
 
 .aboutSection {
-  &.darkMode {
-    .bodyCopy {
-      p {
-        color: $greyLight;
-      }
-    }
-  }
-  &.lightMode {
-    .bodyCopy {
-      p {
-        color: $grey;
-      }
-    }
-  }
   .bodyCopy {
     @include article-responsive-new();
     text-transform: capitalize;

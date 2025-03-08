@@ -1,4 +1,7 @@
+import React from "react";
+import Container from "../Container";
 import { Marquee } from "@/components/Marquee";
+import Section from "../Section";
 
 const smallSvgClassName = "h-[60px] w-[60px] lg:h-[80px] lg:w-[80px]";
 const lagrgeSvgClassName = "h-[150px] w-[150px] md:h-[150px] md:w-[150px]";
@@ -227,7 +230,7 @@ const Logos = {
   ),
 };
 
-export function MarqueeSection() {
+const SkillsSection = () => {
   const LOGO_ORDER = [
     "tailwindcss",
     "sanity",
@@ -240,15 +243,24 @@ export function MarqueeSection() {
   ] as const;
 
   return (
-    <Marquee>
-      {LOGO_ORDER.map((logoKey, index) => (
-        <div
-          key={index}
-          className="relative mx-6 flex h-full w-fit items-center justify-start lg:mx-[4rem]"
-        >
-          {Logos[logoKey]()}
-        </div>
-      ))}
-    </Marquee>
+    <Section withMargin={false}>
+      <Container>
+        <h1 className="text-md text-center font-bold tracking-widest text-black">
+          Framework and Tools i use
+        </h1>
+        <Marquee>
+          {LOGO_ORDER.map((logoKey, index) => (
+            <div
+              key={index}
+              className="relative mx-6 flex h-full w-fit items-center justify-start lg:mx-[4rem]"
+            >
+              {Logos[logoKey]()}
+            </div>
+          ))}
+        </Marquee>
+      </Container>
+    </Section>
   );
-}
+};
+
+export default SkillsSection;

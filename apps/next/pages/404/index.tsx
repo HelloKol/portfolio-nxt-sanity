@@ -4,7 +4,6 @@ import { PortableText } from "@portabletext/react";
 import { PortableTextBlock } from "@portabletext/types";
 import groq from "groq";
 import { Section, Container, Main, Button, Seo } from "@/components";
-import { useTheme } from "@/providers";
 import { sanityClient } from "@/lib";
 import { SEO } from "@/types";
 import styles from "./styles.module.scss";
@@ -27,23 +26,17 @@ interface Props {
 }
 
 export default function Page({ page }: Props): JSX.Element | null {
-  const { theme } = useTheme();
   if (!page) return null;
   const { title, body, cta, seo } = page;
   const { content } = cta;
-  const isDarkMode = theme === "dark-theme";
 
   return (
     <>
       <Seo seo={seo} />
 
       <Main withPadding>
-        <Section
-          className={`${styles.section} ${
-            isDarkMode ? styles.darkMode : styles.lightMode
-          }`}
-        >
-          <Container isFluid={false}>
+        <Section className={`${styles.section}`}>
+          <Container>
             {title && <h1 className={styles.title}>{title}</h1>}
 
             {body && (

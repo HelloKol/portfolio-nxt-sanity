@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import { Container, Section } from "@/components";
 import { SplitText } from "gsap/dist/SplitText";
 import { useGSAP, gsap } from "@/lib";
-import { useTheme } from "@/providers";
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import windowDimension from "@/hooks/useWindowDimension";
@@ -14,9 +13,7 @@ interface Props {
 }
 
 const HeroSection = ({ data }: Props): JSX.Element | null => {
-  const { theme } = useTheme();
   const titleRef = useRef<(HTMLSpanElement | null)[]>([]);
-  const isDarkMode = theme === "dark-theme";
   const { isMobile, isMobileLarge } = windowDimension();
 
   useGSAP(() => {
@@ -55,10 +52,7 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
   const words = title.split(" ");
 
   return (
-    <Section
-      id="hero"
-      className={`hero h-screen ${styles.heroSection} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
-    >
+    <Section className={`h-screen ${styles.heroSection}`}>
       <Image
         src="/image/background-2.png"
         alt="hero-bg"
@@ -75,10 +69,10 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
 
       <Container className="relative h-full">
         <div className="mt-30 w-full sm:absolute sm:top-[25%] sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-[35%]">
-          <h1 className={styles.title}>
+          <h1 className={`${styles.title} invisible text-white uppercase`}>
             {words.map((word, index) => (
               <span
-                className="text-white"
+                className={`${styles.sasdasd} block overflow-hidden nth-of-type-1:text-center nth-of-type-2:text-right nth-of-type-3:text-center`}
                 key={index}
                 ref={(el) => (titleRef.current[index] = el)}
               >

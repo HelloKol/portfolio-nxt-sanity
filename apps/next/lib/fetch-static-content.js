@@ -1,6 +1,5 @@
-const client = require("../lib/sanity");
-
 const fs = require("fs");
+const client = require("./sanity");
 
 const createDirectory = async () =>
   fs.promises.mkdir("./data", { recursive: true });

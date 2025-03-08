@@ -7,7 +7,11 @@ import Email from "../svg/Email";
 import Download from "../svg/Download";
 import Portal from "../Portal";
 
-const MenuToggle = () => {
+interface MenuToggleProps {
+  alternateHeader: boolean;
+}
+
+const MenuToggle = ({ alternateHeader }: MenuToggleProps) => {
   const { isNavOpen, setIsNavOpen } = useContext(Context);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLDivElement | null>(null);
@@ -24,6 +28,9 @@ const MenuToggle = () => {
       const socialLinks = menuRef.current.querySelector(".social-links");
       const backdrop = backdropRef.current;
 
+      // Get button position
+      const buttonRect = buttonRef.current.getBoundingClientRect();
+
       if (!isNavOpen) {
         document.body.style.overflow = "hidden";
 
@@ -32,6 +39,9 @@ const MenuToggle = () => {
           width: 0,
           minWidth: 0,
           height: 0,
+          // Position menu at button's position
+          top: buttonRect.top + "px",
+          right: window.innerWidth - buttonRect.right + "px",
         })
           .to([backdrop, menuRef.current], {
             opacity: 1,
@@ -132,13 +142,13 @@ const MenuToggle = () => {
     return (
       <div
         ref={buttonRef}
-        className="open-menu-button top-[20px] right-[20px] flex h-[50px] w-[50px] cursor-pointer items-center overflow-hidden rounded-full hover:rounded-[15px]"
+        className="open-menu-button flex h-[50px] w-[50px] cursor-pointer items-center overflow-hidden rounded-full hover:rounded-[15px]"
         onClick={toggleMenu}
       >
         {!isNavOpen && (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-full fill-white"
+            className={`w-full ${alternateHeader ? "fill-black" : "fill-white"}`}
             viewBox="0 0 25 9"
             width="25"
             height="9"
@@ -215,7 +225,7 @@ const MenuToggle = () => {
 
       <div
         ref={menuRef}
-        className="invisible fixed top-0 right-0 z-10 overflow-hidden rounded-[30px] bg-[#5A04FF] pt-[30px] pl-6"
+        className="invisible fixed z-10 overflow-hidden rounded-[30px] bg-[#5A04FF] pt-[30px] pl-6"
         style={{ width: 0, minWidth: 0, height: 0 }}
       >
         {renderCloseMenuButton()}

@@ -1,12 +1,12 @@
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { PortableText } from "@portabletext/react";
 import { PortableTextBlock } from "@portabletext/types";
-import { gsap } from "@/lib";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { SplitText } from "gsap/dist/SplitText";
 import ThreeDViewer from "../ThreeViewer";
-import Image from "next/image";
-gsap.registerPlugin(ScrollTrigger, SplitText);
+import Section from "../Section";
+import { gsap } from "@/lib";
 
 interface Props {
   data: {
@@ -17,7 +17,7 @@ interface Props {
 }
 
 const AboutSection = ({ data }: Props): JSX.Element | null => {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLSelectElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const [rotation, setRotation] = useState(0);
 
@@ -84,11 +84,7 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
   const { title, body } = data;
 
   return (
-    <section
-      ref={sectionRef}
-      id="about"
-      className="relative mb-[100px] h-screen overflow-hidden xl:mb-[150px]"
-    >
+    <Section ref={sectionRef} className="relative h-screen overflow-hidden">
       <Image
         src="/image/background-2.png"
         alt="hero-bg"
@@ -119,7 +115,7 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
           </article>
         </div>
       </div>
-    </section>
+    </Section>
   );
 };
 

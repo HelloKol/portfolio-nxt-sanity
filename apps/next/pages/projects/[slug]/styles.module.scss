@@ -1,52 +1,9 @@
-@import '../../../styles/base/variables';
-@import '../../../styles/mixins/mixins';
+@import "../../../styles/base/variables";
+@import "../../../styles/mixins/mixins";
 
 // ==========================================================================
 // Global
 // ==========================================================================
-.section {
-  &.darkMode {
-    color: $white;
-    .greyInfo {
-      color: $white;
-    }
-    .whiteInfo {
-      color: $greyLight;
-    }
-    .excerpt,
-    .bodyCopy {
-      p {
-        color: $greyLight;
-      }
-    }
-    .nextProjectWrapper {
-      .nextProjectLink {
-        color: $white;
-      }
-    }
-  }
-  &.lightMode {
-    color: $black;
-    .greyInfo {
-      color: $black;
-    }
-    .whiteInfo {
-      color: $grey;
-    }
-    .excerpt,
-    .bodyCopy {
-      p {
-        color: $grey;
-      }
-    }
-    .nextProjectWrapper {
-      .nextProjectLink {
-        color: $black;
-      }
-    }
-  }
-}
-
 .projectInfoWrapper {
   .greyInfo {
     color: $white;

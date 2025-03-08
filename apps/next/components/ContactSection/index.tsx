@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import TiltedCard from "../TitledCard";
 import Container from "../Container";
+import Section from "../Section";
 // import CustomCursor from "../Cursor";
 
 export default function ContactSection() {
@@ -62,8 +63,8 @@ export default function ContactSection() {
   };
 
   return (
-    <section
-      id="contact"
+    <Section
+      withMargin={false}
       className="contact relative mt-[150px] rounded-tl-[50px] rounded-tr-[50px] bg-[#18181A] pt-16 pb-10 sm:mt-[200px] md:h-[450px] md:pb-20 lg:h-[430px] xl:h-[530px] xl:pt-24"
     >
       <Container className="relative z-20 md:z-0">
@@ -107,6 +108,6 @@ export default function ContactSection() {
           scaleOnHover={1.02}
         />
       </div>
-    </section>
+    </Section>
   );
 }

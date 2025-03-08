@@ -1,10 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { SplitText } from "gsap/dist/SplitText";
-
-// Register plugins
-gsap.registerPlugin(ScrollTrigger, SplitText);
+import { gsap } from "@/lib";
 
 const ScrollHighlightText = () => {
   const headerRef = useRef(null);

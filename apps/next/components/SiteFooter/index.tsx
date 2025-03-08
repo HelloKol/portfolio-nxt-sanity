@@ -1,15 +1,12 @@
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { Container } from '@/components';
-import { useTheme } from '@/providers';
-import settings from '../../data/settings.json';
-import styles from './styles.module.scss';
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { Container } from "@/components";
+import settings from "../../data/settings.json";
+import styles from "./styles.module.scss";
 
 export default function SiteFooter() {
   const router = useRouter();
-  const { theme } = useTheme();
-  const isDarkMode = theme === 'dark-theme';
-  const hideFooterPath = ['/about'];
+  const hideFooterPath = ["/about"];
   const isFooterHidden = hideFooterPath.includes(router.pathname);
 
   if (isFooterHidden) return null;
@@ -23,7 +20,7 @@ export default function SiteFooter() {
       socialMediaLinks.map((item, index) => {
         const { _type, title, url, email } = item;
 
-        if (_type === 'emailLink') {
+        if (_type === "emailLink") {
           return (
             <Link key={index} href={`mailto:${email}`}>
               {title}
@@ -32,7 +29,7 @@ export default function SiteFooter() {
         }
 
         return (
-          <Link key={index} href={url as string} target={'_blank'}>
+          <Link key={index} href={url as string} target={"_blank"}>
             {title}
           </Link>
         );
@@ -41,8 +38,8 @@ export default function SiteFooter() {
   };
 
   return (
-    <footer className={`${styles.footer} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
-      <Container className={styles.footerContainer} isFluid={false}>
+    <footer className={`${styles.footer} `}>
+      <Container className={styles.footerContainer}>
         {reserved && (
           <div className={styles.footerDisclaimer}>
             <p>{reserved}</p>

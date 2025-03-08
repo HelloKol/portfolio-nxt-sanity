@@ -1,16 +1,24 @@
-import React, { useRef } from 'react';
-import Link from 'next/link';
-import { GetStaticPaths, GetStaticPropsResult } from 'next/types';
-import groq from 'groq';
-import SplitType from 'split-type';
-import { Button, BlockContent, Container, Grid, ImageTag, Main, Section, Seo } from '@/components';
-import { useTheme } from '@/providers';
-import { Project, SEO } from '@/types';
-import { sanityClient, useGSAP, gsap } from '@/lib';
-import { PROJECT_QUERY } from '@/services/queries';
-import { formatDate } from '@/utils';
-import styles from './styles.module.scss';
-import { PortableText } from '@portabletext/react';
+import React, { useRef } from "react";
+import Link from "next/link";
+import { GetStaticPaths, GetStaticPropsResult } from "next/types";
+import groq from "groq";
+import SplitType from "split-type";
+import {
+  Button,
+  BlockContent,
+  Container,
+  Grid,
+  ImageTag,
+  Main,
+  Section,
+  Seo,
+} from "@/components";
+import { Project, SEO } from "@/types";
+import { sanityClient, useGSAP, gsap } from "@/lib";
+import { PROJECT_QUERY } from "@/services/queries";
+import { formatDate } from "@/utils";
+import styles from "./styles.module.scss";
+import { PortableText } from "@portabletext/react";
 
 interface Page {
   page: Project & {
@@ -21,11 +29,22 @@ interface Page {
 
 export default function Page({ page, work }: Page): JSX.Element | null {
   if (!page) return null;
-  const { theme } = useTheme();
-  const { title, excerpt, body, slug, createdDate, tools, type, cta, coverImage, seo } = page;
+  const {
+    title,
+    excerpt,
+    body,
+    slug,
+    createdDate,
+    tools,
+    type,
+    cta,
+    coverImage,
+    seo,
+  } = page;
   const formattedDate = formatDate(createdDate);
-  const isDarkMode = theme === 'dark-theme';
-  const currentIndex = work.findIndex((item) => item.slug.current === slug.current);
+  const currentIndex = work.findIndex(
+    (item) => item.slug.current === slug.current,
+  );
   const nextIndex = currentIndex < work.length - 1 ? currentIndex + 1 : 0;
 
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -37,25 +56,25 @@ export default function Page({ page, work }: Page): JSX.Element | null {
   useGSAP(
     () => {
       // Text reveal
-      const split = new SplitType(titleRef.current!, { types: 'chars' });
+      const split = new SplitType(titleRef.current!, { types: "chars" });
       const chars = split.chars;
 
       gsap.fromTo(
         chars,
         {
           y: 150,
-          opacity: 0
+          opacity: 0,
         },
         {
           y: 0,
           opacity: 1,
           stagger: 0.05,
           duration: 1.5,
-          ease: 'power4.out'
-        }
+          ease: "power4.out",
+        },
       );
     },
-    { scope: titleRef, dependencies: [slug.current] }
+    { scope: titleRef, dependencies: [slug.current] },
   );
 
   useGSAP(
@@ -63,7 +82,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
       gsap.set(containerRef.current, { scaleX: 1 });
       gsap.set(imageRef.current, {
         scale: 1.5,
-        filter: 'blur(50px)'
+        filter: "blur(50px)",
       });
 
       // Image block reveal
@@ -73,76 +92,80 @@ export default function Page({ page, work }: Page): JSX.Element | null {
         {
           duration: 1,
           scaleX: 0,
-          transformOrigin: 'left',
-          ease: 'power2.inOut'
+          transformOrigin: "left",
+          ease: "power2.inOut",
         },
-        '+=0.2'
+        "+=0.2",
       ).to(
         imageRef.current,
         {
           duration: 1,
           scale: 1,
-          filter: 'blur(0px)',
-          ease: 'power2.inOut'
+          filter: "blur(0px)",
+          ease: "power2.inOut",
         },
-        '-=1'
+        "-=1",
       );
     },
-    { scope: containerRef, dependencies: [slug.current] }
+    { scope: containerRef, dependencies: [slug.current] },
   );
 
   useGSAP(
     () => {
-      const articleChildren = gsap.utils.toArray(articleRef?.current?.children!);
+      const articleChildren = gsap.utils.toArray(
+        articleRef?.current?.children!,
+      );
 
       const tl = gsap.timeline({
         delay: 0.2,
         scrollTrigger: {
           trigger: articleRef?.current,
-          start: 'top bottom', // when the top of the trigger hits the bottom of the viewport
-          end: 'bottom center', // end after scrolling 500px beyond the start
-          onEnter: () => tl.play()
-        }
+          start: "top bottom", // when the top of the trigger hits the bottom of the viewport
+          end: "bottom center", // end after scrolling 500px beyond the start
+          onEnter: () => tl.play(),
+        },
       });
 
       tl.fromTo(
         articleChildren,
         {
           y: 30,
-          opacity: 0
+          opacity: 0,
         },
         {
           y: 0,
           opacity: 1,
           duration: 1,
-          ease: 'power4.out',
+          ease: "power4.out",
           stagger: {
-            each: 0.2
-          }
-        }
+            each: 0.2,
+          },
+        },
       );
     },
-    { scope: articleRef, dependencies: [slug.current] }
+    { scope: articleRef, dependencies: [slug.current] },
   );
 
   useGSAP(
     () => {
-      const projectInfo = gsap.utils.toArray(projectInfoRef?.current?.children!);
+      const projectInfo = gsap.utils.toArray(
+        projectInfoRef?.current?.children!,
+      );
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: projectInfoRef?.current,
-          start: 'top bottom', // when the top of the trigger hits the bottom of the viewport
-          end: 'bottom center', // end after scrolling 500px beyond the start
-          onEnter: () => tl.play()
-        }
+          start: "top bottom", // when the top of the trigger hits the bottom of the viewport
+          end: "bottom center", // end after scrolling 500px beyond the start
+          onEnter: () => tl.play(),
+        },
       });
 
       tl.fromTo(
         projectInfo,
         {
           x: -15,
-          opacity: 0
+          opacity: 0,
         },
         {
           x: 0,
@@ -150,12 +173,12 @@ export default function Page({ page, work }: Page): JSX.Element | null {
           delay: 0.2,
           stagger: {
             each: 0.3,
-            ease: 'power2.inOut'
-          }
-        }
+            ease: "power2.inOut",
+          },
+        },
       );
     },
-    { scope: projectInfoRef, dependencies: [slug.current] }
+    { scope: projectInfoRef, dependencies: [slug.current] },
   );
 
   const renderCta = () => {
@@ -167,14 +190,20 @@ export default function Page({ page, work }: Page): JSX.Element | null {
           title: string;
           url: string;
         },
-        index: number
+        index: number,
       ) => {
         return (
-          <Button key={index} href={`${item.url}`} variant="primary" newTab withSvg>
+          <Button
+            key={index}
+            href={`${item.url}`}
+            variant="primary"
+            newTab
+            withSvg
+          >
             {item.title}
           </Button>
         );
-      }
+      },
     );
   };
 
@@ -183,8 +212,8 @@ export default function Page({ page, work }: Page): JSX.Element | null {
       <Seo seo={seo} />
 
       <Main>
-        <Section className={`${styles.section} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
-          <Container className={styles.container} isFluid={false}>
+        <Section>
+          <Container>
             {title && (
               <h1 ref={titleRef} key={slug.current} className={styles.title}>
                 {title}
@@ -206,9 +235,13 @@ export default function Page({ page, work }: Page): JSX.Element | null {
             />
           </div>
 
-          <Container className={styles.containerProjectInfo} isFluid={false}>
+          <Container className={styles.containerProjectInfo}>
             <Grid>
-              <div ref={projectInfoRef} key={slug.current} className={styles.projectInfoWrapper}>
+              <div
+                ref={projectInfoRef}
+                key={slug.current}
+                className={styles.projectInfoWrapper}
+              >
                 {formattedDate && (
                   <div className={styles.projectInfo}>
                     <span className={styles.greyInfo}>Date</span>
@@ -255,7 +288,10 @@ export default function Page({ page, work }: Page): JSX.Element | null {
                 <div className={styles.divider} />
                 <p>Next</p>
                 {nextIndex !== null && (
-                  <Link className={styles.nextProjectLink} href={`/projects/${work[nextIndex].slug.current}`}>
+                  <Link
+                    className={styles.nextProjectLink}
+                    href={`/projects/${work[nextIndex].slug.current}`}
+                  >
                     {work[nextIndex].title}
                   </Link>
                 )}
@@ -280,7 +316,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths,
-    fallback: false
+    fallback: false,
   };
 };
 
@@ -290,11 +326,13 @@ type pathParams = {
   };
 };
 
-export async function getStaticProps({ params }: pathParams): Promise<GetStaticPropsResult<Page>> {
+export async function getStaticProps({
+  params,
+}: pathParams): Promise<GetStaticPropsResult<Page>> {
   const { slug } = params;
 
   let page = await sanityClient.fetch(PROJECT_QUERY, {
-    slug
+    slug,
   });
 
   let work = await sanityClient.fetch(groq`
@@ -306,7 +344,7 @@ export async function getStaticProps({ params }: pathParams): Promise<GetStaticP
   // render the 404 if there is an api error
   if (!page)
     return {
-      notFound: true
+      notFound: true,
     };
 
   page = JSON.parse(JSON.stringify(page));
@@ -315,8 +353,8 @@ export async function getStaticProps({ params }: pathParams): Promise<GetStaticP
   return {
     props: {
       page,
-      work
+      work,
     },
-    revalidate: 30
+    revalidate: 30,
   };
 }

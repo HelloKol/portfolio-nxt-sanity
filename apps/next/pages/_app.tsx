@@ -1,17 +1,12 @@
 import type { AppProps } from "next/app";
-import { useEffect } from "react";
 import { Circles, CustomCursor, Layout } from "@/components";
-import { ConfigProvider, ThemeProvider } from "@/providers";
+import { ConfigProvider } from "@/providers";
 import { ScrollSmoother } from "gsap/dist/ScrollSmoother";
 import { useRouter } from "next/router";
 import { AnimatePresence } from "framer-motion";
-import { gsap } from "@/lib/gsap";
-import { Flip } from "gsap/dist/Flip";
 import CircleText from "@/components/CircleText";
-import "@/styles/globals.scss";
 import Magnet from "@/components/Magnet";
-
-gsap.registerPlugin(Flip);
+import "@/styles/globals.scss";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -35,21 +30,18 @@ export default function App({ Component, pageProps }: AppProps) {
   // }, []);
 
   return (
-    <ThemeProvider>
-      <ConfigProvider>
-        <AnimatePresence mode="wait">
-          <Layout>
-            <Component key={router.route} {...pageProps} />
-            <Magnet padding={50} disabled={false} magnetStrength={2}>
-              <CircleText />
-            </Magnet>
-          </Layout>
-        </AnimatePresence>
-
-        {/* <Component {...pageProps} /> */}
-        {/* <CustomCursor /> */}
-        {/* <Circles /> */}
-      </ConfigProvider>
-    </ThemeProvider>
+    <ConfigProvider>
+      <AnimatePresence mode="wait">
+        <Layout>
+          <Component key={router.route} {...pageProps} />
+          <Magnet padding={50} disabled={false} magnetStrength={2}>
+            <CircleText />
+          </Magnet>
+        </Layout>
+      </AnimatePresence>
+      {/* <Component {...pageProps} /> */}
+      {/* <CustomCursor /> */}
+      {/* <Circles /> */}
+    </ConfigProvider>
   );
 }

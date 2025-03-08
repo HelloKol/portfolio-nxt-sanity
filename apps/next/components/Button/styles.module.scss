@@ -1,4 +1,4 @@
-@import '../../styles/base/variables';
+@import "../../styles/base/variables";
 
 // ==========================================================================
 // Global
@@ -9,54 +9,6 @@
   display: flex;
   align-items: center;
   font-family: $neueMontrealMedium;
-  &.darkMode {
-    svg {
-      fill: $white;
-    }
-    .text {
-      color: $white;
-    }
-    .text:after,
-    .dot {
-      background: $white;
-    }
-    // =================
-    // Primary button
-    // =================
-    &.primary {
-      background: $white;
-      color: $black;
-      .text {
-        color: $black;
-      }
-      svg {
-        fill: $black;
-      }
-      .dot {
-        background: $black;
-      }
-    }
-  }
-  &.lightMode {
-    svg {
-      fill: $black;
-    }
-    .text {
-      color: $black;
-    }
-    .text:after,
-    .dot {
-      background: $black;
-    }
-    // =================
-    // Primary button
-    // =================
-    &.primary {
-      .dot {
-        background: $white;
-      }
-    }
-  }
   .dot {
     height: 5px;
     width: 5px;
@@ -116,7 +68,7 @@
     position: relative;
     padding-bottom: 20px;
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       width: 100%;
       transform: scaleX(1);
