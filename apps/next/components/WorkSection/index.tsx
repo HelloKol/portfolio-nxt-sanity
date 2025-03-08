@@ -6,6 +6,7 @@ import { Project } from "@/types";
 import Container from "../Container";
 import { RainbowButton } from "../RainbowButton";
 import Portal from "../Portal";
+import Section from "../Section";
 
 interface Props {
   data: {
@@ -23,18 +24,25 @@ interface Props {
   };
 }
 
-const Card = ({ title, excerpt, coverImage, slug }: Project) => {
+const Card = ({
+  title,
+  excerpt,
+  coverImage,
+  slug,
+  setIsModalOpen,
+}: Project & { setIsModalOpen: (isModalOpen: boolean) => void }) => {
   return (
     <Link
       href={`/projects/${slug.current}`}
       className="card mb-10 block h-[410px] overflow-hidden rounded-[30px] bg-[#f5f5f5] last:mb-0 lg:h-[500px] xl:h-[530px] 2xl:h-[680px]"
+      onClick={() => setIsModalOpen(true)}
     >
       <div className="card-inner p-5 lg:p-10">
         <div className="card-content relative z-2">
-          <h1 className="card-title text-3xl font-bold lg:text-[40px]">
+          <h1 className="card-title text-3xl font-bold uppercase lg:text-[40px]">
             {title}
           </h1>
-          <article className="card-description w-10/12 text-lg lg:text-xl">
+          <article className="card-description font-body w-10/12 py-3 pr-3 text-lg backdrop-blur-lg lg:text-xl">
             <PortableText value={excerpt} />
           </article>
         </div>
@@ -139,17 +147,21 @@ export default function WorkSection({ data }: Props) {
   if (!workList.length) return null;
 
   return (
-    <section id="work" className="mb-[100px] xl:mb-[150px]">
+    <Section id="work" className="mb-[100px] xl:mb-[150px]">
       <Container>
         <div className="mb-10 flex w-full items-center justify-between">
-          <h1 className="text-center text-xl">{title}</h1>
+          <h1 className="font-heading-bold text-xl uppercase">{title}</h1>
           <RainbowButton onClick={() => setIsModalOpen(true)}>
             {cta.title}
           </RainbowButton>
         </div>
 
         {workList.map((card, index) => (
-          <Card key={index} {...card} />
+          <Card
+            key={index}
+            {...card}
+            setIsModalOpen={() => setIsModalOpen(false)}
+          />
         ))}
 
         <Portal>
@@ -169,7 +181,11 @@ export default function WorkSection({ data }: Props) {
                   {renderCloseMenuButton()}
                   <Container>
                     {data.workList.map((card, index) => (
-                      <Card key={index} {...card} />
+                      <Card
+                        key={index}
+                        {...card}
+                        setIsModalOpen={() => setIsModalOpen(false)}
+                      />
                     ))}
                   </Container>
                 </div>
@@ -178,6 +194,6 @@ export default function WorkSection({ data }: Props) {
           </div>
         </Portal>
       </Container>
-    </section>
+    </Section>
   );
 }

@@ -1,7 +1,7 @@
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
-import Link from "next/link";
 const CirclesText = () => {
   const textRef = useRef<SVGTextElement | null>(null);
 
@@ -20,7 +20,7 @@ const CirclesText = () => {
   return (
     <Link
       href="/resume"
-      className="block flex cursor-pointer items-center justify-center"
+      className="flex hidden cursor-pointer items-center justify-center text-xl lg:block"
     >
       <div className="relative flex items-center justify-center">
         <svg

@@ -84,7 +84,11 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
   const { title, body } = data;
 
   return (
-    <Section ref={sectionRef} className="relative h-screen overflow-hidden">
+    <Section
+      id="about"
+      ref={sectionRef}
+      className="relative h-screen overflow-hidden"
+    >
       <Image
         src="/image/background-2.png"
         alt="hero-bg"
@@ -103,9 +107,11 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
         <ThreeDViewer rotation={rotation} />
       </div>
 
-      <div className="relative z-10 container mx-auto flex h-full items-center justify-center px-4 sm:px-6 md:px-8 xl:max-w-[1536px]">
+      <div className="relative z-10 container mx-auto flex h-full items-center justify-center px-4 sm:px-6 md:px-8 xl:mt-6 xl:max-w-[1536px] 2xl:mt-14">
         <div className="">
-          <h2 className="text-center text-xl text-white">{title}</h2>
+          <h2 className="font-heading-bold text-center text-xl text-white uppercase">
+            {title}
+          </h2>
 
           <article
             ref={textRef}

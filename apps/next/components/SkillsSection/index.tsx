@@ -245,8 +245,8 @@ const SkillsSection = () => {
   return (
     <Section withMargin={false}>
       <Container>
-        <h1 className="text-md text-center font-bold tracking-widest text-black">
-          Framework and Tools i use
+        <h1 className="font-heading-bold text-center text-xl tracking-widest text-black uppercase">
+          Technologies & Skills
         </h1>
         <Marquee>
           {LOGO_ORDER.map((logoKey, index) => (

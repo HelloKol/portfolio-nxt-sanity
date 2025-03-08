@@ -272,7 +272,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
                     "col-span-6 2xl:col-start-9 2xl:col-end-11 2xl:row-start-1"
                   }
                 >
-                  <p className={"text-sm md:text-base"}>Role</p>
+                  <p className={"text-sm md:text-base"}>Services</p>
                   {type.map((item, index) => (
                     <p
                       key={index}
@@ -291,7 +291,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
                     "col-span-6 2xl:col-start-11 2xl:col-end-13 2xl:row-start-1"
                   }
                 >
-                  <p className={"text-sm md:text-base"}>Tools</p>
+                  <p className={"text-sm md:text-base"}>Technology</p>
                   {tools.map((item, index) => (
                     <p
                       key={index}

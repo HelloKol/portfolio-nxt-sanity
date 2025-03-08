@@ -3,7 +3,6 @@ import { Circles, CustomCursor, Layout } from "@/components";
 import { ConfigProvider } from "@/providers";
 import { ScrollSmoother } from "gsap/dist/ScrollSmoother";
 import { useRouter } from "next/router";
-import { AnimatePresence } from "framer-motion";
 import CircleText from "@/components/CircleText";
 import Magnet from "@/components/Magnet";
 import "@/styles/globals.scss";
@@ -31,17 +30,12 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <ConfigProvider>
-      <AnimatePresence mode="wait">
-        <Layout>
-          <Component key={router.route} {...pageProps} />
-          <Magnet padding={50} disabled={false} magnetStrength={2}>
-            <CircleText />
-          </Magnet>
-        </Layout>
-      </AnimatePresence>
-      {/* <Component {...pageProps} /> */}
-      {/* <CustomCursor /> */}
-      {/* <Circles /> */}
+      <Layout>
+        <Component key={router.route} {...pageProps} />
+        <Magnet padding={50} disabled={false} magnetStrength={2}>
+          <CircleText />
+        </Magnet>
+      </Layout>
     </ConfigProvider>
   );
 }

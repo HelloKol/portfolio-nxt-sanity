@@ -1,12 +1,14 @@
+@import "../../styles//base/variables";
+
 // ==========================================================================
 // Global
 // ==========================================================================
 .title {
-  font-size: calc(10 * 100vw / var(--size));
+  font-size: min(calc(10 * 100vw / var(--size)), 150px);
   line-height: calc(10 * 100vw / var(--size));
 }
 
 .heroParagraph {
-  font-size: calc(10 * 100vw / var(--size-p));
+  font-size: min(calc(10 * 100vw / var(--size-p)), 30px);
   line-height: calc(14 * 100vw / var(--size-p));
 }

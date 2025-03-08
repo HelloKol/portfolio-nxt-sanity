@@ -1,9 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import TiltedCard from "../TitledCard";
 import Container from "../Container";
 import Section from "../Section";
-// import CustomCursor from "../Cursor";
 
 export default function ContactSection() {
   const socials = [
@@ -64,6 +62,7 @@ export default function ContactSection() {
 
   return (
     <Section
+      id="contact"
       withMargin={false}
       className="contact relative mt-[150px] rounded-tl-[50px] rounded-tr-[50px] bg-[#18181A] pt-16 pb-10 sm:mt-[200px] md:h-[450px] md:pb-20 lg:h-[430px] xl:h-[530px] xl:pt-24"
     >
@@ -102,10 +101,12 @@ export default function ContactSection() {
       </Container>
 
       <div className="absolute right-0 bottom-0 z-10 h-[370px] w-[300px] md:top-1/2 md:left-1/2 md:h-[500px] md:w-[400px] md:-translate-x-1/2 md:-translate-y-1/2 lg:h-[700px] lg:w-[500px] xl:h-[700px] xl:w-[580px]">
-        <TiltedCard
-          imageSrc="/image/david-full.png"
-          rotateAmplitude={8}
-          scaleOnHover={1.02}
+        <Image
+          src="/image/david-full.png"
+          alt="david-full"
+          width={500}
+          height={500}
+          className="h-full w-full object-contain"
         />
       </div>
     </Section>

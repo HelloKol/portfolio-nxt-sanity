@@ -7,6 +7,8 @@ import { Section, Container, Main, Button, Seo } from "@/components";
 import { sanityClient } from "@/lib";
 import { SEO } from "@/types";
 import styles from "./styles.module.scss";
+import { RainbowButton } from "@/components/RainbowButton";
+import Link from "next/link";
 
 interface Props {
   page: {
@@ -34,26 +36,21 @@ export default function Page({ page }: Props): JSX.Element | null {
     <>
       <Seo seo={seo} />
 
-      <Main withPadding>
-        <Section className={`${styles.section}`}>
+      <Main>
+        <Section className={`text-center`}>
           <Container>
             {title && <h1 className={styles.title}>{title}</h1>}
 
             {body && (
-              <article className={styles.article}>
+              <article className={"font-body mb-4 text-xl text-black"}>
                 <PortableText value={body} />
               </article>
             )}
 
             {cta && (
-              <Button
-                className={styles.btn}
-                withSvg
-                variant="primary"
-                href={content.slug.current}
-              >
+              <RainbowButton href={content.slug.current}>
                 {cta.title}
-              </Button>
+              </RainbowButton>
             )}
           </Container>
         </Section>

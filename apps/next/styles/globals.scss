@@ -11,6 +11,10 @@
   --color-4: hsl(var(--color-4));
   --color-5: hsl(var(--color-5));
 
+  --font-heading-bold: "Lato-Bold", "sans-serif";
+  --font-heading-regular: "Lato-Regular", "sans-serif";
+  --font-body: "Khula-Regular", "sans-serif";
+
   /* Animations */
   --animation-rainbow: rainbow var(--speed, 2s) infinite linear;
   --animation-marquee: marquee var(--duration, 30s) linear infinite;
@@ -31,7 +35,7 @@
   }
 }
 
-@media (min-width: 650px) {
+@media (min-width: 639px) {
   :root {
     --size: 104;
     --size-p: 750;
@@ -39,7 +43,7 @@
   }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 639px) {
   :root {
     --size: 75;
     --size-p: 190;
@@ -50,12 +54,11 @@
 .project-title {
   font-size: min(calc(10 * 100vw / var(--size)), 120px);
   font-family: $latoBold;
-  // line-height: calc(6 * 100vw / var(--size));
 }
 
 .about-section-text {
-  font-size: calc(20 * 100vw / var(--size-about));
-  line-height: calc(25 * 100vw / var(--size-about));
+  font-size: min(calc(20 * 100vw / var(--size-about)), 50px);
+  line-height: min(calc(25 * 100vw / var(--size-about)), 60px);
   font-family: $khulaRegular;
 }
 
@@ -162,10 +165,10 @@ h6 {
 
 .app {
   min-height: 100vh;
-  // background-color: var(--bg-primary);
   color: var(--text-primary);
   will-change: background-color, color;
   transition: background-color 0.2s ease-in-out;
+  overflow: hidden;
 }
 
 .scrollbar-track-x,

@@ -48,7 +48,7 @@ export default function SiteHeader() {
           >
             <Link
               href={`/`}
-              className={`${alternateHeader ? "text-black" : "text-white"} uppercase`}
+              className={`${alternateHeader ? "text-black" : "text-white"} font-heading-bold uppercase`}
             >
               est. {year}
             </Link>

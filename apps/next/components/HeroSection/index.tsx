@@ -4,7 +4,6 @@ import { SplitText } from "gsap/dist/SplitText";
 import { useGSAP, gsap } from "@/lib";
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import windowDimension from "@/hooks/useWindowDimension";
 
 interface Props {
   data: {
@@ -14,7 +13,7 @@ interface Props {
 
 const HeroSection = ({ data }: Props): JSX.Element | null => {
   const titleRef = useRef<(HTMLSpanElement | null)[]>([]);
-  const { isMobile, isMobileLarge } = windowDimension();
+  const paragraphRef = useRef<(HTMLDivElement | null)[]>([]); // Add this ref for paragraph lines
 
   useGSAP(() => {
     const ctx = gsap.context(() => {
@@ -22,26 +21,53 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
 
       titleRef.current.forEach((wordRef, index) => {
         if (wordRef) {
-          const splitText = new SplitText(wordRef, { type: "chars" }); // Split the word into characters
-
-          // Set visibility to visible for animation
-          gsap.set(splitText.chars, { visibility: "visible" });
+          const splitText = new SplitText(wordRef, { type: "lines" });
 
           timeline.fromTo(
-            splitText.chars,
+            splitText.lines,
             {
-              y: 350,
+              yPercent: 100, // Start from below
+              visibility: "visible",
             },
             {
-              y: 0,
-              stagger: 0.03,
-              duration: 2.5,
+              yPercent: 0, // Move to original position
+              stagger: 0.2,
+              duration: 2,
               ease: "power4.out",
             },
-            index === 0 ? 0 : `-=${2.2}`, // Overlap animations by 1.5 seconds
+            index === 0 ? 0 : `-=${1.8}`,
           );
         }
       });
+
+      // Updated paragraph animation with curtain reveal effect
+      timeline.fromTo(
+        paragraphRef.current,
+        {
+          yPercent: 100, // Start from below
+          visibility: "visible",
+        },
+        {
+          yPercent: 0, // Move to original position
+          duration: 1,
+          stagger: 0.15,
+          ease: "power4.out",
+        },
+        "-=2",
+      );
+
+      // Scroll animation for second word
+      if (titleRef.current[1]) {
+        gsap.to(titleRef.current[1], {
+          x: -100, // Move left by 100px
+          scrollTrigger: {
+            trigger: ".heroSection", // Use the section as trigger
+            start: "top top", // Start at the top of the section
+            end: "+=500", // End 500px after start
+            scrub: 1, // Smooth scrolling
+          },
+        });
+      }
     });
 
     return () => ctx.revert();
@@ -52,7 +78,7 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
   const words = title.split(" ");
 
   return (
-    <Section className={`h-screen ${styles.heroSection}`}>
+    <Section id="hero" className={`heroSection h-screen ${styles.heroSection}`}>
       <Image
         src="/image/background-2.png"
         alt="hero-bg"
@@ -61,18 +87,20 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
         className="absolute inset-0 h-screen w-full object-cover"
         style={{
           maskImage:
-            "linear-gradient(to bottom, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%)", // Fix the gradient to start at full opacity
+            "linear-gradient(to bottom, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%)", // Fix the gradient to start at full
           WebkitMaskImage:
             "linear-gradient(to bottom, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%)",
         }}
       />
 
       <Container className="relative h-full">
-        <div className="mt-30 w-full sm:absolute sm:top-[25%] sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-[35%]">
-          <h1 className={`${styles.title} invisible text-white uppercase`}>
+        <div className="mt-30 w-full sm:absolute sm:top-[25%] sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-[35%] sm:px-6 md:px-8">
+          <h1
+            className={`${styles.title} font-heading-regular invisible text-white uppercase`}
+          >
             {words.map((word, index) => (
               <span
-                className={`${styles.sasdasd} block overflow-hidden nth-of-type-1:text-center nth-of-type-2:text-right nth-of-type-3:text-center`}
+                className={`block overflow-hidden nth-of-type-1:text-center nth-of-type-2:text-right nth-of-type-3:text-center`}
                 key={index}
                 ref={(el) => (titleRef.current[index] = el)}
               >
@@ -82,30 +110,41 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
           </h1>
         </div>
 
-        {isMobile || isMobileLarge ? (
-          <div className="mt-14 font-bold sm:absolute sm:top-[37%] sm:left-16">
-            <div className={`text-white ${styles.heroParagraph}`}>
-              Motto® is the leading global branding consultancy for
-              positioning, scaling, and reinventing companies in the tech and
-              innovation space.
-            </div>
-          </div>
-        ) : (
-          <div className="mt-20 font-bold sm:absolute sm:top-[32%] sm:left-16">
-            <div className={`text-white sm:pl-20 ${styles.heroParagraph}`}>
+        {/* Mobile paragraph wrapper - Updated version */}
+        <div className="invisible mt-14 font-bold sm:absolute sm:top-[32%] sm:left-16 sm:mt-20 md:left-20 lg:left-30">
+          <div className="overflow-hidden">
+            <div
+              className={`font-body text-white sm:pl-10 md:pl-14 lg:pl-20 ${styles.heroParagraph}`}
+              ref={(el) => (paragraphRef.current[0] = el)}
+            >
               Motto® is the leading global branding
             </div>
-            <div className={`text-white ${styles.heroParagraph}`}>
-              consultancy for positioning, scaling, and
-            </div>
-            <div className={`text-white ${styles.heroParagraph}`}>
-              reinventing companies in the tech and
-            </div>
-            <div className={`text-white ${styles.heroParagraph}`}>
-              innovation space.
+          </div>
+          <div className="overflow-hidden">
+            <div
+              className={`font-body text-white ${styles.heroParagraph}`}
+              ref={(el) => (paragraphRef.current[1] = el)}
+            >
+              consultancy for positioning, scaling
             </div>
           </div>
-        )}
+          <div className="overflow-hidden">
+            <div
+              className={`font-body text-white ${styles.heroParagraph}`}
+              ref={(el) => (paragraphRef.current[2] = el)}
+            >
+              and reinventing companies in the
+            </div>
+          </div>
+          <div className="overflow-hidden">
+            <div
+              className={`font-body text-white ${styles.heroParagraph}`}
+              ref={(el) => (paragraphRef.current[3] = el)}
+            >
+              tech and innovation space.
+            </div>
+          </div>
+        </div>
       </Container>
     </Section>
   );

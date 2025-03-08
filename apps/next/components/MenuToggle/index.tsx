@@ -1,12 +1,13 @@
-import React, { useContext, useRef } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
+import React, { useContext, useRef } from "react";
 import { gsap } from "gsap";
 import { Context } from "@/contexts/Context";
 import settings from "../../data/settings.json";
 import Email from "../svg/Email";
 import Download from "../svg/Download";
 import Portal from "../Portal";
-
+import { useWindowDimension } from "@/hooks";
 interface MenuToggleProps {
   alternateHeader: boolean;
 }
@@ -17,6 +18,9 @@ const MenuToggle = ({ alternateHeader }: MenuToggleProps) => {
   const buttonRef = useRef<HTMLDivElement | null>(null);
   const linksRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const backdropRef = useRef<HTMLDivElement | null>(null);
+  const { isMobile } = useWindowDimension();
+  const router = useRouter();
+  const isHome = router.pathname === "/";
 
   if (!settings) return null;
   const { headerNavigation } = settings;
@@ -50,8 +54,8 @@ const MenuToggle = ({ alternateHeader }: MenuToggleProps) => {
             ease: "power2.inOut",
             onStart: () => {
               gsap.to(menuRef.current, {
-                width: "400px",
-                minWidth: "400px",
+                width: isMobile ? "320px" : "400px",
+                minWidth: isMobile ? "320px" : "400px",
                 height: "400px",
                 duration: 0.5,
                 ease: "power2.inOut",
@@ -115,6 +119,29 @@ const MenuToggle = ({ alternateHeader }: MenuToggleProps) => {
     }
   };
 
+  const handleNavClick = async (content: string) => {
+    toggleMenu();
+
+    if (!isHome) await router.push("/");
+
+    // Remove any # from the content if it exists
+    const sectionId = content.replace("#", "");
+
+    setTimeout(() => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        gsap.to(window, {
+          duration: 1,
+          ease: "power2.inOut",
+          scrollTo: {
+            y: element,
+            offsetY: 0,
+          },
+        });
+      }
+    }, 100);
+  };
+
   const renderNavigation = () => {
     return (
       <div className="group w-fit">
@@ -123,10 +150,10 @@ const MenuToggle = ({ alternateHeader }: MenuToggleProps) => {
           return (
             <Link
               key={index}
-              href={content}
+              href={`/${content}`}
               ref={(el) => (linksRef.current[index] = el)}
               className="group mb-4 block w-fit text-5xl opacity-0"
-              onClick={toggleMenu}
+              onClick={() => handleNavClick(content)}
             >
               <span className="block text-white transition-all duration-200 group-hover:text-gray-400 hover:text-white">
                 {title}

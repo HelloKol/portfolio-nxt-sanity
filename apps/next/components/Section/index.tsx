@@ -6,12 +6,14 @@ const Section = forwardRef<
     children: React.ReactNode | React.ReactNode[];
     className?: string;
     withMargin?: boolean;
+    id?: string;
   }
->(({ children, className = "", withMargin = true }, ref) => {
+>(({ children, className = "", withMargin = true, id }, ref) => {
   return (
     <section
       ref={ref}
       className={`${className} ${withMargin ? "mb-[100px] xl:mb-[150px]" : ""}`}
+      id={id}
     >
       {children}
     </section>
