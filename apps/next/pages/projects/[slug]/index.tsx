@@ -214,16 +214,16 @@ export default function Page({ page, work }: Page): JSX.Element | null {
           <Container>
             {title && (
               <h1
-                ref={titleRef}
+                // ref={titleRef}
                 key={slug.current}
-                className={"project-title mb-4 text-3xl md:mb-8"}
+                className={"project-title mb-4 text-3xl uppercase md:mb-8"}
               >
                 {title}
               </h1>
             )}
 
             {excerpt && (
-              <article className="mb-8 text-lg md:mb-16 md:w-10/12 md:text-3xl lg:w-8/12">
+              <article className="project-excerpt mb-8 text-lg md:mb-16 md:w-10/12 md:text-3xl lg:w-8/12">
                 <PortableText value={excerpt} />
               </article>
             )}
@@ -248,7 +248,11 @@ export default function Page({ page, work }: Page): JSX.Element | null {
               {/* </div> */}
 
               {body && (
-                <article className={"col-span-12 mb-8 text-xl 2xl:col-span-7"}>
+                <article
+                  className={
+                    "project-body col-span-12 mb-8 text-xl 2xl:col-span-7"
+                  }
+                >
                   <BlockContent value={body} />
                 </article>
               )}

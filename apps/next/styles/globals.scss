@@ -49,13 +49,22 @@
 
 .project-title {
   font-size: min(calc(10 * 100vw / var(--size)), 120px);
+  font-family: $latoBold;
   // line-height: calc(6 * 100vw / var(--size));
 }
 
 .about-section-text {
   font-size: calc(20 * 100vw / var(--size-about));
   line-height: calc(25 * 100vw / var(--size-about));
-  font-family: "sans-serif";
+  font-family: $khulaRegular;
+}
+
+.project-excerpt {
+  font-family: $khulaRegular;
+}
+
+.project-body {
+  font-family: $khulaRegular;
 }
 
 :root {

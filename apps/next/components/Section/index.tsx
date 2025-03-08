@@ -1,14 +1,13 @@
-export default function Section({
-  children,
-  className = "",
-  withMargin = true,
-  ref,
-}: {
-  children: React.ReactNode | React.ReactNode[];
-  className?: string;
-  withMargin?: boolean;
-  ref?: React.RefObject<HTMLSelectElement>;
-}) {
+import React, { forwardRef } from "react";
+
+const Section = forwardRef<
+  HTMLElement,
+  {
+    children: React.ReactNode | React.ReactNode[];
+    className?: string;
+    withMargin?: boolean;
+  }
+>(({ children, className = "", withMargin = true }, ref) => {
   return (
     <section
       ref={ref}
@@ -17,4 +16,8 @@ export default function Section({
       {children}
     </section>
   );
-}
+});
+
+Section.displayName = "Section";
+
+export default Section;

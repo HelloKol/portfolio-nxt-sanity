@@ -65,16 +65,23 @@ $rowGutterDesktopLarge: 30px;
 // ==========================================================================
 
 // Fonts
-$melodramaRegular: 'Melodrama-Regular';
-$melodramaMedium: 'Melodrama-Medium';
-$neueMontrealThin: 'PP Neue Montreal Thin', 'sans-serif';
-$neueMontrealBook: 'PP Neue Montreal Book', 'sans-serif';
-$neueMontrealMedium: 'PP Neue Montreal Medium', 'sans-serif';
-$neueMontrealBold: 'PP Neue Montreal Bold', 'sans-serif';
+$latoRegular: "Lato-Regular", "sans-serif";
+$latoMedium: "Lato-Medium", "sans-serif";
+$latoBold: "Lato-Bold", "sans-serif";
+$latoLight: "Lato-Light", "sans-serif";
+$latoLightItalic: "Lato-LightItalic", "sans-serif";
+$latoItalic: "Lato-Italic", "sans-serif";
+$latoBoldItalic: "Lato-BoldItalic", "sans-serif";
+
+$khulaRegular: "Khula-Regular", "sans-serif";
+$khulaLight: "Khula-Light", "sans-serif";
+$khulaBold: "Khula-Bold", "sans-serif";
+$khulaExtraBold: "Khula-ExtraBold", "sans-serif";
+$khulaSemiBold: "Khula-SemiBold", "sans-serif";
 
 // Global Vars
-$baseFontFamily: $neueMontrealBook;
-$baseFontFamilyBold: $neueMontrealMedium;
+$baseFontFamily: $latoRegular;
+$baseFontFamilyBold: $latoBold;
 $baseFontSize: 11;
 $baseLineHeight: 16;
 $baseLetterSpacingSize: 0;
@@ -88,7 +95,7 @@ $baseBackgroundColor: $white;
 // ==========================================================================
 
 // Normal
-$btnFontFamily: $neueMontrealBook;
+$btnFontFamily: $latoRegular;
 $btnTextTransform: none;
 // $btnFontSizes: 14;
 // $btnLineHeight: 16;
@@ -130,7 +137,7 @@ $linkTextDecoration: none;
 
 // Labels
 // ==========================================================================
-$baseInputLabelFamily: $neueMontrealBook;
+$baseInputLabelFamily: $latoRegular;
 $baseInputLabelFontSize: 14;
 $baseInputLabelLineHeight: 14;
 $baseInputLabelLetterSpacingSize: $baseLetterSpacingSize;
@@ -142,7 +149,7 @@ $baseInputLabelPaddingDesktopLarge: 0 0 12px;
 
 // Inputs
 // ==========================================================================
-$baseInputFamily: $neueMontrealBook;
+$baseInputFamily: $latoRegular;
 $baseInputFontSize: 12;
 $baseInputLineHeight: 12;
 $baseInputLetterSpacingSize: $baseLetterSpacingSize;

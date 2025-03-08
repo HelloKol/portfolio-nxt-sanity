@@ -1,58 +1,103 @@
 @font-face {
-  font-family: 'Melodrama-Light';
-  src:
-    url('../../static/fonts/melodrama/Melodrama-Light.woff2') format('woff2'),
-    url('../../static/fonts/melodrama/Melodrama-Light.woff') format('woff'),
-    url('../../static/fonts/melodrama/Melodrama-Light.ttf') format('truetype');
+  font-family: "Lato-Black";
+  src: url("../../public/font/Lato/Lato-Black.ttf") format("truetype");
   font-weight: 300;
   font-display: swap;
   font-style: normal;
 }
+
 @font-face {
-  font-family: 'Melodrama-Regular';
-  src:
-    url('../../static/fonts/melodrama/Melodrama-Regular.woff2') format('woff2'),
-    url('../../static/fonts/melodrama/Melodrama-Regular.woff') format('woff'),
-    url('../../static/fonts/melodrama/Melodrama-Regular.ttf') format('truetype');
+  font-family: "Lato-BlackItalic";
+  src: url("../../public/font/Lato/Lato-BlackItalic.ttf") format("truetype");
   font-weight: 400;
   font-display: swap;
   font-style: normal;
 }
+
 @font-face {
-  font-family: 'Melodrama-Medium';
-  src:
-    url('../../static/fonts/melodrama/Melodrama-Medium.woff2') format('woff2'),
-    url('../../static/fonts/melodrama/Melodrama-Medium.woff') format('woff'),
-    url('../../static/fonts/melodrama/Melodrama-Medium.ttf') format('truetype');
+  font-family: "Lato-Bold";
+  src: url("../../public/font/Lato/Lato-Bold.ttf") format("truetype");
   font-weight: 500;
   font-display: swap;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'PP Neue Montreal Book';
+  font-family: "Lato-BoldItalic";
+  src: url("../../public/font/Lato/Lato-BoldItalic.ttf") format("truetype");
+  font-weight: 600;
+  font-display: swap;
   font-style: normal;
-  font-weight: normal;
-  src: url('../../static/fonts/neueMontreal/ppneuemontreal-book.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'PP Neue Montreal Thin';
+  font-family: "Lato-Italic";
+  src: url("../../public/font/Lato/Lato-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
   font-style: normal;
-  font-weight: normal;
-  src: url('../../static/fonts/neueMontreal/ppneuemontreal-thin.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'PP Neue Montreal Medium';
+  font-family: "Lato-Light";
+  src: url("../../public/font/Lato/Lato-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-display: swap;
   font-style: normal;
-  font-weight: normal;
-  src: url('../../static/fonts/neueMontreal/ppneuemontreal-medium.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'PP Neue Montreal Bold';
+  font-family: "Lato-LightItalic";
+  src: url("../../public/font/Lato/Lato-LightItalic.ttf") format("truetype");
+  font-weight: 300;
+  font-display: swap;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Lato-Regular";
+  src: url("../../public/font/Lato/Lato-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
   font-style: normal;
-  font-weight: normal;
-  src: url('../../static/fonts/neueMontreal/ppneuemontreal-bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: "Khula-Regular";
+  src: url("../../public/font/Khula/Khula-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Khula-Light";
+  src: url("../../public/font/Khula/Khula-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Khula-Bold";
+  src: url("../../public/font/Khula/Khula-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Khula-ExtraBold";
+  src: url("../../public/font/Khula/Khula-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Khula-SemiBold";
+  src: url("../../public/font/Khula/Khula-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-display: swap;
+  font-style: normal;
 }
