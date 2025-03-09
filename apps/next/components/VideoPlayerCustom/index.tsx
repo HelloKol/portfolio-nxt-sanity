@@ -1,6 +1,5 @@
-import React from 'react';
-import ReactPlayer from 'react-player';
-import styles from './styles.module.scss';
+import React from "react";
+import ReactPlayer from "react-player";
 
 // Props
 interface Props {
@@ -14,7 +13,7 @@ const VideoPlayerCustom = ({ value }: Props) => {
   const { href } = value;
 
   return (
-    <div className={styles.videoPlayerWrapper}>
+    <div className={"mb-8 lg:mb-10"}>
       <ReactPlayer width="100%" height="100%" url={href} muted controls />
     </div>
   );

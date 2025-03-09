@@ -17,7 +17,7 @@ import { sanityClient, useGSAP, gsap } from "@/lib";
 import { PROJECT_QUERY } from "@/services/queries";
 import { PortableText } from "@portabletext/react";
 import { RainbowButton } from "@/components/RainbowButton";
-
+import ContentLayout from "@/components/ContentLayout";
 interface Page {
   page: Project & {
     layout: Layout[];
@@ -201,12 +201,9 @@ export default function Page({ page, work }: Page): JSX.Element | null {
     );
   };
 
-  console.log(page);
-
   return (
     <>
       <Seo seo={seo} />
-
       <Main>
         <Section>
           <Container>
@@ -247,9 +244,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
 
               {body && (
                 <article
-                  className={
-                    "project-body col-span-12 mb-8 text-xl 2xl:col-span-7"
-                  }
+                  className={"project-body col-span-12 text-xl 2xl:col-span-7"}
                 >
                   <BlockContent value={body} />
                 </article>
@@ -257,7 +252,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
 
               <div
                 className={
-                  "col-span-12 mb-16 flex gap-24 2xl:col-start-9 2xl:col-end-13 2xl:row-start-1 2xl:mt-auto 2xl:mb-8 2xl:pt-30"
+                  "col-span-12 mb-16 flex w-fit flex-col gap-4 2xl:col-start-9 2xl:col-end-13 2xl:row-start-1 2xl:mt-auto 2xl:mb-8 2xl:pt-30"
                 }
               >
                 {renderCta()}
@@ -302,23 +297,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
               )}
             </Grid>
 
-            {layout.map((item, index) => (
-              <div key={index}>
-                {item._type === "image" && (
-                  <Image
-                    src={item.asset.url}
-                    alt={item.alt}
-                    width={500}
-                    height={500}
-                  />
-                )}
-                {item._type === "layout.textSection" && (
-                  <article>
-                    <BlockContent value={item.body} />
-                  </article>
-                )}
-              </div>
-            ))}
+            <ContentLayout layout={layout} />
           </Container>
         </Section>
 

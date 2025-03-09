@@ -1,7 +1,6 @@
-import React from 'react';
-import { ImageTag } from '@/components';
-import { Media } from '@/types';
-import styles from './styles.module.scss';
+import React from "react";
+import { ImageTag } from "@/components";
+import { Media } from "@/types";
 
 // Props
 interface Props {
@@ -13,7 +12,7 @@ const BlockContentImage = ({ value }: Props) => {
   const { asset } = value;
 
   return (
-    <div className={styles.imageWrapper}>
+    <div className={"relative mb-8 lg:mb-10"}>
       <ImageTag
         src={`${asset?.url}`}
         alt="project Image"
