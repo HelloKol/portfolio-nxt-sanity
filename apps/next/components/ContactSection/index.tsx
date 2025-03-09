@@ -1,42 +1,68 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import Container from "../Container";
 import Section from "../Section";
+import { gsap } from "@/lib";
+
+const socials = [
+  {
+    name: "Github",
+    href: "https://github.com/HelloKol",
+  },
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/in/shehabemon",
+  },
+  {
+    name: "Behance",
+    href: "https://www.behance.net/shehabemon",
+  },
+];
+
+const navigation = [
+  {
+    name: "Home",
+    href: "#hero",
+  },
+  {
+    name: "About",
+    href: "#about",
+  },
+  {
+    name: "Work",
+    href: "#work",
+  },
+  {
+    name: "Contact",
+    href: "#contact",
+  },
+];
 
 export default function ContactSection() {
-  const socials = [
-    {
-      name: "Github",
-      href: "https://github.com/HelloKol",
-    },
-    {
-      name: "LinkedIn",
-      href: "https://www.linkedin.com/in/shehabemon",
-    },
-    {
-      name: "Behance",
-      href: "https://www.behance.net/shehabemon",
-    },
-  ];
+  const router = useRouter();
+  const isHome = router.pathname === "/";
 
-  const navigation = [
-    {
-      name: "Home",
-      href: "#hero",
-    },
-    {
-      name: "About",
-      href: "#about",
-    },
-    {
-      name: "Work",
-      href: "#work",
-    },
-    {
-      name: "Contact",
-      href: "#contact",
-    },
-  ];
+  const handleNavClick = async (content: string) => {
+    if (!isHome) await router.push("/");
+
+    // Remove any # from the content if it exists
+    const sectionId = content.replace("#", "");
+
+    setTimeout(() => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        gsap.to(window, {
+          duration: 1,
+          ease: "power2.inOut",
+          scrollTo: {
+            y: element,
+            offsetY: 0,
+          },
+        });
+      }
+    }, 100);
+  };
 
   const renderSocials = () => {
     return socials.map((social) => (
@@ -54,7 +80,12 @@ export default function ContactSection() {
 
   const renderNavigation = () => {
     return navigation.map((item) => (
-      <Link key={item.name} href={item.href} className="block w-fit">
+      <Link
+        key={item.name}
+        href={`/${item.href}`}
+        className="block w-fit"
+        onClick={() => handleNavClick(item.href)}
+      >
         <span className="text-white">{item.name}</span>
       </Link>
     ));
@@ -64,7 +95,7 @@ export default function ContactSection() {
     <Section
       id="contact"
       withMargin={false}
-      className="contact relative mt-[150px] rounded-tl-[50px] rounded-tr-[50px] bg-[#18181A] pt-16 pb-10 sm:mt-[200px] md:h-[450px] md:pb-20 lg:h-[430px] xl:h-[530px] xl:pt-24"
+      className="contact relative mt-[150px] rounded-tl-[50px] rounded-tr-[50px] bg-[#060010] pt-16 pb-10 sm:mt-[200px] md:h-[450px] md:pb-20 lg:h-[430px] xl:h-[530px] xl:pt-24"
     >
       <Container className="relative z-20 md:z-0">
         <div className="grid grid-cols-12 gap-10">
@@ -80,9 +111,7 @@ export default function ContactSection() {
               Get in touch
             </h1>
             <Link
-              href="https://x.com/0x_josh"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="mailto:info@shehab.uk"
               className="mt-6 block w-fit text-4xl md:ml-auto xl:text-5xl"
             >
               <span className="text-white">Info@shehab.uk</span>
@@ -100,10 +129,10 @@ export default function ContactSection() {
         </div>
       </Container>
 
-      <div className="absolute right-0 bottom-0 z-10 h-[370px] w-[300px] md:top-1/2 md:left-1/2 md:h-[500px] md:w-[400px] md:-translate-x-1/2 md:-translate-y-1/2 lg:h-[700px] lg:w-[500px] xl:h-[700px] xl:w-[580px]">
+      <div className="absolute right-0 bottom-0 z-10 h-[370px] w-[300px] sm:w-[350px] md:top-1/2 md:left-1/2 md:h-[450px] md:w-[400px] md:-translate-x-1/2 md:-translate-y-1/2 lg:h-[430px] lg:w-[500px] xl:h-[530px] xl:w-[580px] 2xl:h-[530px] 2xl:w-[640px]">
         <Image
-          src="/image/david-full.png"
-          alt="david-full"
+          src="/image/david-head.png"
+          alt="david-head"
           width={500}
           height={500}
           className="h-full w-full object-contain"

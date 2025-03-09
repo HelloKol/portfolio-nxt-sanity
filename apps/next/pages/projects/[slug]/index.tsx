@@ -18,6 +18,7 @@ import { PROJECT_QUERY } from "@/services/queries";
 import { PortableText } from "@portabletext/react";
 import { RainbowButton } from "@/components/RainbowButton";
 import ContentLayout from "@/components/ContentLayout";
+
 interface Page {
   page: Project & {
     layout: Layout[];

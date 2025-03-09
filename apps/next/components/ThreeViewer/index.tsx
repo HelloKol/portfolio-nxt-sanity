@@ -3,7 +3,7 @@ import { OrbitControls, useGLTF } from "@react-three/drei";
 import { Suspense } from "react";
 
 function Model({ rotation }: { rotation: number }) {
-  const { scene } = useGLTF("/Neon_David.glb");
+  const { scene } = useGLTF("/model/Neon_David.glb");
   return <primitive object={scene} scale={1} rotation={[0, rotation, 0]} />;
 }
 

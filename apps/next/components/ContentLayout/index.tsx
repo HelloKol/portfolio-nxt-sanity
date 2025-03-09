@@ -4,7 +4,9 @@ interface ContentLayoutProps {
   layout: Layout[];
 }
 
-const ContentLayout = ({ layout }: ContentLayoutProps) => {
+const ContentLayout = ({ layout = [] }: ContentLayoutProps) => {
+  if (!layout.length) return null;
+
   return (
     <div>
       {layout.map((item, index) => (

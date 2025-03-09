@@ -52,12 +52,6 @@ export default defineConfig({
                 S.list()
                   .title('Content')
                   .items([
-                    // Define Work Index
-                    S.listItem()
-                      .title('Work Index')
-                      .icon(TiersIcon)
-                      .id('workIndex')
-                      .child(S.document().schemaType('workIndex').documentId('workIndex')),
                     // Define Work
                     S.listItem()
                       .title('Work')
@@ -88,12 +82,6 @@ export default defineConfig({
                       ),
                   ]),
               ),
-            // Define Contact
-            S.listItem()
-              .title('Contact')
-              .icon(PinIcon)
-              .id('contact')
-              .child(S.document().schemaType('contact').documentId('contact')),
             // Define Page Not Found
             S.listItem()
               .title('Page Not Found')

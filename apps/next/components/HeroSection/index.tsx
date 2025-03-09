@@ -8,6 +8,7 @@ import Image from "next/image";
 interface Props {
   data: {
     title: string;
+    body: Array<string>;
   };
 }
 
@@ -74,7 +75,7 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
   });
 
   if (!data) return null;
-  const { title } = data;
+  const { title, body } = data;
   const words = title.split(" ");
 
   return (
@@ -110,40 +111,17 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
           </h1>
         </div>
 
-        {/* Mobile paragraph wrapper - Updated version */}
         <div className="invisible mt-14 font-bold sm:absolute sm:top-[32%] sm:left-16 sm:mt-20 md:left-20 lg:left-30">
-          <div className="overflow-hidden">
-            <div
-              className={`font-body text-white sm:pl-10 md:pl-14 lg:pl-20 ${styles.heroParagraph}`}
-              ref={(el) => (paragraphRef.current[0] = el)}
-            >
-              Motto® is the leading global branding
+          {body.map((line, index) => (
+            <div className="overflow-hidden" key={index}>
+              <div
+                className={`font-body text-white ${styles.heroParagraph} ${index === 0 ? "sm:pl-10 md:pl-14 lg:pl-20" : ""}`}
+                ref={(el) => (paragraphRef.current[index] = el)}
+              >
+                {line}
+              </div>
             </div>
-          </div>
-          <div className="overflow-hidden">
-            <div
-              className={`font-body text-white ${styles.heroParagraph}`}
-              ref={(el) => (paragraphRef.current[1] = el)}
-            >
-              consultancy for positioning, scaling
-            </div>
-          </div>
-          <div className="overflow-hidden">
-            <div
-              className={`font-body text-white ${styles.heroParagraph}`}
-              ref={(el) => (paragraphRef.current[2] = el)}
-            >
-              and reinventing companies in the
-            </div>
-          </div>
-          <div className="overflow-hidden">
-            <div
-              className={`font-body text-white ${styles.heroParagraph}`}
-              ref={(el) => (paragraphRef.current[3] = el)}
-            >
-              tech and innovation space.
-            </div>
-          </div>
+          ))}
         </div>
       </Container>
     </Section>

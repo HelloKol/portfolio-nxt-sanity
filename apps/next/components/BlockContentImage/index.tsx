@@ -1,5 +1,5 @@
 import React from "react";
-import { ImageTag } from "@/components";
+import Image from "next/image";
 import { Media } from "@/types";
 
 // Props
@@ -13,7 +13,7 @@ const BlockContentImage = ({ value }: Props) => {
 
   return (
     <div className={"relative mb-8 lg:mb-10"}>
-      <ImageTag
+      <Image
         src={`${asset?.url}`}
         alt="project Image"
         layout="responsive"

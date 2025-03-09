@@ -1,5 +1,3 @@
-import styles from "./styles.module.scss";
-
 export default function Main({
   children,
   withPadding = true,
@@ -9,9 +7,7 @@ export default function Main({
 }) {
   return (
     <main
-      className={`${styles.main} ${
-        withPadding ? styles.withPadding : styles.withoutPadding
-      }`}
+      className={`min-h-screen ${withPadding ? "pt-[120px] md:pt-[180px]" : ""}`}
     >
       {children}
     </main>

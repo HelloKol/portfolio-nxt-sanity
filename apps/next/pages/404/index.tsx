@@ -3,12 +3,10 @@ import { GetStaticProps } from "next";
 import { PortableText } from "@portabletext/react";
 import { PortableTextBlock } from "@portabletext/types";
 import groq from "groq";
-import { Section, Container, Main, Button, Seo } from "@/components";
+import { Section, Container, Main, Seo } from "@/components";
 import { sanityClient } from "@/lib";
 import { SEO } from "@/types";
-import styles from "./styles.module.scss";
 import { RainbowButton } from "@/components/RainbowButton";
-import Link from "next/link";
 
 interface Props {
   page: {
@@ -39,7 +37,7 @@ export default function Page({ page }: Props): JSX.Element | null {
       <Main>
         <Section className={`text-center`}>
           <Container>
-            {title && <h1 className={styles.title}>{title}</h1>}
+            {title && <h1 className={"text-9xl"}>{title}</h1>}
 
             {body && (
               <article className={"font-body mb-4 text-xl text-black"}>

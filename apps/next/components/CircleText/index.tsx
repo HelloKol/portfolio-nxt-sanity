@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
+import { gsap } from "@/lib";
 import settings from "@/data/settings.json";
 
 const CirclesText = () => {

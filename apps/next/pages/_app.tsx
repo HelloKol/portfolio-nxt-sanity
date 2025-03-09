@@ -1,5 +1,5 @@
 import type { AppProps } from "next/app";
-import { Circles, CustomCursor, Layout } from "@/components";
+import { Layout } from "@/components";
 import { ConfigProvider } from "@/providers";
 import { ScrollSmoother } from "gsap/dist/ScrollSmoother";
 import { useRouter } from "next/router";

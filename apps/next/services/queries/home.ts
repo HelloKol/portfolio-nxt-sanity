@@ -4,12 +4,12 @@ import SEO from "../seo";
 const HOME_QUERY = groq`
 *[_type == "home" && !(_id in path('drafts.**'))][0] {
     heroSection {
-      title
+      title,
+      body
     },
     aboutSection {
       title,
       body,
-      cvLink
     },
     workSection {
       title,

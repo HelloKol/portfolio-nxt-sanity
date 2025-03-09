@@ -1,5 +1,5 @@
-import groq from 'groq';
-import SEO from '../seo';
+import groq from "groq";
+import SEO from "../seo";
 
 const PROJECT_INDEX_QUERY = groq`
 *[_type == "workIndex" && !(_id in path('drafts.**'))][0] {
@@ -12,6 +12,7 @@ const PROJECT_INDEX_LIST_QUERY = groq`
         _id,
         title,
         slug,
+        excerpt,
         tools,
         type,
         color,

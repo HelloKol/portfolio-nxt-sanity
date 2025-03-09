@@ -12,7 +12,6 @@ interface Props {
   data: {
     title: string;
     body: PortableTextBlock;
-    cvLink: string;
   };
 }
 
@@ -58,10 +57,6 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
       trigger: section,
       start: "top center",
       end: "bottom center",
-      // onEnter: () =>
-      //   gsap.to(section, { backgroundColor: "#ffffff", duration: 0.5 }),
-      // onLeaveBack: () =>
-      //   gsap.to(section, { backgroundColor: "#ffffff", duration: 0.5 }),
     });
 
     return () => {

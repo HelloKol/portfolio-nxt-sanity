@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
 import React, { useContext, useRef } from "react";
-import { gsap } from "gsap";
+import { gsap } from "@/lib";
 import { Context } from "@/contexts/Context";
 import settings from "@/data/settings.json";
 import Email from "../svg/Email";

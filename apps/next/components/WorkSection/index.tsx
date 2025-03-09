@@ -1,13 +1,13 @@
 import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
-import { gsap } from "gsap";
+import { gsap } from "@/lib";
 import { PortableText } from "@portabletext/react";
 import { Project } from "@/types";
 import Container from "../Container";
 import { RainbowButton } from "../RainbowButton";
 import Portal from "../Portal";
 import Section from "../Section";
-
+import Close from "../svg/Close";
 interface Props {
   data: {
     title: string;
@@ -22,6 +22,7 @@ interface Props {
     };
     workList: Project[];
   };
+  allWorks: Project[];
 }
 
 const Card = ({
@@ -42,7 +43,7 @@ const Card = ({
           <h1 className="card-title text-3xl font-bold uppercase lg:text-[40px]">
             {title}
           </h1>
-          <article className="card-description font-body w-10/12 py-3 pr-3 text-lg lg:text-xl">
+          <article className="card-description font-body w-10/12 py-3 pr-3 text-lg lg:w-2/3 lg:text-xl xl:w-3/5 2xl:w-1/2">
             <PortableText value={excerpt} />
           </article>
         </div>
@@ -57,7 +58,7 @@ const Card = ({
   );
 };
 
-export default function WorkSection({ data }: Props) {
+export default function WorkSection({ data, allWorks = [] }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
@@ -125,20 +126,7 @@ export default function WorkSection({ data }: Props) {
         className="close-menu-button absolute top-[25px] right-[25px] flex h-[50px] w-[50px] cursor-pointer items-center justify-center rounded-full bg-black transition-all duration-100 hover:scale-85"
         onClick={() => setIsModalOpen(false)}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M18 6L6 18M6 6l12 12"
-            stroke="white"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+        <Close />
       </div>
     );
   };
@@ -179,15 +167,17 @@ export default function WorkSection({ data }: Props) {
               <div className="WorkListModal-inner h-full">
                 <div className="WorkListModal-content h-[98%] overflow-y-auto">
                   {renderCloseMenuButton()}
-                  <Container>
-                    {data.workList.map((card, index) => (
-                      <Card
-                        key={index}
-                        {...card}
-                        setIsModalOpen={() => setIsModalOpen(false)}
-                      />
-                    ))}
-                  </Container>
+                  {!!allWorks.length && (
+                    <Container>
+                      {allWorks.map((card, index) => (
+                        <Card
+                          key={index}
+                          {...card}
+                          setIsModalOpen={() => setIsModalOpen(false)}
+                        />
+                      ))}
+                    </Container>
+                  )}
                 </div>
               </div>
             </div>
