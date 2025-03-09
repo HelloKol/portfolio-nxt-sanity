@@ -28,6 +28,10 @@ interface Page {
 }
 
 export default function Page({ page, work }: Page): JSX.Element | null {
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const articleRef = useRef<HTMLElement>(null);
+  const imageContainerRef = useRef<HTMLDivElement>(null);
+
   if (!page) return null;
   const {
     title,
@@ -46,28 +50,20 @@ export default function Page({ page, work }: Page): JSX.Element | null {
   );
   const nextIndex = currentIndex < work.length - 1 ? currentIndex + 1 : 0;
 
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const projectInfoRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef(null);
-  const imageRef = useRef(null);
-  const articleRef = useRef<HTMLElement>(null);
-
   useGSAP(
     () => {
-      // Text reveal
-      const split = new SplitType(titleRef.current!, { types: "chars" });
-      const chars = split.chars;
+      const split = new SplitType(titleRef.current!, { types: "lines" });
+      const lines = split.lines;
 
       gsap.fromTo(
-        chars,
+        lines,
         {
           y: 150,
-          opacity: 0,
+          visibility: "visible",
         },
         {
           y: 0,
           opacity: 1,
-          stagger: 0.05,
           duration: 1.5,
           ease: "power4.out",
         },
@@ -75,109 +71,46 @@ export default function Page({ page, work }: Page): JSX.Element | null {
     },
     { scope: titleRef, dependencies: [slug.current] },
   );
-
   useGSAP(
     () => {
-      gsap.set(containerRef.current, { scaleX: 1 });
-      gsap.set(imageRef.current, {
-        scale: 1.5,
-        filter: "blur(50px)",
-      });
+      const article = articleRef.current;
+      if (!article) return;
 
-      // Image block reveal
-      const tl = gsap.timeline();
-      tl.to(
-        containerRef.current,
-        {
-          duration: 1,
-          scaleX: 0,
-          transformOrigin: "left",
-          ease: "power2.inOut",
-        },
-        "+=0.2",
-      ).to(
-        imageRef.current,
-        {
-          duration: 1,
-          scale: 1,
-          filter: "blur(0px)",
-          ease: "power2.inOut",
-        },
-        "-=1",
-      );
-    },
-    { scope: containerRef, dependencies: [slug.current] },
-  );
+      gsap.set(article, { visibility: "visible" });
 
-  useGSAP(
-    () => {
-      const articleChildren = gsap.utils.toArray(
-        articleRef?.current?.children!,
+      gsap.fromTo(
+        article,
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, ease: "power4.out", delay: 0.4 },
       );
 
-      const tl = gsap.timeline({
-        delay: 0.2,
-        scrollTrigger: {
-          trigger: articleRef?.current,
-          start: "top bottom", // when the top of the trigger hits the bottom of the viewport
-          end: "bottom center", // end after scrolling 500px beyond the start
-          onEnter: () => tl.play(),
-        },
-      });
-
-      tl.fromTo(
-        articleChildren,
-        {
-          y: 30,
-          opacity: 0,
-        },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: "power4.out",
-          stagger: {
-            each: 0.2,
-          },
-        },
-      );
+      return () => {
+        gsap.set(article, { clearProps: "all" });
+      };
     },
     { scope: articleRef, dependencies: [slug.current] },
   );
 
   useGSAP(
     () => {
-      const projectInfo = gsap.utils.toArray(
-        projectInfoRef?.current?.children!,
-      );
+      const container = imageContainerRef.current;
+      if (!container) return;
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: projectInfoRef?.current,
-          start: "top bottom", // when the top of the trigger hits the bottom of the viewport
-          end: "bottom center", // end after scrolling 500px beyond the start
-          onEnter: () => tl.play(),
-        },
+      gsap.set(container, {
+        width: "80%",
+        xPercent: -50,
+        left: "50%",
       });
 
-      tl.fromTo(
-        projectInfo,
-        {
-          x: -15,
-          opacity: 0,
-        },
-        {
-          x: 0,
-          opacity: 1,
-          delay: 0.2,
-          stagger: {
-            each: 0.3,
-            ease: "power2.inOut",
-          },
-        },
-      );
+      gsap.to(container, {
+        width: "100%",
+        xPercent: 0,
+        left: "0",
+        duration: 1.2,
+        ease: "power4.inOut",
+      });
     },
-    { scope: projectInfoRef, dependencies: [slug.current] },
+    { scope: imageContainerRef, dependencies: [slug.current] },
   );
 
   const renderCta = () => {
@@ -210,21 +143,29 @@ export default function Page({ page, work }: Page): JSX.Element | null {
           <Container>
             {title && (
               <h1
-                // ref={titleRef}
                 key={slug.current}
-                className={"project-title mb-4 text-3xl uppercase md:mb-8"}
+                className={
+                  "project-title invisible mb-4 text-3xl uppercase md:mb-8"
+                }
               >
-                {title}
+                <span ref={titleRef} className="block overflow-hidden">
+                  {title}
+                </span>
               </h1>
             )}
 
             {excerpt && (
-              <article className="project-excerpt mb-8 text-lg md:mb-16 md:w-10/12 md:text-3xl lg:w-8/12">
-                <PortableText value={excerpt} />
-              </article>
+              <div className="mb-8 text-lg md:mb-16 md:w-10/12 md:text-3xl lg:w-8/12">
+                <article ref={articleRef} className="project-excerpt invisible">
+                  <PortableText value={excerpt} />
+                </article>
+              </div>
             )}
 
-            <div className="relative mb-16 h-80 w-full max-w-full overflow-hidden rounded-lg transition-[height] sm:h-94 md:h-[500px] lg:h-[700px] xl:h-[850px]">
+            <div
+              ref={imageContainerRef}
+              className="relative mb-16 h-80 w-full max-w-full overflow-hidden rounded-lg transition-[height] sm:h-94 md:h-[500px] lg:h-[700px] xl:h-[850px]"
+            >
               <Image
                 src={coverImage?.asset?.url}
                 alt="Project Image"
@@ -236,13 +177,6 @@ export default function Page({ page, work }: Page): JSX.Element | null {
             </div>
 
             <Grid>
-              {/* <div
-                ref={projectInfoRef}
-                key={slug.current}
-                className={styles.projectInfoWrapper}
-              > */}
-              {/* </div> */}
-
               {body && (
                 <article
                   className={"project-body col-span-12 text-xl 2xl:col-span-7"}
@@ -261,7 +195,6 @@ export default function Page({ page, work }: Page): JSX.Element | null {
 
               {type && (
                 <div
-                  ref={projectInfoRef}
                   className={
                     "col-span-6 2xl:col-start-9 2xl:col-end-11 2xl:row-start-1"
                   }
@@ -280,7 +213,6 @@ export default function Page({ page, work }: Page): JSX.Element | null {
 
               {tools && (
                 <div
-                  ref={projectInfoRef}
                   className={
                     "col-span-6 2xl:col-start-11 2xl:col-end-13 2xl:row-start-1"
                   }

@@ -110,7 +110,7 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
 
           <article
             ref={textRef}
-            className="about-section-text mt-4 text-center leading-tight font-bold text-gray-400"
+            className="about-section-text mt-4 text-center leading-tight font-bold text-gray-600"
           >
             <PortableText value={body} />
           </article>
