@@ -11,7 +11,7 @@ export default function ThreeDViewer({ rotation }: { rotation: number }) {
   return (
     <div className="h-full w-full">
       <Canvas camera={{ position: [0, 2, 5], fov: 25 }}>
-        <ambientLight intensity={0.5} />
+        <ambientLight {...({ intensity: 0.5 } as any)} />
         <directionalLight position={[2, 2, 2]} />
         <Suspense fallback={null}>
           <Model rotation={rotation} />
