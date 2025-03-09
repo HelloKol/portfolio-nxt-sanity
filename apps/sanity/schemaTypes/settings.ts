@@ -15,6 +15,10 @@ export default defineType({
       title: 'Site Footer',
     },
     {
+      name: 'other',
+      title: 'Other',
+    },
+    {
       name: 'seo',
       title: 'SEO',
     },
@@ -45,6 +49,12 @@ export default defineType({
       type: 'array',
       of: [{type: 'externalLink'}, {type: 'emailLink'}],
       group: 'siteFooter',
+    }),
+    defineField({
+      name: 'resumeFile',
+      title: 'Resume File',
+      type: 'file',
+      group: 'other',
     }),
     defineField({
       title: 'SEO Settings',

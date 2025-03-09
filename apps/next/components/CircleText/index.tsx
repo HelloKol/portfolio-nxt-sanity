@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import settings from "@/data/settings.json";
 
 const CirclesText = () => {
   const textRef = useRef<SVGTextElement | null>(null);
+  const { resumeFile } = settings;
 
   useEffect(() => {
     if (textRef.current) {
@@ -19,7 +21,9 @@ const CirclesText = () => {
 
   return (
     <Link
-      href="/resume"
+      href={resumeFile.asset.url}
+      download
+      target="_blank"
       className="flex hidden cursor-pointer items-center justify-center text-xl lg:block"
     >
       <div className="relative flex items-center justify-center">

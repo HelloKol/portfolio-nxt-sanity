@@ -42,7 +42,7 @@ const Card = ({
           <h1 className="card-title text-3xl font-bold uppercase lg:text-[40px]">
             {title}
           </h1>
-          <article className="card-description font-body w-10/12 py-3 pr-3 text-lg backdrop-blur-lg lg:text-xl">
+          <article className="card-description font-body w-10/12 py-3 pr-3 text-lg lg:text-xl">
             <PortableText value={excerpt} />
           </article>
         </div>

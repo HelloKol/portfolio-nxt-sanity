@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useContext, useRef } from "react";
 import { gsap } from "gsap";
 import { Context } from "@/contexts/Context";
-import settings from "../../data/settings.json";
+import settings from "@/data/settings.json";
 import Email from "../svg/Email";
 import Download from "../svg/Download";
 import Portal from "../Portal";
@@ -23,7 +23,7 @@ const MenuToggle = ({ alternateHeader }: MenuToggleProps) => {
   const isHome = router.pathname === "/";
 
   if (!settings) return null;
-  const { headerNavigation } = settings;
+  const { headerNavigation, resumeFile } = settings;
 
   const toggleMenu = () => {
     if (menuRef.current && buttonRef.current) {
@@ -237,7 +237,9 @@ const MenuToggle = ({ alternateHeader }: MenuToggleProps) => {
   const renderResumeLink = () => {
     return (
       <Link
-        href="mailto:info@shehab.uk"
+        href={resumeFile.asset.url}
+        download
+        target="_blank"
         className="resume-link absolute bottom-0 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white pr-3 pl-2 text-xl normal-case hover:bg-[#6426db]"
       >
         <Download className="h-6 w-6" />

@@ -20,6 +20,12 @@ const fetchSiteSettings = async () => {
         email,
         _type
       },
+      resumeFile {
+        asset->{
+          _id,
+          url
+        }
+      },
       seoSettings {
         ...,
         image {
