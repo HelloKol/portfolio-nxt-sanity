@@ -1,12 +1,12 @@
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { PortableText } from "@portabletext/react";
 import { PortableTextBlock } from "@portabletext/types";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { SplitText } from "gsap/dist/SplitText";
-import ThreeDViewer from "../ThreeViewer";
-import Section from "../Section";
 import { gsap } from "@/lib";
+import Section from "../Section";
+import Container from "../Container";
 
 interface Props {
   data: {
@@ -18,7 +18,6 @@ interface Props {
 const AboutSection = ({ data }: Props): JSX.Element | null => {
   const sectionRef = useRef<HTMLSelectElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
-  const [rotation, setRotation] = useState(0);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -65,26 +64,12 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
     };
   }, []);
 
-  // Rotate 3D model based on scroll
-  useEffect(() => {
-    const handleScroll = (event: WheelEvent) => {
-      setRotation((prev) => prev + (event.deltaY > 0 ? 0.025 : -0.025)); // Left/Right rotation
-    };
-
-    window.addEventListener("wheel", handleScroll);
-    return () => window.removeEventListener("wheel", handleScroll);
-  }, []);
-
   if (!data) return null;
   const { title, body } = data;
 
   return (
-    <Section
-      id="about"
-      ref={sectionRef}
-      className="relative h-screen overflow-hidden"
-    >
-      <Image
+    <Section id="about" className="relative">
+      {/* <Image
         src="/image/background-2.png"
         alt="hero-bg"
         width={3000}
@@ -96,26 +81,22 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
           WebkitMaskImage:
             "linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 15%)",
         }}
-      />
+      /> */}
 
-      <div className="absolute -top-[60px] left-0 h-full w-full sm:top-0">
-        <ThreeDViewer rotation={rotation} />
-      </div>
-
-      <div className="relative z-10 container mx-auto flex h-full items-center justify-center px-4 sm:px-6 md:px-8 xl:mt-6 xl:max-w-[1536px] 2xl:mt-14">
+      <Container>
         <div className="">
-          <h2 className="font-heading-bold text-center text-xl text-white uppercase">
+          <h2 className="font-heading-bold text-center text-xl uppercase">
             {title}
           </h2>
 
           <article
             ref={textRef}
-            className="about-section-text mt-4 text-center leading-tight font-bold text-gray-600"
+            className="about-section-text mt-4 text-center leading-tight font-bold"
           >
             <PortableText value={body} />
           </article>
         </div>
-      </div>
+      </Container>
     </Section>
   );
 };

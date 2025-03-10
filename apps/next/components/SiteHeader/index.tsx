@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { Container, MenuToggle } from "@/components";
 import { useGSAP, gsap } from "@/lib";
 import { Context } from "@/contexts/Context";
+import { useHeaderCollapse } from "@/hooks";
 import styles from "./styles.module.scss";
 
 export default function SiteHeader() {
@@ -14,6 +15,7 @@ export default function SiteHeader() {
   const date = new Date();
   const year = date.getFullYear();
   const alternateHeader = ["/projects/[slug]"].includes(router.pathname);
+  const isCollapsed = useHeaderCollapse();
 
   useGSAP(
     () => {
@@ -48,12 +50,12 @@ export default function SiteHeader() {
           >
             <Link
               href={`/`}
-              className={`${alternateHeader ? "text-black" : "text-white"} font-heading-bold uppercase`}
+              className={`${alternateHeader || isCollapsed ? "text-black" : "text-white"} font-heading-bold uppercase`}
             >
               est. {year}
             </Link>
 
-            <MenuToggle alternateHeader={alternateHeader} />
+            <MenuToggle alternateHeader={alternateHeader || isCollapsed} />
           </div>
         </Container>
       </nav>

@@ -71,6 +71,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
     },
     { scope: titleRef, dependencies: [slug.current] },
   );
+
   useGSAP(
     () => {
       const article = articleRef.current;
@@ -97,16 +98,18 @@ export default function Page({ page, work }: Page): JSX.Element | null {
       if (!container) return;
 
       gsap.set(container, {
-        width: "80%",
+        width: "60%",
         xPercent: -50,
         left: "50%",
+        opacity: 0,
       });
 
       gsap.to(container, {
         width: "100%",
         xPercent: 0,
         left: "0",
-        duration: 1.2,
+        opacity: 1,
+        duration: 1.5,
         ease: "power4.inOut",
       });
     },
@@ -164,7 +167,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
 
             <div
               ref={imageContainerRef}
-              className="relative mb-16 h-80 w-full max-w-full overflow-hidden rounded-lg transition-[height] sm:h-94 md:h-[500px] lg:h-[700px] xl:h-[850px]"
+              className="relative mb-16 h-80 w-full max-w-full overflow-hidden rounded-lg opacity-0 transition-[height] sm:h-94 md:h-[500px] lg:h-[700px] xl:h-[850px]"
             >
               <Image
                 src={coverImage?.asset?.url}

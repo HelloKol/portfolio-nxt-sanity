@@ -7,14 +7,12 @@ type props = {
 
 export default function Layout({ children }: props) {
   return (
-    <div id="smooth-wrapper">
-      <div id="smooth-content">
-        <SiteHeader />
-        <div className={`app`}>
-          {children}
-          <ContactSection />
-        </div>
+    <>
+      <SiteHeader />
+      <div className={`app`}>
+        {children}
+        <ContactSection />
       </div>
-    </div>
+    </>
   );
 }

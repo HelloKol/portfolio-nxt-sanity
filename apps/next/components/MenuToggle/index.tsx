@@ -122,7 +122,8 @@ const MenuToggle = ({ alternateHeader }: MenuToggleProps) => {
   const handleNavClick = async (content: string) => {
     toggleMenu();
 
-    if (!isHome) await router.push("/");
+    if (isHome) return;
+    await router.push("/");
 
     // Remove any # from the content if it exists
     const sectionId = content.replace("#", "");
@@ -217,7 +218,7 @@ const MenuToggle = ({ alternateHeader }: MenuToggleProps) => {
       <div
         ref={backdropRef}
         onClick={toggleMenu}
-        className="invisible fixed inset-0 z-1 h-screen w-screen bg-black/30 backdrop-blur-sm"
+        className="invisible fixed inset-0 z-2 h-screen w-screen bg-black/30 backdrop-blur-sm"
         style={{ opacity: 0 }}
       />
     );

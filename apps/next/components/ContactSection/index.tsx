@@ -44,7 +44,8 @@ export default function ContactSection() {
   const isHome = router.pathname === "/";
 
   const handleNavClick = async (content: string) => {
-    if (!isHome) await router.push("/");
+    if (isHome) return;
+    await router.push("/");
 
     // Remove any # from the content if it exists
     const sectionId = content.replace("#", "");
@@ -129,7 +130,7 @@ export default function ContactSection() {
         </div>
       </Container>
 
-      <div className="absolute right-0 bottom-0 z-10 h-[370px] w-[300px] sm:w-[350px] md:top-1/2 md:left-1/2 md:h-[450px] md:w-[400px] md:-translate-x-1/2 md:-translate-y-1/2 lg:h-[430px] lg:w-[500px] xl:h-[530px] xl:w-[580px] 2xl:h-[530px] 2xl:w-[640px]">
+      <div className="absolute right-0 bottom-0 z-1 h-[370px] w-[300px] sm:w-[350px] md:top-1/2 md:left-1/2 md:h-[450px] md:w-[400px] md:-translate-x-1/2 md:-translate-y-1/2 lg:h-[430px] lg:w-[500px] xl:h-[530px] xl:w-[580px] 2xl:h-[530px] 2xl:w-[640px]">
         <Image
           src="/image/david-head.png"
           alt="david-head"

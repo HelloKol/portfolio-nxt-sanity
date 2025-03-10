@@ -62,7 +62,7 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
         gsap.to(titleRef.current[1], {
           x: -100, // Move left by 100px
           scrollTrigger: {
-            trigger: ".heroSection", // Use the section as trigger
+            trigger: "#hero", // Use the section as trigger
             start: "top top", // Start at the top of the section
             end: "+=500", // End 500px after start
             scrub: 1, // Smooth scrolling
@@ -79,7 +79,7 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
   const words = title.split(" ");
 
   return (
-    <Section id="hero" className={`heroSection h-screen ${styles.heroSection}`}>
+    <Section id="hero" className={"h-screen"} withMargin={false}>
       <Image
         src="/image/background-2.png"
         alt="hero-bg"
