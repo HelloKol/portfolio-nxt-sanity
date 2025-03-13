@@ -79,13 +79,13 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
   const words = title.split(" ");
 
   return (
-    <Section id="hero" className={"h-screen"} withMargin={false}>
+    <Section id="hero" className={"h-dvh"} withMargin={false}>
       <Image
         src="/image/background-2.png"
         alt="hero-bg"
         width={3000}
         height={3000}
-        className="absolute inset-0 h-screen w-full object-cover"
+        className="absolute inset-0 h-dvh w-full object-cover"
         style={{
           maskImage:
             "linear-gradient(to bottom, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%)", // Fix the gradient to start at full
@@ -95,7 +95,7 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
       />
 
       <Container className="relative h-full">
-        <div className="mt-30 w-full sm:absolute sm:top-[25%] sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-[35%] sm:px-6 md:px-8">
+        <div className="w-full pt-30 sm:absolute sm:top-[25%] sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-[35%] sm:px-6 md:px-8">
           <h1
             className={`${styles.title} font-heading-regular invisible text-white uppercase`}
           >
@@ -111,7 +111,7 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
           </h1>
         </div>
 
-        <div className="invisible mt-14 font-bold sm:absolute sm:top-[32%] sm:left-16 sm:mt-20 md:left-20 lg:left-30">
+        <div className="invisible mt-14 font-bold sm:absolute sm:top-[36%] sm:left-16 sm:mt-0 md:top-[36%] md:left-20 lg:left-30">
           {body.map((line, index) => (
             <div className="overflow-hidden" key={index}>
               <div

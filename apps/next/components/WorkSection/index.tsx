@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
-import { gsap } from "@/lib";
+import ScrollTrigger from "gsap/dist/ScrollTrigger";
+import { useGSAP, gsap } from "@/lib";
 import { PortableText } from "@portabletext/react";
 import { Project } from "@/types";
 import Container from "../Container";
@@ -8,6 +9,7 @@ import { RainbowButton } from "../RainbowButton";
 import Portal from "../Portal";
 import Section from "../Section";
 import Close from "../svg/Close";
+
 interface Props {
   data: {
     title: string;
@@ -32,8 +34,40 @@ const Card = ({
   slug,
   setIsModalOpen,
 }: Project & { setIsModalOpen: (isModalOpen: boolean) => void }) => {
+  const cardRef = useRef<HTMLAnchorElement>(null);
+
+  useGSAP(
+    () => {
+      const card = cardRef.current;
+      if (!card) return;
+
+      // Set initial state
+      gsap.set(card, {
+        y: 150,
+        opacity: 0,
+      });
+
+      // Create scroll trigger animation
+      ScrollTrigger.create({
+        trigger: card,
+        start: "top bottom-=100",
+        toggleActions: "play none none reset",
+        onEnter: () => {
+          gsap.to(card, {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            ease: "power3.out",
+          });
+        },
+      });
+    },
+    { scope: cardRef },
+  );
+
   return (
     <Link
+      ref={cardRef}
       href={`/projects/${slug.current}`}
       className="card mb-10 block h-[410px] overflow-hidden rounded-[30px] bg-[#f5f5f5] last:mb-0 lg:h-[500px] xl:h-[530px] 2xl:h-[680px]"
       onClick={() => setIsModalOpen(true)}

@@ -245,7 +245,7 @@ const SkillsSection = () => {
   return (
     <Section withMargin={false}>
       <Container>
-        <h1 className="font-heading-bold text-center text-xl tracking-widest text-black uppercase">
+        <h1 className="font-heading-bold mb-4 text-center text-xl tracking-widest text-black uppercase">
           Technologies & Skills
         </h1>
         <Marquee>

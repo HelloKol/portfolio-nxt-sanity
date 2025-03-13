@@ -13,6 +13,15 @@
   --font-heading-bold: "Lato-Bold", "sans-serif";
   --font-heading-regular: "Lato-Regular", "sans-serif";
   --font-body: "Khula-Regular", "sans-serif";
+  --font-body-light: "Khula-Light", "sans-serif";
+  --font-body-bold: "Khula-Bold", "sans-serif";
+
+  --font-manrope-regular: "manrope-Regular", "sans-serif";
+  --font-manrope-medium: "manrope-Medium", "sans-serif";
+  --font-manrope-semibold: "manrope-SemiBold", "sans-serif";
+  --font-manrope-bold: "manrope-Bold", "sans-serif";
+  --font-manrope-extrabold: "manrope-ExtraBold", "sans-serif";
+  --font-manrope-black: "manrope-Black", "sans-serif";
 
   /* Animations */
   --animation-rainbow: rainbow var(--speed, 2s) infinite linear;
@@ -64,7 +73,6 @@
 .about-section-text {
   font-size: min(calc(20 * 100vw / var(--size-about)), 50px);
   line-height: min(calc(25 * 100vw / var(--size-about)), 60px);
-  font-family: $khulaRegular;
 }
 
 .project-excerpt {

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { PortableText } from "@portabletext/react";
 import { PortableTextBlock } from "@portabletext/types";
@@ -69,29 +68,13 @@ const AboutSection = ({ data }: Props): JSX.Element | null => {
 
   return (
     <Section id="about" className="relative">
-      {/* <Image
-        src="/image/background-2.png"
-        alt="hero-bg"
-        width={3000}
-        height={3000}
-        className="absolute inset-0 h-[110vh] w-full rotate-180 object-cover"
-        style={{
-          maskImage:
-            "linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 15%)", // Fade out from top to bottom
-          WebkitMaskImage:
-            "linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 15%)",
-        }}
-      /> */}
-
       <Container>
         <div className="">
-          <h2 className="font-heading-bold text-center text-xl uppercase">
-            {title}
-          </h2>
+          <h2 className="font-heading-bold mb-10 text-xl uppercase">{title}</h2>
 
           <article
             ref={textRef}
-            className="about-section-text mt-4 text-center leading-tight font-bold"
+            className="about-section-text font-manrope-medium leading-tight md:w-5/6"
           >
             <PortableText value={body} />
           </article>

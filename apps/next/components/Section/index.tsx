@@ -12,7 +12,7 @@ const Section = forwardRef<
   return (
     <section
       ref={ref}
-      className={`${className} ${withMargin ? "mb-[100px] xl:mb-[150px]" : ""}`}
+      className={`${className} ${withMargin ? "mb-[120px] md:mb-[160px] xl:mb-[240px]" : ""}`}
       id={id}
     >
       {children}

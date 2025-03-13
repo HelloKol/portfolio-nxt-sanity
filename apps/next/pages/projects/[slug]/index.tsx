@@ -179,7 +179,7 @@ export default function Page({ page, work }: Page): JSX.Element | null {
               />
             </div>
 
-            <Grid>
+            <Grid className="mb-16">
               {body && (
                 <article
                   className={"project-body col-span-12 text-xl 2xl:col-span-7"}
