@@ -4,7 +4,7 @@ import { Marquee } from "@/components/Marquee";
 import Section from "../Section";
 
 const smallSvgClassName = "h-[60px] w-[60px] lg:h-[80px] lg:w-[80px]";
-const lagrgeSvgClassName = "h-[150px] w-[150px] md:h-[150px] md:w-[150px]";
+const lagrgeSvgClassName = "h-[80px] md:h-[110px] lg:h-[150px] md:w-[150px]";
 
 const Logos = {
   nextjs: () => (
@@ -29,7 +29,8 @@ const Logos = {
   ),
   tailwindcss: () => (
     <svg
-      viewBox="0 -224 512 512"
+      // viewBox="0 -224 512 512"
+      viewBox="0 -124 510 312"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="xMidYMid"
@@ -248,16 +249,30 @@ const SkillsSection = () => {
         <h1 className="font-heading-bold mb-4 text-center text-xl tracking-widest text-black uppercase">
           Technologies & Skills
         </h1>
-        <Marquee>
+
+        <div className="grid grid-cols-12 justify-items-center gap-4 lg:hidden">
           {LOGO_ORDER.map((logoKey, index) => (
             <div
               key={index}
-              className="relative mx-6 flex h-full w-fit items-center justify-start lg:mx-[4rem]"
+              className="relative col-span-6 mx-6 flex items-center sm:col-span-4 md:col-span-3"
             >
               {Logos[logoKey]()}
             </div>
           ))}
-        </Marquee>
+        </div>
+
+        <div className="hidden lg:block">
+          <Marquee>
+            {LOGO_ORDER.map((logoKey, index) => (
+              <div
+                key={index}
+                className="relative flex h-full w-fit items-center justify-start lg:mx-[4rem]"
+              >
+                {Logos[logoKey]()}
+              </div>
+            ))}
+          </Marquee>
+        </div>
       </Container>
     </Section>
   );

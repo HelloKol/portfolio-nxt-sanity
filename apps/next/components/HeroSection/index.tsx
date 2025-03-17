@@ -14,7 +14,8 @@ interface Props {
 
 const HeroSection = ({ data }: Props): JSX.Element | null => {
   const titleRef = useRef<(HTMLSpanElement | null)[]>([]);
-  const paragraphRef = useRef<(HTMLDivElement | null)[]>([]); // Add this ref for paragraph lines
+  const paragraphRef1 = useRef<(HTMLDivElement | null)[]>([]);
+  const paragraphRef2 = useRef<(HTMLDivElement | null)[]>([]);
 
   useGSAP(() => {
     const ctx = gsap.context(() => {
@@ -26,46 +27,38 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
 
           timeline.fromTo(
             splitText.lines,
-            {
-              yPercent: 100, // Start from below
-              visibility: "visible",
-            },
-            {
-              yPercent: 0, // Move to original position
-              stagger: 0.2,
-              duration: 2,
-              ease: "power4.out",
-            },
+            { yPercent: 100, visibility: "visible" },
+            { yPercent: 0, stagger: 0.2, duration: 2, ease: "power4.out" },
             index === 0 ? 0 : `-=${1.8}`,
           );
         }
       });
 
-      // Updated paragraph animation with curtain reveal effect
+      // Animate paragraphRef1
       timeline.fromTo(
-        paragraphRef.current,
-        {
-          yPercent: 100, // Start from below
-          visibility: "visible",
-        },
-        {
-          yPercent: 0, // Move to original position
-          duration: 1,
-          stagger: 0.15,
-          ease: "power4.out",
-        },
+        paragraphRef1.current,
+        { yPercent: 100, visibility: "visible" },
+        { yPercent: 0, duration: 1, stagger: 0.15, ease: "power4.out" },
+        "-=2",
+      );
+
+      // Animate paragraphRef2 (optional - remove if you only animate the first set)
+      timeline.fromTo(
+        paragraphRef2.current,
+        { yPercent: 100, visibility: "visible" },
+        { yPercent: 0, duration: 1, stagger: 0.15, ease: "power4.out" },
         "-=2",
       );
 
       // Scroll animation for second word
       if (titleRef.current[1]) {
         gsap.to(titleRef.current[1], {
-          x: -100, // Move left by 100px
+          x: -100,
           scrollTrigger: {
-            trigger: "#hero", // Use the section as trigger
-            start: "top top", // Start at the top of the section
-            end: "+=500", // End 500px after start
-            scrub: 1, // Smooth scrolling
+            trigger: "#hero",
+            start: "top top",
+            end: "+=500",
+            scrub: 1,
           },
         });
       }
@@ -79,16 +72,16 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
   const words = title.split(" ");
 
   return (
-    <Section id="hero" className={"h-dvh"} withMargin={false}>
+    <Section id="hero" className={"h-dvh overflow-hidden"} withMargin={false}>
       <Image
         src="/image/background-2.png"
         alt="hero-bg"
         width={3000}
         height={3000}
-        className="absolute inset-0 h-dvh w-full object-cover"
+        className="absolute inset-0 h-[125vh] w-full object-cover lg:h-[115vh]"
         style={{
           maskImage:
-            "linear-gradient(to bottom, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%)", // Fix the gradient to start at full
+            "linear-gradient(to bottom, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%)",
           WebkitMaskImage:
             "linear-gradient(to bottom, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%)",
         }}
@@ -96,32 +89,55 @@ const HeroSection = ({ data }: Props): JSX.Element | null => {
 
       <Container className="relative h-full">
         <div className="w-full pt-30 sm:absolute sm:top-[25%] sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-[35%] sm:px-6 md:px-8">
-          <h1
+          <div
             className={`${styles.title} font-heading-regular invisible text-white uppercase`}
           >
-            {words.map((word, index) => (
+            <div className="relative">
               <span
-                className={`block overflow-hidden nth-of-type-1:text-center nth-of-type-2:text-right nth-of-type-3:text-center`}
-                key={index}
-                ref={(el) => (titleRef.current[index] = el)}
+                ref={(el) => (titleRef.current[0] = el)}
+                className={`block overflow-hidden text-center`}
               >
-                {word}
+                {words[0]}
               </span>
-            ))}
-          </h1>
-        </div>
-
-        <div className="invisible mt-14 font-bold sm:absolute sm:top-[36%] sm:left-16 sm:mt-0 md:top-[36%] md:left-20 lg:left-30">
-          {body.map((line, index) => (
-            <div className="overflow-hidden" key={index}>
-              <div
-                className={`font-body text-white ${styles.heroParagraph} ${index === 0 ? "sm:pl-10 md:pl-14 lg:pl-20" : ""}`}
-                ref={(el) => (paragraphRef.current[index] = el)}
-              >
-                {line}
+              <div className="invisible hidden font-bold sm:absolute sm:top-[120%] sm:left-16 sm:block md:left-20 lg:left-30">
+                {body.map((line, index) => (
+                  <div className="overflow-hidden" key={index}>
+                    <div
+                      className={`font-body text-white ${styles.heroParagraph} ${index === 0 ? "sm:pl-10 md:pl-14 lg:pl-20" : ""}`}
+                      ref={(el) => (paragraphRef1.current[index] = el)}
+                    >
+                      {line}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
+            <span
+              className={`block overflow-hidden text-right`}
+              ref={(el) => (titleRef.current[1] = el)}
+            >
+              {words[1]}
+            </span>
+            <span
+              className={`block overflow-hidden text-center`}
+              ref={(el) => (titleRef.current[2] = el)}
+            >
+              {words[2]}
+            </span>
+          </div>
+
+          <div className="invisible mt-14 font-bold sm:hidden">
+            {body.map((line, index) => (
+              <div className="overflow-hidden" key={index}>
+                <div
+                  className={`font-body text-white ${styles.heroParagraph} ${index === 0 ? "sm:pl-10 md:pl-14 lg:pl-20" : ""}`}
+                  ref={(el) => (paragraphRef2.current[index] = el)}
+                >
+                  {line}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </Container>
     </Section>

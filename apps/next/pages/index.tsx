@@ -18,6 +18,8 @@ interface Page {
     aboutSection: {
       title: string;
       body: PortableTextBlock;
+      excerptLeft: string;
+      excerptRight: string;
     };
     workSection: {
       title: string;

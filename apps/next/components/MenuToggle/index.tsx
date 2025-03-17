@@ -25,102 +25,108 @@ const MenuToggle = ({ alternateHeader }: MenuToggleProps) => {
   if (!settings) return null;
   const { headerNavigation, resumeFile } = settings;
 
-  const toggleMenu = () => {
-    if (menuRef.current && buttonRef.current) {
-      const tl = gsap.timeline();
-      const closeButton = menuRef.current.querySelector(".close-menu-button");
-      const socialLinks = menuRef.current.querySelector(".social-links");
-      const backdrop = backdropRef.current;
+  const openMenu = () => {
+    if (!menuRef.current || !buttonRef.current) return;
 
-      // Get button position
-      const buttonRect = buttonRef.current.getBoundingClientRect();
+    const tl = gsap.timeline();
+    const closeButton = menuRef.current.querySelector(".close-menu-button");
+    const socialLinks = menuRef.current.querySelector(".social-links");
+    const backdrop = backdropRef.current;
+    const buttonRect = buttonRef.current.getBoundingClientRect();
+    document.body.style.overflow = "hidden";
 
-      if (!isNavOpen) {
-        document.body.style.overflow = "hidden";
+    tl.set(menuRef.current, {
+      visibility: "visible",
+      width: 0,
+      minWidth: 0,
+      height: 0,
+      top: buttonRect.top + "px",
+      right: window.innerWidth - buttonRect.right + "px",
+    })
+      .to([backdrop, menuRef.current], {
+        opacity: 1,
+        visibility: "visible",
+        duration: 0.5,
+        ease: "power2.inOut",
+        onStart: () => {
+          gsap.to(menuRef.current, {
+            width: isMobile ? "320px" : "400px",
+            minWidth: isMobile ? "320px" : "400px",
+            height: "400px",
+            duration: 0.5,
+            ease: "power2.inOut",
+          });
+        },
+      })
+      .add(() => {
+        gsap.to(linksRef.current, {
+          opacity: 1,
+          y: -10,
+          stagger: 0.1,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      })
+      .set(buttonRef.current, { borderRadius: "15px" }, "-=0.5")
+      .to(closeButton, {
+        opacity: 1,
+        duration: 0.3,
+      })
+      .to(socialLinks, {
+        opacity: 1,
+        duration: 0.3,
+      });
 
-        tl.set(menuRef.current, {
-          visibility: "visible",
+    setIsNavOpen(true);
+  };
+
+  const closeMenu = () => {
+    if (!menuRef.current || !buttonRef.current) return;
+
+    const tl = gsap.timeline();
+    const closeButton = menuRef.current.querySelector(".close-menu-button");
+    const socialLinks = menuRef.current.querySelector(".social-links");
+    const backdrop = backdropRef.current;
+
+    tl.to(closeButton, {
+      opacity: 0,
+      duration: 0.3,
+    }).to(socialLinks, {
+      opacity: 0,
+      duration: 0.3,
+    });
+
+    gsap.to(linksRef.current, {
+      opacity: 0,
+      y: 10,
+      stagger: 0.1,
+      duration: 0.3,
+      ease: "power2.in",
+      onComplete: () => {
+        tl.to(menuRef.current, {
           width: 0,
           minWidth: 0,
           height: 0,
-          // Position menu at button's position
-          top: buttonRect.top + "px",
-          right: window.innerWidth - buttonRect.right + "px",
+          duration: 0.5,
+          ease: "power2.inOut",
         })
-          .to([backdrop, menuRef.current], {
-            opacity: 1,
-            visibility: "visible",
+          .set(backdrop, {
+            opacity: 0,
+            visibility: "hidden",
             duration: 0.5,
             ease: "power2.inOut",
-            onStart: () => {
-              gsap.to(menuRef.current, {
-                width: isMobile ? "320px" : "400px",
-                minWidth: isMobile ? "320px" : "400px",
-                height: "400px",
-                duration: 0.5,
-                ease: "power2.inOut",
-              });
-            },
           })
-          .add(() => {
-            gsap.to(linksRef.current, {
-              opacity: 1,
-              y: -10,
-              stagger: 0.1,
-              duration: 0.3,
-              ease: "power2.out",
-            });
-          })
-          .set(buttonRef.current, { borderRadius: "15px" }, "-=0.5")
-          .to(closeButton, {
-            opacity: 1,
-            duration: 0.3,
-          })
-          .to(socialLinks, {
-            opacity: 1,
-            duration: 0.3,
-          });
-      } else {
-        tl.to(closeButton, {
-          opacity: 0,
-          duration: 0.3,
-        }).to(socialLinks, {
-          opacity: 0,
-          duration: 0.3,
-        });
-        gsap.to(linksRef.current, {
-          opacity: 0,
-          y: 10,
-          stagger: 0.1,
-          duration: 0.3,
-          ease: "power2.in",
-          onComplete: () => {
-            tl.to(menuRef.current, {
-              width: 0,
-              minWidth: 0,
-              height: 0,
-              duration: 0.5,
-              ease: "power2.inOut",
-            })
-              .set(backdrop, {
-                opacity: 0,
-                visibility: "hidden",
-                duration: 0.5,
-                ease: "power2.inOut",
-              })
-              .set(menuRef.current, { visibility: "hidden" })
-              .set(buttonRef.current, { borderRadius: "9999px" })
-              .set(document.body, { overflow: "auto" });
-          },
-        });
-      }
+          .set(menuRef.current, { visibility: "hidden" })
+          .set(buttonRef.current, { borderRadius: "9999px" })
+          .set(document.body, { overflow: "auto" });
+      },
+    });
 
-      setIsNavOpen(!isNavOpen);
-    }
+    setIsNavOpen(false);
   };
 
   const handleNavClick = async (content: string) => {
-    toggleMenu();
+    closeMenu();
 
     if (isHome) return;
     await router.push("/");
@@ -171,7 +177,7 @@ const MenuToggle = ({ alternateHeader }: MenuToggleProps) => {
       <div
         ref={buttonRef}
         className="open-menu-button flex h-[50px] w-[50px] cursor-pointer items-center overflow-hidden rounded-full hover:rounded-[15px]"
-        onClick={toggleMenu}
+        onClick={openMenu}
       >
         {!isNavOpen && (
           <svg
@@ -193,7 +199,7 @@ const MenuToggle = ({ alternateHeader }: MenuToggleProps) => {
     return (
       <div
         className="close-menu-button absolute top-[25px] right-[25px] flex h-[50px] w-[50px] cursor-pointer items-center justify-center rounded-full bg-white opacity-0 transition-all duration-100 hover:scale-85"
-        onClick={toggleMenu}
+        onClick={closeMenu}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -217,7 +223,7 @@ const MenuToggle = ({ alternateHeader }: MenuToggleProps) => {
     return (
       <div
         ref={backdropRef}
-        onClick={toggleMenu}
+        onClick={closeMenu}
         className="invisible fixed inset-0 z-2 h-screen w-screen bg-black/30 backdrop-blur-sm"
         style={{ opacity: 0 }}
       />
