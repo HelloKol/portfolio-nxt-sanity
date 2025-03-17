@@ -76,6 +76,18 @@ export default defineType({
           title: 'Body',
           type: 'blockContent',
         }),
+        defineField({
+          name: 'excerptLeft',
+          title: 'Excerpt Left',
+          type: 'text',
+          rows: 6,
+        }),
+        defineField({
+          name: 'excerptRight',
+          title: 'Excerpt Right',
+          type: 'text',
+          rows: 6,
+        }),
       ],
       group: 'content',
     }),

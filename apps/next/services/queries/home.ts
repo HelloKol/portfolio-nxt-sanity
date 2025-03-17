@@ -10,6 +10,8 @@ const HOME_QUERY = groq`
     aboutSection {
       title,
       body,
+      excerptLeft,
+      excerptRight,
     },
     workSection {
       title,
