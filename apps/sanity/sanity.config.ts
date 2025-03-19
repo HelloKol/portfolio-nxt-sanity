@@ -2,8 +2,7 @@ import {CogIcon, HomeIcon} from '@sanity/icons'
 import {defineConfig} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {visionTool} from '@sanity/vision'
-import {TiersIcon, TagIcon, PinIcon, CaseIcon, InfoOutlineIcon} from '@sanity/icons'
-import {simplerColorInput} from 'sanity-plugin-simpler-color-input'
+import {TagIcon, CaseIcon, InfoOutlineIcon} from '@sanity/icons'
 import {codeInput} from '@sanity/code-input'
 import {schemaTypes} from './schemaTypes'
 import config from './config'
@@ -25,10 +24,6 @@ export default defineConfig({
 
   plugins: [
     codeInput(),
-    simplerColorInput({
-      defaultColorFormat: 'rgba',
-      enableSearch: true,
-    }),
     deskTool({
       structure: (S, {schema}) => {
         return S.list()
@@ -40,11 +35,7 @@ export default defineConfig({
               .icon(HomeIcon)
               .id('home')
               .child(S.document().schemaType('home').documentId('home')),
-            // Define Home
-            S.listItem()
-              .title('About')
-              .id('about')
-              .child(S.document().schemaType('about').documentId('about')),
+            // Define Work
             S.listItem()
               .title('Work')
               .icon(CaseIcon)

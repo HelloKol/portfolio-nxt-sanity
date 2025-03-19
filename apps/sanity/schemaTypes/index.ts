@@ -1,5 +1,4 @@
 // Schema
-import about from './about'
 import category from './category'
 import home from './home'
 import pageNotFound from './pageNotFound'
@@ -15,11 +14,10 @@ import youtube from '../objects/common/youtube'
 import seoPage from '../objects/seo/seoPage'
 import seoSettings from '../objects/seo/seoSettings'
 
-const linkableContentTypes = ['about', 'home', 'work']
+const linkableContentTypes = ['home', 'work']
 
 export const schemaTypes = [
   // Schema
-  about,
   category,
   home,
   pageNotFound,

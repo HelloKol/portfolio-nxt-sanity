@@ -26,16 +26,6 @@ const PROJECT_QUERY = groq`
       }
     }
   },
-  featuredImage {
-    _type,
-    asset->{
-      _id,
-      url,
-      metadata{
-        lqip
-      }
-    }
-  },
   cta[] {
     _type,
     title,

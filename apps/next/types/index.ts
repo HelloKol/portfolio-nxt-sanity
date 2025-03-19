@@ -8,20 +8,14 @@ export interface Project {
   slug: {
     current: string;
   };
-  createdDate: string;
   type: string[];
   tools: string[];
-  rank: number;
-  color: {
-    value: string;
-  };
   cta: {
     title: string;
     url: string;
     _type: string;
   }[];
   coverImage: Media;
-  featuredImage: Media;
 }
 
 export interface Media {

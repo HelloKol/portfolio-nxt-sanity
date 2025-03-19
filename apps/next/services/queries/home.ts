@@ -27,9 +27,7 @@ const HOME_QUERY = groq`
         title,
         excerpt,
         slug,
-        createdDate,
         type,
-        rank,
         coverImage {
           _type,
           asset->{

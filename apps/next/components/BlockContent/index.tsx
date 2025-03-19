@@ -21,10 +21,10 @@ const serializers = {
   },
   block: {
     normal: ({ children }: any) => (
-      <p className="font-body mb-8 max-w-[940px] text-xl">{children}</p>
+      <p className="font-body mb-5 max-w-[940px] text-xl">{children}</p>
     ),
     h1: ({ children }: any) => (
-      <h1 className="font-heading-regular mb-4 max-w-[650px] text-4xl md:text-5xl lg:text-6xl">
+      <h1 className="font-heading-regular mb-4 max-w-[650px] text-4xl md:text-5xl lg:mb-6 lg:text-6xl">
         {children}
       </h1>
     ),

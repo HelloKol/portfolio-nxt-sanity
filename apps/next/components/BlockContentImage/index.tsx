@@ -46,7 +46,7 @@ const BlockContentImage = ({ value }: Props) => {
   );
 
   return (
-    <div ref={cardRef} className={"relative mb-8 lg:mb-10"}>
+    <div ref={cardRef} className={"relative mb-8 lg:mb-10 lg:w-3/4"}>
       <Image
         src={`${asset?.url}`}
         alt="project Image"

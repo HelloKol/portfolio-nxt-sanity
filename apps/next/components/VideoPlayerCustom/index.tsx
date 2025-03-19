@@ -13,7 +13,7 @@ const VideoPlayerCustom = ({ value }: Props) => {
   const { href } = value;
 
   return (
-    <div className={"mb-8 lg:mb-10"}>
+    <div className={"my-10 ml-auto lg:w-3/4"}>
       <ReactPlayer width="100%" height="100%" url={href} muted controls />
     </div>
   );

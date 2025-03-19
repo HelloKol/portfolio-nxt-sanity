@@ -15,8 +15,6 @@ const PROJECT_INDEX_LIST_QUERY = groq`
         excerpt,
         tools,
         type,
-        color,
-        rank,
         coverImage {
           _type,
           asset->{
