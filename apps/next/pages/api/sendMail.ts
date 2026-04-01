@@ -1,6 +1,6 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import sgMail from '@sendgrid/mail';
-import { env } from '@/utils/env';
+import { NextApiRequest, NextApiResponse } from "next";
+import sgMail from "@sendgrid/mail";
+import { env } from "@/utils/env";
 
 sgMail.setApiKey(env.NEXT_PUBLIC_SENDGRID_API_KEY as string);
 
@@ -10,8 +10,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const content = {
     to: env.NEXT_PUBLIC_RECIEVER_EMAIL as string,
     from: {
-      name: 'Portfolio message',
-      email: env.NEXT_PUBLIC_SENDER_EMAIL as string
+      name: "Portfolio message",
+      email: env.NEXT_PUBLIC_SENDER_EMAIL as string,
     },
     subject: `New Message from ${email}`,
     text: message,
@@ -342,7 +342,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                                                     white-space: pre-wrap;
                                                     widows: 2;
                                                     word-spacing: 0px;
-                                                    -webkit-text-stroke-width: 0px;
+                                                    -webkit-text-strokeWidth: 0px;
                                                     text-decoration-thickness: initial;
                                                     text-decoration-style: initial;
                                                     text-decoration-color: initial;
@@ -409,7 +409,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                                                       white-space: pre-wrap;
                                                       widows: 2;
                                                       word-spacing: 0px;
-                                                      -webkit-text-stroke-width: 0px;
+                                                      -webkit-text-strokeWidth: 0px;
                                                       font-family: arial, helvetica,
                                                         sans-serif;
                                                       color: #ffffff;
@@ -462,7 +462,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                                                     white-space: pre-wrap;
                                                     widows: 2;
                                                     word-spacing: 0px;
-                                                    -webkit-text-stroke-width: 0px;
+                                                    -webkit-text-strokeWidth: 0px;
                                                     text-decoration-thickness: initial;
                                                     text-decoration-style: initial;
                                                     text-decoration-color: initial;
@@ -710,14 +710,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         </center>
       </body>
     </html>
-    `
+    `,
   };
 
   try {
     const response = await sgMail.send(content);
     res.status(200).send(response);
   } catch (error) {
-    console.log('ERROR ', error);
+    console.log("ERROR ", error);
     res.status(400).send(error);
   }
 };

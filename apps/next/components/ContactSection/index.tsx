@@ -102,9 +102,7 @@ export default function ContactSection() {
         <div className="grid grid-cols-12 gap-10">
           <div className="left-side order-2 col-span-12 space-y-6 md:order-1 md:col-span-6">
             <h1 className="text-lg font-bold text-white md:text-xl">Socials</h1>
-            <div className="social-links mt-6 text-4xl xl:text-5xl">
-              {renderSocials()}
-            </div>
+            <div className="social-links mt-6 text-4xl">{renderSocials()}</div>
           </div>
 
           <div className="right-side order-1 col-span-12 space-y-6 md:order-2 md:col-span-6 md:text-right">
@@ -112,10 +110,10 @@ export default function ContactSection() {
               Get in touch
             </h1>
             <Link
-              href="mailto:info@shehab.uk"
-              className="mt-6 block w-fit text-4xl md:ml-auto xl:text-5xl"
+              href="mailto:shehabhasan2020@gmail.com"
+              className="mt-6 block w-fit text-4xl md:ml-auto"
             >
-              <span className="text-white">Info@shehab.uk</span>
+              <span className="text-white">shehabhasan2020@gmail.com</span>
             </Link>
             <div className="navigation-links flex items-center gap-4 text-lg md:justify-end md:text-xl">
               {renderNavigation()}

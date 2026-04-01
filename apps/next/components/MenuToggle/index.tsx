@@ -210,9 +210,9 @@ const MenuToggle = ({ alternateHeader }: MenuToggleProps) => {
           <path
             d="M18 6L6 18M6 6l12 12"
             stroke="black"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
       </div>
@@ -233,7 +233,7 @@ const MenuToggle = ({ alternateHeader }: MenuToggleProps) => {
   const renderEmailLink = () => {
     return (
       <Link
-        href="mailto:info@shehab.uk"
+        href="mailto:shehabhasan2020@gmail.com"
         className="email-link block h-fit w-fit rounded-full border border-white p-1 hover:bg-[#6426db]"
       >
         <Email className="h-6 w-6" />

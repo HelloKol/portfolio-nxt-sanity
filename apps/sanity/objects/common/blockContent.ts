@@ -1,25 +1,5 @@
 import {defineType, defineArrayMember} from 'sanity'
-
-// Define a new object type for URL link
-const videoLink = {
-  title: 'Video Link',
-  name: 'videoLink',
-  type: 'object',
-  fields: [
-    {
-      title: 'URL',
-      name: 'href',
-      type: 'url',
-      validation: (Rule: any) => Rule.required(),
-    },
-    {
-      title: 'Text',
-      name: 'text',
-      type: 'string',
-      description: 'Optional text for the link',
-    },
-  ],
-}
+import videoFile from './videoFile'
 
 export default defineType({
   title: 'Block Content',
@@ -72,6 +52,6 @@ export default defineType({
       type: 'code',
       title: 'Code block',
     },
-    videoLink,
+    defineArrayMember(videoFile),
   ],
 })

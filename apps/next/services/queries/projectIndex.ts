@@ -8,13 +8,15 @@ const PROJECT_INDEX_QUERY = groq`
 }`;
 
 const PROJECT_INDEX_LIST_QUERY = groq`
-    *[_type == "work" && !(_id in path('drafts.**'))] {
+    *[_type == "work" && !(_id in path('drafts.**'))] | order(rank asc) {
         _id,
         title,
         slug,
+        rank,
         excerpt,
         tools,
         type,
+        cardGradient,
         coverImage {
           _type,
           asset->{

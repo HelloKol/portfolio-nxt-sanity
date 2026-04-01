@@ -45,6 +45,22 @@ const fetchSiteSettings = async () => {
   fs.writeFileSync("./data/settings.json", JSON.stringify(data));
 };
 
+const toSafeErrorMessage = (error) => {
+  if (!error) return "Unknown error";
+  if (typeof error === "string") return error;
+  if (error.message) return error.message;
+  try {
+    return JSON.stringify(error);
+  } catch {
+    return String(error);
+  }
+};
+
 (async () => {
-  await Promise.all([createDirectory(), fetchSiteSettings()]);
+  try {
+    await Promise.all([createDirectory(), fetchSiteSettings()]);
+  } catch (error) {
+    console.error("[fetch-static-content] Failed:", toSafeErrorMessage(error));
+    process.exit(1);
+  }
 })();

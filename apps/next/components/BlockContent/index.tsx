@@ -1,21 +1,47 @@
 import React, { useEffect, useState } from "react";
 import { PortableTextBlock } from "@portabletext/types";
 import { PortableText } from "@portabletext/react";
-import {
-  CodeBlock,
-  VideoPlayerCustom,
-  VideoPlayerYoutube,
-  BlockContentImage,
-} from "@/components";
+import { env } from "@/utils/env";
+import { getSanityVideoUrlFromBlock } from "@/lib";
+import { CodeBlock, VideoPlayerYoutube, BlockContentImage } from "@/components";
 
 interface Props {
-  value: PortableTextBlock;
+  value: PortableTextBlock[];
 }
 
 const serializers = {
   types: {
     code: ({ value }: any) => <CodeBlock value={value} />,
-    videoLink: ({ value }: any) => <VideoPlayerCustom value={value} />,
+    videoFile: ({ value }: any) => {
+      const src = getSanityVideoUrlFromBlock(
+        value,
+        env.NEXT_PUBLIC_SANITY_STUDIO_ID,
+        env.NEXT_PUBLIC_SANITY_STUDIO_DATASET,
+      );
+      if (!src) return null;
+
+      return (
+        <figure className="my-8">
+          <video
+            className="w-full rounded-lg"
+            controls={value?.controls ?? true}
+            autoPlay={Boolean(value?.autoplay)}
+            loop={Boolean(value?.loop)}
+            muted={Boolean(value?.muted)}
+            playsInline
+            preload="metadata"
+            poster={value?.poster?.asset?.url}
+          >
+            <source src={src} />
+          </video>
+          {value?.caption ? (
+            <figcaption className="mt-2 text-sm opacity-80">
+              {value.caption}
+            </figcaption>
+          ) : null}
+        </figure>
+      );
+    },
     image: ({ value }: any) => <BlockContentImage value={value} />,
     youtube: ({ value }: any) => <VideoPlayerYoutube value={value} />,
   },

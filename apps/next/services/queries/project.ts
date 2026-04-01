@@ -5,6 +5,7 @@ const PROJECT_QUERY = groq`
 *[_type == "work" && slug.current == $slug && !(_id in path('drafts.**'))][0] {
   _id,
   title,
+  rank,
   excerpt,
   body[]{
     ...,
@@ -16,6 +17,7 @@ const PROJECT_QUERY = groq`
   slug,
   type,
   tools,
+  cardGradient,
   coverImage {
     _type,
     asset->{

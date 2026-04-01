@@ -12,12 +12,14 @@ import {
   Section,
   Seo,
 } from "@/components";
+import { sanityClient, useGSAP, gsap, getSanityVideoUrlFromBlock } from "@/lib";
+import { env } from "@/utils/env";
 import { Project, SEO, Layout } from "@/types";
-import { sanityClient, useGSAP, gsap } from "@/lib";
 import { PROJECT_QUERY } from "@/services/queries";
 import { PortableText } from "@portabletext/react";
 import { RainbowButton } from "@/components/RainbowButton";
 import ContentLayout from "@/components/ContentLayout";
+import { getCardGradient } from "@/components/WorkSection";
 
 interface Page {
   page: Project & {
@@ -26,6 +28,42 @@ interface Page {
   };
   work: Project[];
 }
+
+const portableTextComponents = {
+  types: {
+    videoFile: ({ value }: { value: any }) => {
+      const src = getSanityVideoUrlFromBlock(
+        value,
+        env.NEXT_PUBLIC_SANITY_STUDIO_ID,
+        env.NEXT_PUBLIC_SANITY_STUDIO_DATASET,
+      );
+
+      if (!src) return null;
+
+      return (
+        <figure className="my-8">
+          <video
+            className="w-full rounded-lg"
+            controls={value?.controls ?? true}
+            autoPlay={Boolean(value?.autoplay)}
+            loop={Boolean(value?.loop)}
+            muted={Boolean(value?.muted)}
+            playsInline
+            preload="metadata"
+            poster={value?.poster?.asset?.url}
+          >
+            <source src={src} />
+          </video>
+          {value?.caption ? (
+            <figcaption className="mt-2 text-sm opacity-80">
+              {value.caption}
+            </figcaption>
+          ) : null}
+        </figure>
+      );
+    },
+  },
+};
 
 export default function Page({ page, work }: Page): JSX.Element | null {
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -49,6 +87,8 @@ export default function Page({ page, work }: Page): JSX.Element | null {
     (item) => item.slug.current === slug.current,
   );
   const nextIndex = currentIndex < work.length - 1 ? currentIndex + 1 : 0;
+
+  const pageGradient = getCardGradient(page.cardGradient);
 
   useGSAP(
     () => {
@@ -167,16 +207,23 @@ export default function Page({ page, work }: Page): JSX.Element | null {
 
             <div
               ref={imageContainerRef}
-              className="relative mb-16 h-80 w-full max-w-full overflow-hidden rounded-lg opacity-0 transition-[height] sm:h-94 md:h-[500px] lg:h-[700px] xl:h-[850px]"
+              style={{
+                background: pageGradient,
+              }}
+              className="relative mb-16 h-80 max-w-full overflow-hidden rounded-lg opacity-0 transition-[height] sm:h-94 md:h-[500px] lg:h-[700px]"
             >
-              <Image
+              {/* <Image
                 src={coverImage?.asset?.url}
                 alt="Project Image"
                 layout="fill"
                 objectFit="cover"
                 priority
                 blurDataURL={coverImage?.asset?.metadata?.lqip}
-              />
+              /> */}
+
+              <div className="mx-auto mt-26 w-[100%] overflow-hidden rounded-lg sm:w-[95%]">
+                <img src={`${coverImage?.asset?.url}`} alt={title} />
+              </div>
             </div>
 
             <Grid className="mb-16">
@@ -184,7 +231,10 @@ export default function Page({ page, work }: Page): JSX.Element | null {
                 <article
                   className={"project-body col-span-12 text-xl 2xl:col-span-7"}
                 >
-                  <BlockContent value={body} />
+                  <PortableText
+                    value={body}
+                    components={portableTextComponents}
+                  />
                 </article>
               )}
 
@@ -306,8 +356,10 @@ export async function getStaticProps({
   });
 
   let work = await sanityClient.fetch(groq`
-  *[_type == "work" && !(_id in path('drafts.**'))] {
+  *[_type == "work" && !(_id in path('drafts.**'))] | order(rank asc) {
     slug,
+    rank,
+    cardGradient,
     coverImage {
       _type,
       asset->{

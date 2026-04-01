@@ -22,11 +22,13 @@ const HOME_QUERY = groq`
           slug
         }
       },
-      workList[]->{
+      "workList": workList[]-> | order(rank asc) {
         _id,
         title,
         excerpt,
         slug,
+        rank,
+        cardGradient,
         type,
         coverImage {
           _type,

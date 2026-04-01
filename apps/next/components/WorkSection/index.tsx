@@ -9,6 +9,7 @@ import { RainbowButton } from "../RainbowButton";
 import Portal from "../Portal";
 import Section from "../Section";
 import Close from "../svg/Close";
+import Grid from "../Grid";
 
 interface Props {
   data: {
@@ -27,13 +28,46 @@ interface Props {
   allWorks: Project[];
 }
 
+/**
+ * 🎨 Gradient system
+ */
+export const GRADIENTS: Record<string, string> = {
+  "periwinkle-indigo": "linear-gradient(-20deg, #A8A5FF, #312E81)",
+  "silver-charcoal": "linear-gradient(-20deg, #D4D6DB, #3C3F46)",
+  "lavender-deep-purple": "linear-gradient(-20deg, #EDAFFF, #461E80)",
+  "pink-magenta": "linear-gradient(-20deg, #FFB8E6, #B10854)",
+  "mint-teal": "linear-gradient(-20deg, #B7F4C8, #1E7F5C)",
+  "sky-blue-navy": "linear-gradient(-20deg, #A7D8FF, #1E3A8A)",
+  "peach-burnt-orange": "linear-gradient(-20deg, #FFD1B3, #C2410C)",
+  "lemon-olive": "linear-gradient(-20deg, #FFF3B0, #4D7C0F)",
+  "lilac-royal-blue": "linear-gradient(-20deg, #D8B4FE, #3730A3)",
+  "cyan-deep-teal": "linear-gradient(-20deg, #6FDFFF, #0A4E7A)",
+  "rose-plum": "linear-gradient(-20deg, #F9A8D4, #7E22CE)",
+  "aqua-cobalt": "linear-gradient(-20deg, #3FE1C4, #1D4ED8)",
+  "coral-scarlet": "linear-gradient(-20deg, #FDBA74, #DC2626)",
+  "sage-forest": "linear-gradient(-20deg, #BBF7D0, #166534)",
+  "slate-midnight": "linear-gradient(-20deg, #7F93B3, #0B1220)",
+};
+
+export const DEFAULT_GRADIENT_KEY = "periwinkle-indigo";
+
+export const getCardGradient = (preset?: string | null) => {
+  if (!preset) return GRADIENTS[DEFAULT_GRADIENT_KEY];
+  if (preset.includes("linear-gradient(")) return preset; // defensive fallback
+  return GRADIENTS[preset] || GRADIENTS[DEFAULT_GRADIENT_KEY];
+};
+
 const Card = ({
   title,
   excerpt,
   coverImage,
   slug,
   setIsModalOpen,
-}: Project & { setIsModalOpen: (isModalOpen: boolean) => void }) => {
+  gradient,
+}: Project & {
+  setIsModalOpen: (isModalOpen: boolean) => void;
+  gradient: string;
+}) => {
   const cardRef = useRef<HTMLAnchorElement>(null);
 
   useGSAP(
@@ -41,13 +75,11 @@ const Card = ({
       const card = cardRef.current;
       if (!card) return;
 
-      // Set initial state
       gsap.set(card, {
         y: 150,
         opacity: 0,
       });
 
-      // Create scroll trigger animation
       ScrollTrigger.create({
         trigger: card,
         start: "top bottom-=100",
@@ -69,25 +101,28 @@ const Card = ({
     <Link
       ref={cardRef}
       href={`/projects/${slug.current}`}
-      className="card mb-10 block h-[410px] overflow-hidden rounded-[30px] bg-[#f5f5f5] last:mb-0 lg:h-[500px] xl:h-[530px] 2xl:h-[680px]"
+      className="card relative col-span-12 mb-10 block h-[320px] overflow-hidden rounded-[18px] last:mb-0 sm:h-[430px] lg:col-span-6 lg:h-[300px] xl:h-[380px] 2xl:h-[480px]"
       onClick={() => setIsModalOpen(true)}
     >
-      <div className="card-inner p-5 lg:p-10">
-        <div className="card-content relative z-2">
-          <h1 className="card-title text-3xl font-bold uppercase lg:text-[40px]">
-            {title}
-          </h1>
-          <article className="card-description font-body w-10/12 py-3 pr-3 text-lg lg:w-2/3 lg:text-xl xl:w-3/5 2xl:w-1/2">
+      {/* Gradient Background */}
+      <div className="absolute inset-0 z-0" style={{ background: gradient }} />
+
+      {/* Overlay for readability */}
+      <div className="absolute inset-0 z-[1] bg-black/10" />
+
+      {/* Content */}
+      <div className="card-inner relative z-10 p-5 lg:p-10 lg:pt-8">
+        <div className="card-content">
+          <h1 className="card-title text-2xl font-bold text-white">{title}</h1>
+          <article className="card-description font-body w-full py-3 pr-3 text-sm text-white/90 sm:text-[16px] xl:text-lg">
             <PortableText value={excerpt} />
           </article>
         </div>
 
-        <div className="card-img mx-auto mt-10 w-[100%] sm:mt-16 sm:w-[80%] 2xl:mt-20">
+        <div className="card-img mx-auto mt-6 w-[100%] overflow-hidden rounded-lg sm:w-[95%]">
           <img src={`${coverImage?.asset?.url}`} alt={title} />
         </div>
       </div>
-
-      <div className="gradient-box"></div>
     </Link>
   );
 };
@@ -178,13 +213,16 @@ export default function WorkSection({ data, allWorks = [] }: Props) {
           </RainbowButton>
         </div>
 
-        {workList.map((card, index) => (
-          <Card
-            key={index}
-            {...card}
-            setIsModalOpen={() => setIsModalOpen(false)}
-          />
-        ))}
+        <Grid>
+          {workList.map((card, index) => (
+            <Card
+              key={index}
+              {...card}
+              gradient={getCardGradient(card.cardGradient)}
+              setIsModalOpen={() => setIsModalOpen(false)}
+            />
+          ))}
+        </Grid>
 
         <Portal>
           <div>
@@ -203,13 +241,16 @@ export default function WorkSection({ data, allWorks = [] }: Props) {
                   {renderCloseMenuButton()}
                   {!!allWorks.length && (
                     <Container>
-                      {allWorks.map((card, index) => (
-                        <Card
-                          key={index}
-                          {...card}
-                          setIsModalOpen={() => setIsModalOpen(false)}
-                        />
-                      ))}
+                      <Grid>
+                        {allWorks.map((card, index) => (
+                          <Card
+                            key={index}
+                            {...card}
+                            gradient={getCardGradient(card.cardGradient)}
+                            setIsModalOpen={() => setIsModalOpen(false)}
+                          />
+                        ))}
+                      </Grid>
                     </Container>
                   )}
                 </div>

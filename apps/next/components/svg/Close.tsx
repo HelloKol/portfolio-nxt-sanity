@@ -12,9 +12,9 @@ export default function Close({ className }: { className?: string }) {
       <path
         d="M18 6L6 18M6 6l12 12"
         stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

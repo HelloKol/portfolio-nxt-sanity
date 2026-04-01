@@ -8,6 +8,7 @@ export interface Project {
   slug: {
     current: string;
   };
+  rank?: number;
   type: string[];
   tools: string[];
   cta: {
@@ -16,6 +17,7 @@ export interface Project {
     _type: string;
   }[];
   coverImage: Media;
+  cardGradient?: string;
 }
 
 export interface Media {
