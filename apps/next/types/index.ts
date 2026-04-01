@@ -45,6 +45,6 @@ export interface SEO {
 
 export interface Layout {
   _type: string;
-  body: PortableTextBlock;
+  body: PortableTextBlock[]; // changed to array to match PortableText consumption
   image: Media;
 }

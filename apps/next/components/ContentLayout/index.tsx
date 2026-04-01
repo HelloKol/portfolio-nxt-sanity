@@ -16,7 +16,9 @@ const ContentLayout = ({ layout = [] }: ContentLayoutProps) => {
           )}
           {item._type === "layout.textSection" && (
             <article>
-              <BlockContent value={item.body} />
+              <BlockContent
+                value={Array.isArray(item.body) ? item.body : [item.body]}
+              />
             </article>
           )}
         </div>
