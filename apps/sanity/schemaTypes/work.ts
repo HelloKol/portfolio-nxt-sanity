@@ -1,10 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
-const numbersList = []
-for (let i = 1; i <= 50; i++) {
-  numbersList.push({title: `${i}`, value: `${i}`})
-}
-
 const gradientPresetOptions = [
   {title: '🟪🟦 Periwinkle → Indigo', value: 'periwinkle-indigo'},
   {title: '⬜⬛ Silver → Charcoal', value: 'silver-charcoal'},

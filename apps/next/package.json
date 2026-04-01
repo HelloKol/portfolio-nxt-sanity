@@ -9,7 +9,7 @@
     "fetch-static-content": "rm -rf ./data && node ./lib/fetch-static-content.js"
   },
   "dependencies": {
-    "@gsap/react": "^2.1.1",
+    "@gsap/react": "https://registry.npmjs.org/@gsap/react/-/react-2.1.1.tgz",
     "@hookform/resolvers": "^3.1.1",
     "@portabletext/react": "^3.0.17",
     "@react-three/drei": "^8.20.2",
